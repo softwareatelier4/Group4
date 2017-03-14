@@ -8,7 +8,7 @@
     "serve:dev": "nodemon --watch app --watch bootstrap --watch config --watch .env -x node server.js",
     "serve": "node server.js",
     "lint": "standard",
-    "test": "npm run test-mocha",
+    "test": "npm run test-mocha && ./nightwatch",
     "test-mocha": "JUNIT_REPORT_PATH=./jenkins-test-results.xml istanbul cover --report cobertura _mocha -- --timeout 3000 -R spec ./test/test1 --colors --reporter mocha-jenkins-reporter"
   },
   "author": "Group 4",
@@ -25,6 +25,7 @@
     "adonis-lucid": "^3.0.14",
     "adonis-middleware": "^1.0.11",
     "adonis-websocket": "^1.0.3",
+    "istanbul": "^0.4.5",
     "mocha-jenkins-reporter": "^0.3.6",
     "morgan": "^1.6.1",
     "mysql": "^2.13.0",

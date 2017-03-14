@@ -7,3 +7,4 @@ npm-debug.log
 log
 *.log
 test/nightwatch-reports/*
+jenkins-test-results.xml
