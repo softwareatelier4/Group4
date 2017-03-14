@@ -6,15 +6,15 @@ class ProfilesTableSchema extends Schema {
 
   up () {
     this.create('profiles', (table) => {
-		table.increments('id').primary()
-		table.string('user_id').nullable()
-		table.string('city').nullable()
-		table.string('website').nullable()
-		table.string('telephone').nullable()
-		table.text('desription').nullable()
-		table.string('price').nullable()
-		table.string('logo').nullable()
-		table.timestamps()
+      table.increments('id').primary()
+      table.string('user_id').nullable()
+      table.string('city').nullable()
+      table.string('website').nullable()
+      table.string('telephone').nullable()
+      table.text('desription').nullable()
+      table.string('price').nullable()
+      table.string('logo').nullable()
+      table.timestamps()
     })
   }
 

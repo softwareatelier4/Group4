@@ -1,8 +1,8 @@
 'use strict'
 
 class ProfileController {
-  *index (request, response){
-    response.send("profile");
+  * index (request, response) {
+    // response.send('profile')
   }
 }
 

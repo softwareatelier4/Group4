@@ -7,8 +7,7 @@ class CategoriesTableSchema extends Schema {
   up () {
     this.create('categories', (table) => {
       table.increments('id').primary()
-		table.string('name').nullable()
-
+      table.string('name').nullable()
     })
   }
 
