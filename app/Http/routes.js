@@ -17,4 +17,11 @@
 
 const Route = use('Route')
 
-Route.on('/').render('welcome')
+Route.get('/', 'HomeController.index');
+
+Route.get('/profile', 'ProfileController.index');
+
+// Route.get('/profile:id', function * (request, response) {
+//   const id = request.param('id')
+//   response.send(`Profile page for user with id ${id}`)
+// })
