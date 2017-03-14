@@ -2,7 +2,7 @@
 
 class HomeController {
   *index (request, response){
-    response.send("home");
+    response.sendView("index");
   }
 }
 
