@@ -1,0 +1,21 @@
+body {
+	background-image: url("../imgs/home-bg.jpg");
+	background-size: cover;
+}
+
+#circle-menu {
+	border-radius: 100%;
+	border: 3px solid white;
+	height: 36px;
+	width: 36px;	
+}
+
+#navbarDropdownMenuLink::after {
+	display: none;
+}
+
+#home-searchbox{
+	height: 65px;
+	box-shadow: none;
+	border-radius: 35px;
+}
