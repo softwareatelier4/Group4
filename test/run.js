@@ -1,9 +1,12 @@
+
 var should = require('should');
 
-describe('Run test environment', function(done){
+var assert = require('assert');
 
-  describe('Found test script', function(){
-    it('should have a constructor', function(){
-    	done();
-    })
+describe('Array', function() {
+  describe('#indexOf()', function() {
+    it('should return -1 when the value is not present', function() {
+      assert.equal(-1, [1,2,3].indexOf(4));
+    });
   });
+});
