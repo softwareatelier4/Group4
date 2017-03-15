@@ -6,14 +6,19 @@ class ReviewsTableSchema extends Schema {
 
   up () {
     this.create('reviews', (table) => {
+
       table.increments('id').primary()
+      table.text('comment')
+      table.enu('vote_price', [1, 2, 3, 4, 5])
+      table.enu('vote_quality', [1, 2, 3, 4, 5])
+      table.enu('vote_overall', [1, 2, 3, 4, 5])
+
       table.integer('profile_id').unsigned()
-      table.foreign('profile_id').references('profiles.id')
+      table.foreign('profile_id').references('profiles.id').onDelete('cascade')
+
       table.integer('user_id').unsigned()
-      table.string('comment').nullable()
-      table.integer('vote_price').unsigned()
-      table.integer('vote_quality').unsigned()
-      table.integer('vote_overall').unsigned()
+      table.foreign('user_id').references('users.id').onDelete('set null')
+
       table.timestamps()
     })
   }
