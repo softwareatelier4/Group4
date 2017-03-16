@@ -12,19 +12,27 @@
 */
 
 const Factory = use('Factory')
+const faker = require('faker') // better than fake provided by Factory
+
 
 /*
 |--------------------------------------------------------------------------
-| User Model Blueprint
+| Profile Model Blueprint
 |--------------------------------------------------------------------------
-| Below is an example of blueprint for User Model. You can make use of
+| Below is an example of blueprint for Profile Model. You can make use of
 | this blueprint inside your seeds to generate dummy data.
 |
 */
-Factory.blueprint('App/Model/User', (fake) => {
+
+Factory.blueprint('App/Model/Profile', (fake) => {
+
   return {
-    username: fake.username(),
-    email: fake.email(),
-    password: fake.password()
+
+    description: faker.lorem.paragraph(),
+    city: faker.address.city(),
+
+    website: faker.internet.url(),
+    telephone: faker.phone.phoneNumber(),
+    price: faker.commerce.price(),
   }
 })

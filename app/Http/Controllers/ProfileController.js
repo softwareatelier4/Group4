@@ -3,8 +3,15 @@
 const Profile = use('App/Model/Profile')
 
 class ProfileController {
+
   * index (request, response) {
-    const profiles = yield Profile.all()
+
+    const profiles = yield Profile
+      .query()
+      .city(request.input('city'))
+      .category(request.input('category'))
+      .fetch()
+
     yield response.sendView('profiles.index', { profiles: profiles.toJSON() })
   }
 
