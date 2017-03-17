@@ -9,7 +9,7 @@
 const path = require('path')
 const globby = require('globby')
 const bootstrap = require('./bootstrap')
-// process.env.ENV_PATH = '.env.test'
+process.env.ENV_PATH = '.env.test'
 
 const testFiles = {
   functional: 'tests/functional/*.js',
