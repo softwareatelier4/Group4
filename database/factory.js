@@ -14,7 +14,6 @@
 const Factory = use('Factory')
 const faker = require('faker') // better than fake provided by Factory
 
-
 /*
 |--------------------------------------------------------------------------
 | Profile Model Blueprint
@@ -25,7 +24,6 @@ const faker = require('faker') // better than fake provided by Factory
 */
 
 Factory.blueprint('App/Model/Profile', (fake) => {
-
   return {
 
     description: faker.lorem.paragraph(),
@@ -33,6 +31,6 @@ Factory.blueprint('App/Model/Profile', (fake) => {
 
     website: faker.internet.url(),
     telephone: faker.phone.phoneNumber(),
-    price: faker.commerce.price(),
+    price: faker.commerce.price()
   }
 })

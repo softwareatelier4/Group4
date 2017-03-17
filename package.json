@@ -5,12 +5,12 @@
   "scripts": {
     "start": "echo \"\\033[31mWARN: 'start' will be depreciated soon. Instead use 'npm run serve'\" && npm run serve",
     "dev": "echo \"\\033[31mWARN: 'dev' will be depreciated soon. Instead use 'npm run serve:dev'\" && npm run serve:dev",
-    "serve:webstorm": "nodemon --watch app --watch bootstrap --watch config --watch .env -x node $NODE_DEBUG_OPTION server.js",
-    "serve:dev": "nodemon --watch app --watch bootstrap --watch config --watch .env -x node server.js",
-    "serve": "node server.js",
+    "serve:webstorm": "nodemon --watch app --watch bootstrap --watch config --watch .env -x \"node --harmony_proxies $NODE_DEBUG_OPTION server.js\"",
+    "serve:dev": "nodemon --watch app --watch bootstrap --watch config --watch .env -x \"node --harmony_proxies server.js\"",
+    "serve": "node --harmony_proxies server.js",
     "lint": "standard",
-    "test": "npm run test-mocha && ./nightwatch",
-    "test-mocha": "JUNIT_REPORT_PATH=./jenkins-test-results.xml istanbul cover --report cobertura _mocha -- --timeout 3000 -R spec ./test/test1 --colors --reporter mocha-jenkins-reporter"
+    "test": "node --harmony_proxies ./bin/test",
+    "coverage": "node --harmony_proxies ./node_modules/.bin/istanbul cover --report cobertura ./bin/test.js -i \"./app/**/*.js\""
   },
   "author": "Group 4",
   "license": "MIT",
@@ -28,16 +28,14 @@
     "adonis-websocket": "^1.0.3",
     "faker": "^4.1.0",
     "istanbul": "^0.4.5",
-    "mariasql": "^0.2.6",
     "mocha-jenkins-reporter": "^0.3.6",
-    "morgan": "^1.6.1",
-    "mysql": "^2.13.0",
-    "phantomjs": "^2.1.7",
     "standard": "^8.6.0",
-    "supertest": "^1.1.0",
     "youch": "^2.0.4"
   },
   "standard": {
+    "ignore": [
+      "public"
+    ],
     "global": [
       "use",
       "make"
@@ -48,8 +46,9 @@
   },
   "devDependencies": {
     "nodemon": "^1.11.0",
+    "should": "^4.0.4",
+    "sqlite3": "^3.1.8",
     "standard": "^8.6.0",
-    "nightwatch": "^0.8.6",
-    "should": "^4.0.4"
+    "zombie": "^5.0.5"
   }
 }

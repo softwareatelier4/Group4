@@ -6,7 +6,6 @@ class ReviewsTableSchema extends Schema {
 
   up () {
     this.create('reviews', (table) => {
-
       table.increments('id').primary()
       table.text('comment')
       table.enu('vote_price', [1, 2, 3, 4, 5])
