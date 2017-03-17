@@ -28,12 +28,8 @@
     "adonis-websocket": "^1.0.3",
     "faker": "^4.1.0",
     "istanbul": "^0.4.5",
-    "mariasql": "^0.2.6",
     "mocha-jenkins-reporter": "^0.3.6",
-    "morgan": "^1.6.1",
-    "mysql": "^2.13.0",
     "standard": "^8.6.0",
-    "supertest": "^1.1.0",
     "youch": "^2.0.4"
   },
   "standard": {
