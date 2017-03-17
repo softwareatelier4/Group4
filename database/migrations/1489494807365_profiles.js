@@ -6,7 +6,6 @@ class ProfilesTableSchema extends Schema {
 
   up () {
     this.create('profiles', (table) => {
-
       table.increments('id').primary()
       table.text('description')
       table.string('city')

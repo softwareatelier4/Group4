@@ -6,7 +6,6 @@ class ProfileCategoryTableSchema extends Schema {
 
   up () {
     this.create('profile_category', (table) => {
-
       table.increments('id').primary()
 
       table.integer('profile_id').unsigned()

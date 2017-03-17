@@ -33,6 +33,9 @@
     "youch": "^2.0.4"
   },
   "standard": {
+    "ignore": [
+      "public"
+    ],
     "global": [
       "use",
       "make"

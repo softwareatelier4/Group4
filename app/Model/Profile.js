@@ -16,12 +16,11 @@ class Profile extends Lucid {
     return this.belongsTo('App/Model/User')
   }
 
-
   /*
   * QUERY SCOPES
   */
 
-  static scopeCategory(builder, categoryQuery) {
+  static scopeCategory (builder, categoryQuery) {
     if (categoryQuery) builder.where('category', categoryQuery)
   }
 

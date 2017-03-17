@@ -6,7 +6,6 @@ class UsersTableSchema extends Schema {
 
   up () {
     this.create('users', (table) => {
-
       table.increments('id').primary()
       table.string('email')
       table.string('password')
