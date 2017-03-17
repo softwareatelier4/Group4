@@ -9,8 +9,8 @@
     "serve:dev": "nodemon --watch app --watch bootstrap --watch config --watch .env -x node server.js",
     "serve": "node server.js",
     "lint": "standard",
-    "test": "npm run test-mocha && ./nightwatch",
-    "test-mocha": "JUNIT_REPORT_PATH=./jenkins-test-results.xml istanbul cover --report cobertura _mocha -- --timeout 3000 -R spec ./test/test1 --colors --reporter mocha-jenkins-reporter"
+    "test": "node ./bin/test",
+    "coverage": "JUNIT_REPORT_PATH=./jenkins-test-results.xml ./node_modules/.bin/istanbul cover --report cobertura ./bin/test.js -i \".app/**/*.js\" --colors --reporter mocha-jenkins-reporter"
   },
   "author": "Group 4",
   "license": "MIT",
@@ -32,7 +32,6 @@
     "mocha-jenkins-reporter": "^0.3.6",
     "morgan": "^1.6.1",
     "mysql": "^2.13.0",
-    "phantomjs": "^2.1.7",
     "standard": "^8.6.0",
     "supertest": "^1.1.0",
     "youch": "^2.0.4"
@@ -48,8 +47,8 @@
   },
   "devDependencies": {
     "nodemon": "^1.11.0",
+    "should": "^4.0.4",
     "standard": "^8.6.0",
-    "nightwatch": "^0.8.6",
-    "should": "^4.0.4"
+    "zombie": "^5.0.5"
   }
 }

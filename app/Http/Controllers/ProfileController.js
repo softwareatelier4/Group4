@@ -1,12 +1,17 @@
 'use strict'
 
-const Profile = use('App/Model/Profile')
-
 class ProfileController {
 
-  * index (request, response) {
+  static get inject () {
+    return ['App/Model/Profile']
+  }
 
-    const profiles = yield Profile
+  constructor (Profile) {
+    this.Profile = Profile
+  }
+
+  * index (request, response) {
+    const profiles = yield this.Profile
       .query()
       .city(request.input('city'))
       .category(request.input('category'))
@@ -16,7 +21,8 @@ class ProfileController {
   }
 
   * show (request, response) {
-    const profile = yield Profile.find(request.param('id'))
+    const profile = yield this.Profile.find(request.param('id'))
+
     yield response.sendView('profiles.show', { profile: profile })
   }
 
@@ -25,7 +31,7 @@ class ProfileController {
   }
 
   * edit (request, response) {
-    const profile = yield Profile.find(request.param('id'))
+    const profile = yield this.Profile.find(request.param('id'))
     yield response.sendView('profiles.edit', { profile: profile })
   }
 
