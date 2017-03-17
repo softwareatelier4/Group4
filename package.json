@@ -10,7 +10,7 @@
     "serve": "node server.js",
     "lint": "standard",
     "test": "node ./bin/test",
-    "coverage": "JUNIT_REPORT_PATH=./jenkins-test-results.xml ./node_modules/.bin/istanbul cover --report cobertura ./bin/test.js -i \"./app/**/*.js\" --colors --reporter mocha-jenkins-reporter"
+    "coverage": "JUNIT_REPORT_PATH=./tests-reports/jenkins-test-results.xml ./node_modules/.bin/istanbul cover --report cobertura ./bin/test.js -i \"./app/**/*.js\" --colors --reporter mocha-jenkins-reporter"
   },
   "author": "Group 4",
   "license": "MIT",
