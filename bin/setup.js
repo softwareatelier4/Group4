@@ -11,7 +11,13 @@
 */
 
 const Mocha = require('mocha')
-const mocha = new Mocha()
+const mocha = new Mocha({
+  reporter: 'mocha-jenkins-reporter',
+  reporterOptions: {
+    junit_report_name: 'Tests',
+    junit_report_path: './tests-reports/jenkins-test-results.xml'
+  }
+})
 
 /**
  * sets up mocha by adding test files to it.
