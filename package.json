@@ -9,8 +9,8 @@
     "serve:dev": "nodemon --watch app --watch bootstrap --watch config --watch .env -x node server.js",
     "serve": "node server.js",
     "lint": "standard",
-    "test": "node ./bin/test",
-    "coverage": "./node_modules/.bin/istanbul cover --report cobertura ./bin/test.js -i \"./app/**/*.js\""
+    "test": "node --harmony_proxies ./bin/test",
+    "coverage": "node --harmony_proxies ./node_modules/.bin/istanbul cover --report cobertura ./bin/test.js -i \"./app/**/*.js\""
   },
   "author": "Group 4",
   "license": "MIT",
