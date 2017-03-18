@@ -1,21 +1,41 @@
 body {
-	background-image: url("../imgs/home-bg.jpg");
-	background-size: cover;
+    background-image: url("../imgs/home-bg.jpg");
+    background-size: cover;
+    font-family: 'Lato', sans-serif;
 }
 
+
 #circle-menu {
-	border-radius: 100%;
-	border: 3px solid white;
-	height: 36px;
-	width: 36px;	
+    border-radius: 100%;
+    border: 3px solid white;
+    height: 36px;
+    width: 36px;	
 }
 
 #navbarDropdownMenuLink::after {
-	display: none;
+    display: none;
 }
 
-#home-searchbox{
-	height: 65px;
-	box-shadow: none;
-	border-radius: 35px;
+#searchbox{
+    height: 50px;
+    box-shadow: none;
+    float:left;
+    width:80%;
+    border-radius: 0px;
+}
+
+#searchbox::-webkit-input-placeholder{
+    font-style:italic;
+    font-size:1.2rem;
+}
+
+#search {
+    height : 50px;
+    width:20%;
+    float:left;
+    border-radius: 0px;
+}
+
+.center{
+    margin-top: 25%;
 }
