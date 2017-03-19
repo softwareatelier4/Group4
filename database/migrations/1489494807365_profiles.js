@@ -10,7 +10,7 @@ class ProfilesTableSchema extends Schema {
       table.text('title')
       table.text('description')
       table.string('city')
-
+      table.string('email').nullable()
       table.string('website').nullable()
       table.string('telephone').nullable()
       table.string('price').nullable()

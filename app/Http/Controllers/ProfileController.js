@@ -23,8 +23,9 @@ class ProfileController {
 
   * show (request, response) {
     const profile = yield this.Profile.find(request.param('id'))
+    const reviews = yield profile.reviews().fetch()
 
-    yield response.sendView('profiles.show', { profile: profile })
+    yield response.sendView('profiles.show', { profile: profile, reviews: reviews.toJSON() })
   }
 
   * create (request, response) {
