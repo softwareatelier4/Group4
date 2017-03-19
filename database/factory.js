@@ -25,12 +25,13 @@ const faker = require('faker') // better than fake provided by Factory
 
 Factory.blueprint('App/Model/Profile', (fake) => {
   return {
-
+  	title: faker.company.companyName(),
     description: faker.lorem.paragraph(),
     city: faker.address.city(),
 
     website: faker.internet.url(),
     telephone: faker.phone.phoneNumber(),
-    price: faker.commerce.price()
+    price: faker.commerce.price(),
+    logo: faker.image.business()
   }
 })

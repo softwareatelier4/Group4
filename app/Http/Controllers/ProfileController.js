@@ -15,6 +15,7 @@ class ProfileController {
       .query()
       .city(request.input('city'))
       .category(request.input('category'))
+      .search(request.input('search'))
       .fetch()
 
     yield response.sendView('profiles.index', { profiles: profiles.toJSON() })

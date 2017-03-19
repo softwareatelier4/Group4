@@ -4,6 +4,9 @@ body {
   margin-top:50px;
 }
 
+a{
+  color: #025aa5;
+}
 
 #searchbox{
   height: 50px;
@@ -49,4 +52,13 @@ body {
 
 .result-item-details{
   margin-bottom: 1.2rem;
+}
+
+.result-item-title a{
+  color: #025aa5;
+}
+
+.result-item-title a:hover{
+  text-decoration: none;
+  color: #025aa5;
 }
