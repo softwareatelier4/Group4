@@ -1,5 +1,6 @@
 'use strict'
 
+
 class ProfileController {
 
   static get inject () {
@@ -13,16 +14,34 @@ class ProfileController {
   }
 
   * index (request, response) {
+    const page = request.input('page') || 1
     const profiles = yield this.Profile
       .query()
       .city(request.input('city'))
       .category(request.input('category'))
       .search(request.input('search'))
-      .fetch()
+      .paginate(page, 25)
 
     // TODO: MAKE THIS AJAX
     const allCategories = yield this.Category.query().has('profiles').fetch()
     const allCities = yield this.City.query().has('profiles').fetch()
+
+    const components = request.except('page')
+
+    let nextPage = request.url() + '?'
+    let previousPage = request.url() + '?'
+
+    for(var key in components){
+      if(components[key] !== null && components[key] !== 'page')
+        nextPage = `${nextPage}\&${key}=${decodeURIComponent(components[key])}`
+        previousPage = `${previousPage}\&${key}=${decodeURIComponent(components[key])}`
+    }
+
+    nextPage = `${nextPage}&page=${ parseInt(page) + 1 }`
+    previousPage = `${previousPage}&page=${ parseInt(page) == 1 ? (parseInt(page) + 2) : (parseInt(page) - 1) }`
+
+    profiles.meta.nextPage = nextPage
+    profiles.meta.previousPage = previousPage
 
     yield response.sendView('profiles.index', {
       profiles: profiles.toJSON(),

@@ -23,7 +23,7 @@ const faker = require('faker') // better than fake provided by Factory
 |
 */
 
-Factory.profilesNumber = 20
+Factory.profilesNumber = 1000
 
 Factory.blueprint('App/Model/Profile', (fake) => {
   return {
