@@ -3,13 +3,12 @@
 const Lucid = use('Lucid')
 
 class Category extends Lucid {
+
   profiles () {
     return this.belongsToMany('App/Model/Profile', 'profile_category')
   }
 
-  /**
-   * Disabling auto-timestamp
-   */
+  /** Disabling auto-timestamp */
   static get createTimestamp () {
     return null
   }

@@ -8,6 +8,10 @@ class Profile extends Lucid {
     return this.belongsToMany('App/Model/Category', 'profile_category')
   }
 
+  cities () {
+    return this.belongsToMany('App/Model/City', 'profile_cities')
+  }
+
   reviews () {
     return this.hasMany('App/Model/Review')
   }
@@ -29,7 +33,11 @@ class Profile extends Lucid {
   }
 
   static scopeCity (builder, cityQuery) {
-    if (cityQuery) builder.where('city', cityQuery)
+    if (cityQuery) builder
+      .innerJoin('profile_cities', 'profile_cities.profile_id', 'profiles.id')
+      .innerJoin('cities', 'cities.id', 'profile_cities.city_id')
+      .where('cities.name', cityQuery)
+      .select('profiles.*', 'cities.*')
   }
 
   static scopeSearch (builder, searchQuery) {
@@ -41,7 +49,6 @@ class Profile extends Lucid {
         builder.where(function () {
           this.orWhere('title', 'like', `%${key}%`)
         .orWhere('description', 'like', `%${key}%`)
-        .orWhere('city', 'like', `%${key}%`)
         .orWhere('website', 'like', `%${key}%`)
         })
       }
