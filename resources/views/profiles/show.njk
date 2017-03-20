@@ -74,6 +74,20 @@
 
 			</div>
 			{% endfor %}
+
+			<div class="row">
+				<div class="col">
+					<h4>Add your review</h4>
+					
+					<form action="/profiles/{{ profile.id }}/reviews" method="POST">
+						<div class="form-group">
+						    <label>Message</label>
+						    <textarea class="form-control" name="comment" rows="3"></textarea>
+						</div>
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</form>
+				</div>
+			</div>
 		</div>
 
 	</div>
