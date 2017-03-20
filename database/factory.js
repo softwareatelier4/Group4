@@ -23,6 +23,8 @@ const faker = require('faker') // better than fake provided by Factory
 |
 */
 
+Factory.profilesNumber = 10
+
 Factory.blueprint('App/Model/Profile', (fake) => {
   return {
     title: faker.company.companyName(),
@@ -33,5 +35,36 @@ Factory.blueprint('App/Model/Profile', (fake) => {
     telephone: faker.phone.phoneNumber(),
     price: faker.commerce.price(),
     logo: faker.image.business()
+  }
+})
+
+Factory.categoriesNumber = 5
+
+Factory.blueprint('App/Model/Category', () => {
+  return {
+    name: faker.name.jobType()
+  }
+})
+
+Factory.blueprint('App/Model/ProfileCategory', () => {
+  return {
+    profile_id: Math.floor(
+      Math.random() * Factory.profilesNumber
+    ) + 1,
+    category_id: Math.floor(
+      Math.random() * Factory.categoriesNumber
+    ) + 1,
+  }
+})
+
+Factory.blueprint('App/Model/Review', () => {
+  return {
+
+  }
+})
+
+Factory.blueprint('App/Model/User', () => {
+  return {
+
   }
 })

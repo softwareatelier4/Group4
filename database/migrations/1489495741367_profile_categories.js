@@ -2,10 +2,10 @@
 
 const Schema = use('Schema')
 
-class ProfileCategoryTableSchema extends Schema {
+class ProfileCategoriesTableSchema extends Schema {
 
   up () {
-    this.create('profile_category', (table) => {
+    this.create('profile_categories', (table) => {
       table.increments('id').primary()
 
       table.integer('profile_id').unsigned()
@@ -19,9 +19,9 @@ class ProfileCategoryTableSchema extends Schema {
   }
 
   down () {
-    this.drop('profile_category')
+    this.drop('profile_categories')
   }
 
 }
 
-module.exports = ProfileCategoryTableSchema
+module.exports = ProfileCategoriesTableSchema

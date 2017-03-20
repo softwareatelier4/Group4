@@ -21,7 +21,11 @@ class Profile extends Lucid {
   */
 
   static scopeCategory (builder, categoryQuery) {
-    if (categoryQuery) builder.where('category', categoryQuery)
+    if (categoryQuery) builder
+      .innerJoin('profile_categories', 'profile_categories.profile_id', 'profiles.id')
+      .innerJoin('categories', 'categories.id', 'profile_categories.category_id')
+      .where('categories.name', categoryQuery)
+      .select('profiles.*', 'categories.*')
   }
 
   static scopeCity (builder, cityQuery) {
