@@ -77,7 +77,7 @@
 			<div class="row">
 				<div class="col">
 					<h4>Add your review</h4>
-					{{ form.open({ action: 'ReviewController.create', params: {profiles_id: profile.id} }) }}
+					{{ form.open({ action: 'ReviewController.store', params: {profiles_id: profile.id} }) }}
 						{{ csrfField }}
 						<div class="form-group">
 						    <label>Message</label>

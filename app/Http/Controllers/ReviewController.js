@@ -19,7 +19,7 @@ class ReviewController {
   }
 
   * create (request, response) {
-    
+
     yield this.Review.create({
       comment: request.input('comment'),
       vote_price: 5,
@@ -40,6 +40,14 @@ class ReviewController {
 
   * store (request, response) {
 
+    yield this.Review.create({
+      comment: request.input('comment'),
+      vote_price: 5,
+      vote_quality: 5,
+      vote_overall: 5,
+      profile_id: request.params().profiles_id
+    })
+    response.redirect('back')
   }
 
   * destroy (request, response) {

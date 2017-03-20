@@ -20,6 +20,8 @@ class ProfileController {
       .search(request.input('search'))
       .fetch()
 
+    console.log(profiles)
+
     // TODO: MAKE THIS AJAX
     const allCategories = yield this.Category.query().has('profiles').fetch()
     const allCities = yield this.City.query().has('profiles').fetch()
