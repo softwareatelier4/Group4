@@ -1,6 +1,5 @@
 'use strict'
 
-
 class ProfileController {
 
   static get inject () {
@@ -22,8 +21,6 @@ class ProfileController {
       .search(request.input('search'))
       .paginate(page, 25)
 
-    console.log(profiles)
-
     // TODO: MAKE THIS AJAX
     const allCategories = yield this.Category.query().has('profiles').fetch()
     const allCities = yield this.City.query().has('profiles').fetch()
@@ -33,14 +30,15 @@ class ProfileController {
     let nextPage = request.url() + '?'
     let previousPage = request.url() + '?'
 
-    for(var key in components){
-      if(components[key] !== null && components[key] !== 'page')
+    for (var key in components) {
+      if (components[key] !== null && components[key] !== 'page') {
         nextPage = `${nextPage}\&${key}=${decodeURIComponent(components[key])}`
-        previousPage = `${previousPage}\&${key}=${decodeURIComponent(components[key])}`
+      }
+      previousPage = `${previousPage}\&${key}=${decodeURIComponent(components[key])}`
     }
 
-    nextPage = `${nextPage}&page=${ parseInt(page) + 1 }`
-    previousPage = `${previousPage}&page=${ parseInt(page) == 1 ? (parseInt(page) + 2) : (parseInt(page) - 1) }`
+    nextPage = `${nextPage}&page=${parseInt(page) + 1}`
+    previousPage = `${previousPage}&page=${parseInt(page) == 1 ? (parseInt(page) + 2) : (parseInt(page) - 1)}`
 
     profiles.meta.nextPage = nextPage
     profiles.meta.previousPage = previousPage
@@ -57,6 +55,10 @@ class ProfileController {
     const reviews = yield profile.reviews().fetch()
     const categories = yield profile.categories().fetch()
     const cities = yield profile.cities().fetch()
+
+    profile.vote_quality = yield profile.reviews().avg('vote_quality as vote_quality')
+    profile.vote_price = yield profile.reviews().avg('vote_price as vote_price')
+    profile.vote_overall = yield profile.reviews().avg('vote_overall as vote_overall')
 
     // TODO: MAKE THIS AJAX
     const allCategories = yield this.Category.query().has('profiles').fetch()
