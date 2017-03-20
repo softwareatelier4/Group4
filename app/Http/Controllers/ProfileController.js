@@ -21,8 +21,8 @@ class ProfileController {
       .fetch()
 
     // TODO: MAKE THIS AJAX
-    const allCategories = yield this.Category.all()
-    const allCities = yield this.City.all()
+    const allCategories = yield this.Category.query().has('profiles').fetch()
+    const allCities = yield this.City.query().has('profiles').fetch()
 
     yield response.sendView('profiles.index', {
       profiles: profiles.toJSON(),
@@ -38,8 +38,8 @@ class ProfileController {
     const cities = yield profile.cities().fetch()
 
     // TODO: MAKE THIS AJAX
-    const allCategories = yield this.Category.all()
-    const allCities = yield this.City.all()
+    const allCategories = yield this.Category.query().has('profiles').fetch()
+    const allCities = yield this.City.query().has('profiles').fetch()
 
     yield response.sendView('profiles.show', {
       profile: profile.toJSON(),
