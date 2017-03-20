@@ -25,16 +25,43 @@
 
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
               <ul class="navbar-nav">
+
+                <!-- Location dropdown button -->
+                <li class="dropdown nav-item">
+                  <input type="text" class="dropdown-toggle form-control" placeholder="Search by location" aria-label="..." data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <ul class="dropdown-menu nav-item">
+                    {% block cities %}
+                      {% for city in cities %}
+                        <li class="nav-item"><a class="nav-link" href="/profiles?city={{ city.name }}">{{ city.name }}</a></li>
+                      {% endfor %}
+                    {% endblock %}
+                  </ul>
+                </li>
+
+                <!-- Category dropdown button -->
+                <li class="dropdown nav-item">
+                  <input type="text" class="dropdown-toggle form-control" placeholder="Search by category" aria-label="..." data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <ul class="dropdown-menu nav-item">
+                    {% block categories %}
+                      {% for category in categories %}
+                        <li class="nav-item"><a class="nav-link" href="/profiles?category={{ category.name }}">{{ category.name }}</a></li>
+                      {% endfor %}
+                    {% endblock %}
+                  </ul>
+                </li>
+
                 <li class="nav-item"><a class="nav-link" href="/profiles">BROWSE</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">LOGIN</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">REGISTER</a> </li>
-              </ul>
 
+              </ul>
             </div>
+
           </nav>
         </div>
       </div>
     </div>
+
     {% block content %}{% endblock %}
 
     <script src="https://unpkg.com/jquery@3.1.1"></script>

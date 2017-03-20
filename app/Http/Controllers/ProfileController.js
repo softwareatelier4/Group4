@@ -3,11 +3,12 @@
 class ProfileController {
 
   static get inject () {
-    return ['App/Model/Profile']
+    return ['App/Model/Profile', 'App/Model/Category']
   }
 
-  constructor (Profile) {
+  constructor (Profile, Category) {
     this.Profile = Profile
+    this.Category = Category
   }
 
   * index (request, response) {
@@ -18,7 +19,9 @@ class ProfileController {
       .search(request.input('search'))
       .fetch()
 
-    yield response.sendView('profiles.index', { profiles: profiles.toJSON() })
+    const categories = yield this.Category.all()
+
+    yield response.sendView('profiles.index', { profiles: profiles.toJSON(), categories: categories.toJSON() })
   }
 
   * show (request, response) {
