@@ -21,7 +21,7 @@ class ProfileController {
 
     const categories = yield this.Category.all()
 
-    yield response.sendView('profiles.index', { profiles: profiles.toJSON(), categories: categories.toJSON() })
+    yield response.sendView('profiles.index', { profiles: profiles.toJSON(), categories: categories.toJSON()})
   }
 
   * show (request, response) {

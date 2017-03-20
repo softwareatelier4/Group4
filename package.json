@@ -6,8 +6,8 @@
     "start": "echo \"\\033[31mWARN: 'start' will be depreciated soon. Instead use 'npm run serve'\" && npm run serve",
     "dev": "echo \"\\033[31mWARN: 'dev' will be depreciated soon. Instead use 'npm run serve:dev'\" && npm run serve:dev",
     "serve:webstorm": "nodemon --watch app --watch bootstrap --watch config --watch .env -x \"node --harmony $NODE_DEBUG_OPTION server.js\"",
-    "serve:dev": "nodemon --watch app --watch bootstrap --watch config --watch .env -x \"node --harmony server.js\"",
-    "serve": "node --harmony server.js",
+    "serve:dev": "nodemon --watch app --watch bootstrap --watch config --watch .env -x \"node --harmony_proxies server.js\"",
+    "serve": "node --harmony_proxies server.js",
     "lint": "standard",
     "test": "node --harmony_proxies ./bin/test",
     "coverage": "node --harmony_proxies ./node_modules/.bin/istanbul cover --report cobertura ./bin/test.js -i \"./app/**/*.js\""
