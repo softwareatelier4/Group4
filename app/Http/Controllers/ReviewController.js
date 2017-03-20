@@ -19,13 +19,15 @@ class ReviewController {
   }
 
   * create (request, response) {
+    
     yield this.Review.create({
-      comment: "something",
+      comment: request.input('comment'),
       vote_price: 5,
       vote_quality: 5,
       vote_overall: 5,
-      profile_id: 1
+      profile_id: request.params().profiles_id
     })
+    response.redirect('back')
   }
 
   * edit (request, response) {
