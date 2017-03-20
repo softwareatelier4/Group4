@@ -26,24 +26,24 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
               <ul class="navbar-nav">
 
-                <!-- Location dropdown button -->
+                <!-- Location dropdown button SHOULD BE AJAX -->
                 <li class="dropdown nav-item">
                   <input type="text" class="dropdown-toggle form-control" placeholder="Location" aria-label="..." data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                   <ul class="dropdown-menu nav-item">
-                    {% block cities %}
-                      {% for city in cities %}
+                    {% block allCities %}
+                      {% for city in allCities %}
                         <li class="nav-item"><a class="nav-link" href="/profiles?city={{ city.name }}">{{ city.name }}</a></li>
                       {% endfor %}
                     {% endblock %}
                   </ul>
                 </li>
 
-                <!-- Category dropdown button -->
+                <!-- Category dropdown button SHOULD BE AJAX -->
                 <li class="dropdown nav-item">
                   <input type="text" class="dropdown-toggle form-control" placeholder="Category" aria-label="..." data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                   <ul class="dropdown-menu nav-item">
-                    {% block categories %}
-                      {% for category in categories %}
+                    {% block allCategories %}
+                      {% for category in allCategories %}
                         <li class="nav-item"><a class="nav-link" href="/profiles?category={{ category.name }}">{{ category.name }}</a></li>
                       {% endfor %}
                     {% endblock %}

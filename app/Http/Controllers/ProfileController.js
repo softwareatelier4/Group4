@@ -20,21 +20,35 @@ class ProfileController {
       .search(request.input('search'))
       .fetch()
 
-    const categories = yield this.Category.all()
-    const cities = yield this.City.all()
+    // TODO: MAKE THIS AJAX
+    const allCategories = yield this.Category.all()
+    const allCities = yield this.City.all()
 
     yield response.sendView('profiles.index', {
       profiles: profiles.toJSON(),
-      categories: categories.toJSON(),
-      cities: cities.toJSON()
+      allCategories: allCategories.toJSON(),
+      allCities: allCities.toJSON()
     })
   }
 
   * show (request, response) {
     const profile = yield this.Profile.find(request.param('id'))
     const reviews = yield profile.reviews().fetch()
+    const categories = yield profile.categories().fetch()
+    const cities = yield profile.cities().fetch()
 
-    yield response.sendView('profiles.show', { profile: profile, reviews: reviews.toJSON() })
+    // TODO: MAKE THIS AJAX
+    const allCategories = yield this.Category.all()
+    const allCities = yield this.City.all()
+
+    yield response.sendView('profiles.show', {
+      profile: profile.toJSON(),
+      reviews: reviews.toJSON(),
+      categories: categories.toJSON(),
+      cities: cities.toJSON(),
+      allCategories: allCategories.toJSON(),
+      allCities: allCities.toJSON()
+    })
   }
 
   * create (request, response) {

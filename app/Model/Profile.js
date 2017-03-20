@@ -5,7 +5,7 @@ const Lucid = use('Lucid')
 class Profile extends Lucid {
 
   categories () {
-    return this.belongsToMany('App/Model/Category', 'profile_category')
+    return this.belongsToMany('App/Model/Category', 'profile_categories')
   }
 
   cities () {
