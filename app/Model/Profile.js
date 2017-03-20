@@ -29,7 +29,7 @@ class Profile extends Lucid {
       .innerJoin('profile_categories', 'profile_categories.profile_id', 'profiles.id')
       .innerJoin('categories', 'categories.id', 'profile_categories.category_id')
       .where('categories.name', categoryQuery)
-      .select('profiles.*', 'categories.*')
+      .select('profiles.*')
   }
 
   static scopeCity (builder, cityQuery) {
@@ -37,7 +37,7 @@ class Profile extends Lucid {
       .innerJoin('profile_cities', 'profile_cities.profile_id', 'profiles.id')
       .innerJoin('cities', 'cities.id', 'profile_cities.city_id')
       .where('cities.name', cityQuery)
-      .select('profiles.*', 'cities.*')
+      .select('profiles.*')
   }
 
   static scopeSearch (builder, searchQuery) {

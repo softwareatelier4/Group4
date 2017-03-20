@@ -22,6 +22,8 @@ class ProfileController {
       .search(request.input('search'))
       .paginate(page, 25)
 
+    console.log(profiles)
+
     // TODO: MAKE THIS AJAX
     const allCategories = yield this.Category.query().has('profiles').fetch()
     const allCities = yield this.City.query().has('profiles').fetch()
