@@ -1,0 +1,74 @@
+body {
+  font-family: 'Lato', sans-serif;
+  color: #000;
+  margin-top:50px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+a{
+  color: #025aa5;
+}
+
+#searchbox{
+  height: 50px;
+  box-shadow: none;
+  float:left;
+  width:80%;
+  border-radius: 0px;
+}
+
+#searchbox::-webkit-input-placeholder{
+  font-style:italic;
+  font-size:1.2rem;
+}
+
+#search {
+  height : 50px;
+  width:20%;
+  float:left;
+  border-radius: 0px;
+}
+
+#search-form{
+  margin-top: 50px;
+}
+
+#results{
+  margin-top: 75px;
+}
+
+.result-item{
+  margin-bottom: 40px;
+  border: 3px solid;
+  border-color: #F8F8F8;
+  padding: 10px;
+  box-shadow: 1px 0px 5px #EAE7E7;
+}
+
+.result-item-title{
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 1.2rem;
+}
+
+.result-item-details{
+  margin-bottom: 1.2rem;
+}
+
+.result-item-title a{
+  color: #025aa5;
+}
+
+.result-item-title a:hover{
+  text-decoration: none;
+  color: #025aa5;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+a.badge-anchor{
+  text-decoration: none;
+}

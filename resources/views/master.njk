@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>JobAdvisor</title>
+
+
+  <link rel="icon" href="/assets/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/bootstrap@4.0.0-alpha.6/dist/css/bootstrap.css">
+  {#<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">#}
+  <link rel="stylesheet" type="text/css" href="/css/custom.css">
+  <link rel="stylesheet" type="text/css" href="/css/bars-square.css">
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <nav class="navbar navbar-toggleable-md">
+          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a class="navbar-brand" href="/"><img src="/assets/logo.png"/></a>
+
+          <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+
+              <!-- Location dropdown button SHOULD BE AJAX -->
+              <li class="dropdown nav-item">
+                <input type="text" class="dropdown-toggle form-control" placeholder="Location" aria-label="..." data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <ul class="dropdown-menu nav-item">
+                  {% block allCities %}
+                  {% for city in allCities %}
+                  <li class="nav-item"><a class="nav-link" href="/profiles?city={{ city.name }}">{{ city.name }}</a></li>
+                  {% endfor %}
+                  {% endblock %}
+                </ul>
+              </li>
+
+              <!-- Category dropdown button SHOULD BE AJAX -->
+              <li class="dropdown nav-item">
+                <input type="text" class="dropdown-toggle form-control" placeholder="Category" aria-label="..." data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <ul class="dropdown-menu nav-item">
+                  {% block allCategories %}
+                  {% for category in allCategories %}
+                  <li class="nav-item"><a class="nav-link" href="/profiles?category={{ category.name }}">{{ category.name }}</a></li>
+                  {% endfor %}
+                  {% endblock %}
+                </ul>
+              </li>
+
+              <li class="nav-item"><a class="nav-link" href="/profiles">BROWSE</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">LOGIN</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">REGISTER</a> </li>
+
+            </ul>
+          </div>
+
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  {% block content %}{% endblock %}
+
+  <script src="https://unpkg.com/jquery@3.1.1"></script>
+  <script src="https://unpkg.com/tether@1.4.0"></script>
+  <script src="https://unpkg.com/bootstrap@4.0.0-alpha.6"></script>
+  <script type="text/javascript" src="/js/jquery.barrating.min.js"></script>
+  {#<script type="text/javascript" src="/js/jquery-3.1.1.js"></script>#}
+  {#<script type="text/javascript" src="/js/bootstrap.min.js"></script>#}
+  
+  {% block javascript %}{% endblock %}
+</body>
+</html>

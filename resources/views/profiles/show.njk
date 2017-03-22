@@ -1,0 +1,205 @@
+{% extends 'master' %}
+
+{% block content %}
+<div class="container">
+	<form action="/profiles" class="mb-5" method="GET">
+		<div id="search-form" class="form-group row justify-content-center">
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="searchbox" name="search" placeholder="Plumber">
+				<button id="search" type="submit" class="btn btn-primary">Search</button>
+			</div>
+		</div>
+	</form>
+	<div class="row justify-content-center">
+		<div class="col-10 result-item">
+			<div class="row">
+				<div class="col">
+					<h1>{{ profile.title }}</h1>
+					<hr>
+				</div>
+			</div>
+			
+
+			<div class="row">
+				<div class="col-4">
+					<img src="{{ profile.logo }}" class="img-fluid" alt="{{ profile.title }} logo">
+				</div>
+				<div class="col-8">
+					<dl class="row">
+						<dt class="col-sm-3">Email</dt>
+						<dd class="col-sm-9"><a href="mailto:{{ profile.email }}">{{ profile.email }}</a></dd>
+						<dt class="col-sm-3">Telephone</dt>
+						<dd class="col-sm-9"><a href="tel:{{ profile.telephone }}">{{ profile.telephone }}</a></dd>
+						<dt class="col-sm-3">Website</dt>
+						<dd class="col-sm-9"><a href="{{ profile.website }}" target="_blank" rel="nofollow">{{ profile.website }}</a></dd>
+						<dt class="col-sm-3">Range of operation</dt>
+						<dd class="col-sm-9">
+							{% for city in cities %}
+							{{ city.name }} {% if not loop.last %}, {% endif %}
+							{% endfor %}
+						</dd>
+						<dt class="col-sm-3">Service type</dt>
+						<dd class="col-sm-9">
+							{% for category in categories %}
+							<a href="/profiles?category={{ category.name }}" class="badge-anchor">
+								<span class="badge badge-pill badge-primary">{{ category.name }}</span>
+							</a>
+							{% endfor %}
+						</dd>
+						<dt class="col-sm-3">Rate per hour</dt>
+						<dd class="col-sm-9">${{ profile.price }}</dd>
+					</dl>
+				</div>
+			</div>
+			<div class="row mt-3">
+				<div class="col-12 col-md-8">
+					<h3>About us</h3>
+					{{ profile.description }}
+				</div>
+				<div class="col-12 col-md-4">
+					<h3>Rating</h3>
+					<div class="row mt-2">
+						<div class="col">
+							<label>Vote overall</label>
+							<select id="display_overall" autocomplete="off" style="display: none;" required>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col">
+							<label>Vote price</label>
+							<select id="display_price" autocomplete="off" style="display: none;">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col">
+							<label>Vote quality</label>
+							<select id="display_quality" autocomplete="off" style="display: none;">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mt-3">
+				<div class="col">
+					<h3>Reviews</h3>
+				</div>
+			</div>
+
+			{% for review in reviews %}
+			<div class="row mt-3 mb-3 align-items-center">
+				<div class="col-2">
+					<img src="http://avatar.3sd.me/100" class="img-fluid rounded-circle">
+				</div>
+				<div class="col-10">
+					<p>{{ review.comment }}</p>
+				</div>
+			</div>
+			{% endfor %}
+
+			<div class="row">
+				<div class="col">
+					<h4>Add your review</h4>
+					{{ form.open({ action: 'ReviewController.store', params: {profiles_id: profile.id} }) }}
+					{{ csrfField }}
+					<div class="form-group">
+						<label>Message</label>
+						<textarea class="form-control" name="comment" rows="3"></textarea>
+					</div>
+					<div class="form-group row">
+						<div class="col">
+							<label>Vote overall</label>
+							<select id="overall" name="vote_overall" autocomplete="off" style="display: none;" required>
+								<option value="1" selected>1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col">
+							<label>Vote price</label> 
+							<select id="price" name="vote_price" autocomplete="off" style="display: none;" required>
+								<option value="1" selected>1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col">
+							<label>Vote quality</label>
+							<select id="quality" name="vote_quality" autocomplete="off" style="display: none;" required>
+								<option value="1" selected>1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-primary">Submit</button>
+					{{ form.close() }}
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">
+	$(function() {
+		$('#quality, #price, #overall').barrating('show', {
+			theme: 'bars-square',
+			showValues: true,
+			showSelectedRating: false,
+			initialRating: 3
+		});
+	
+		$('#display_quality').barrating('show', {
+			theme: 'bars-square',
+			showValues: true,
+			showSelectedRating: false,
+			readonly: true,
+			initialRating: {{ profile.vote_quality[0].vote_quality | round }}
+		});
+		$('#display_price').barrating('show', {
+			theme: 'bars-square',
+			showValues: true,
+			showSelectedRating: false,
+			readonly: true,
+			initialRating: {{ profile.vote_price[0].vote_price | round }}
+		});
+		$('#display_overall').barrating('show', {
+			theme: 'bars-square',
+			showValues: true,
+			showSelectedRating: false,
+			readonly: true,
+			initialRating: {{ profile.vote_overall[0].vote_overall | round }}
+		});
+	});
+</script>
+{% endblock %}
