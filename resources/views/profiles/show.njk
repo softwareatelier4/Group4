@@ -18,8 +18,6 @@
 					<hr>
 				</div>
 			</div>
-			
-
 			<div class="row">
 				<div class="col-4">
 					<img src="{{ profile.logo }}" class="img-fluid" alt="{{ profile.title }} logo">
@@ -104,11 +102,57 @@
 
 			{% for review in reviews %}
 			<div class="row mt-3 mb-3 align-items-center">
-				<div class="col-2">
-					<img src="http://avatar.3sd.me/100" class="img-fluid rounded-circle">
+				<div class="col-12">
+					<div class="row align-items-center">
+						<div class="col-1">
+							<img src="http://avatar.3sd.me/100" class="img-fluid rounded-circle">
+						</div>
+						<div class="col-10">
+							<a href="#">Username</a>
+						</div>
+					</div>
+					<hr>
 				</div>
-				<div class="col-10">
+				<div class="col-8">
 					<p>{{ review.comment }}</p>
+				</div>
+				<div class="col-4">
+					<div class="row mt-2">
+						<div class="col">
+							<label>Vote overall</label>
+							<select class="ratings" autocomplete="off" style="display: none;" >
+								<option value="1" {{ "selected" if (review.vote_price == 1) }}>1</option>
+								<option value="2" {{ "selected" if (review.vote_price == 2) }}>2</option>
+								<option value="3" {{ "selected" if (review.vote_price == 3) }}>3</option>
+								<option value="4" {{ "selected" if (review.vote_price == 4) }}>4</option>
+								<option value="5" {{ "selected" if (review.vote_price == 5) }}>5</option>
+							</select>
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col">
+							<label>Vote price</label>
+							<select class="ratings" autocomplete="off" style="display: none;">
+								<option value="1" {{ "selected" if (review.vote_price == 1) }}>1</option>
+								<option value="2" {{ "selected" if (review.vote_price == 2) }}>2</option>
+								<option value="3" {{ "selected" if (review.vote_price == 3) }}>3</option>
+								<option value="4" {{ "selected" if (review.vote_price == 4) }}>4</option>
+								<option value="5" {{ "selected" if (review.vote_price == 5) }}>5</option>
+							</select>
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col">
+							<label>Vote quality</label>
+							<select class="ratings" autocomplete="off" style="display: none;">
+								<option value="1" {{ "selected" if (review.vote_price == 1) }}>1</option>
+								<option value="2" {{ "selected" if (review.vote_price == 2) }}>2</option>
+								<option value="3" {{ "selected" if (review.vote_price == 3) }}>3</option>
+								<option value="4" {{ "selected" if (review.vote_price == 4) }}>4</option>
+								<option value="5" {{ "selected" if (review.vote_price == 5) }}>5</option>
+							</select>
+						</div>
+					</div>
 				</div>
 			</div>
 			{% endfor %}
@@ -172,13 +216,14 @@
 {% block javascript %}
 <script type="text/javascript">
 	$(function() {
+		
 		$('#quality, #price, #overall').barrating('show', {
 			theme: 'bars-square',
 			showValues: true,
 			showSelectedRating: false,
 			initialRating: 3
 		});
-	
+
 		$('#display_quality').barrating('show', {
 			theme: 'bars-square',
 			showValues: true,
@@ -198,7 +243,13 @@
 			showValues: true,
 			showSelectedRating: false,
 			readonly: true,
-			initialRating: {{ profile.vote_overall[0].vote_overall | round }}
+			initialRating: {{ profile.vote_price[0].vote_price | round }}
+		});
+		$('.ratings').barrating('show', {
+			theme: 'bars-square-small',
+			showValues: false,
+			showSelectedRating: false,
+			readonly: true,
 		});
 	});
 </script>
