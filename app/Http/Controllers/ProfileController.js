@@ -46,7 +46,8 @@ class ProfileController {
     yield response.sendView('profiles.index', {
       profiles: profiles.toJSON(),
       allCategories: allCategories.toJSON(),
-      allCities: allCities.toJSON()
+      allCities: allCities.toJSON(),
+      params : request.all()
     })
   }
 

@@ -29,7 +29,7 @@ class Profile extends Lucid {
       builder
       .innerJoin('profile_categories', 'profile_categories.profile_id', 'profiles.id')
       .innerJoin('categories', 'categories.id', 'profile_categories.category_id')
-      .where('categories.name', categoryQuery)
+      .where('profile_categories.category_id', categoryQuery)
       .select('profiles.*')
     }
   }
@@ -39,7 +39,7 @@ class Profile extends Lucid {
       builder
       .innerJoin('profile_cities', 'profile_cities.profile_id', 'profiles.id')
       .innerJoin('cities', 'cities.id', 'profile_cities.city_id')
-      .where('cities.name', cityQuery)
+      .where('profile_cities.city_id', cityQuery)
       .select('profiles.*')
     }
   }

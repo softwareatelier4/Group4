@@ -13,6 +13,7 @@
   {#<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">#}
   <link rel="stylesheet" type="text/css" href="/css/custom.css">
   <link rel="stylesheet" type="text/css" href="/css/bars-square.css">
+  <link rel="stylesheet" type="text/css" href="/css/font-icon.css">
 </head>
 <body>
   <div class="container">
@@ -27,30 +28,6 @@
           <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
             <ul class="navbar-nav">
 
-              <!-- Location dropdown button SHOULD BE AJAX -->
-              <li class="dropdown nav-item">
-                <input type="text" class="dropdown-toggle form-control" placeholder="Location" aria-label="..." data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                <ul class="dropdown-menu nav-item">
-                  {% block allCities %}
-                  {% for city in allCities %}
-                  <li class="nav-item"><a class="nav-link" href="/profiles?city={{ city.name }}">{{ city.name }}</a></li>
-                  {% endfor %}
-                  {% endblock %}
-                </ul>
-              </li>
-
-              <!-- Category dropdown button SHOULD BE AJAX -->
-              <li class="dropdown nav-item">
-                <input type="text" class="dropdown-toggle form-control" placeholder="Category" aria-label="..." data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                <ul class="dropdown-menu nav-item">
-                  {% block allCategories %}
-                  {% for category in allCategories %}
-                  <li class="nav-item"><a class="nav-link" href="/profiles?category={{ category.name }}">{{ category.name }}</a></li>
-                  {% endfor %}
-                  {% endblock %}
-                </ul>
-              </li>
-
               <li class="nav-item"><a class="nav-link" href="/profiles">BROWSE</a></li>
               <li class="nav-item"><a class="nav-link" href="#">LOGIN</a></li>
               <li class="nav-item"><a class="nav-link" href="#">REGISTER</a> </li>
@@ -62,16 +39,45 @@
       </div>
     </div>
   </div>
+<div class="container">
+{{ ciao | dump }}
+   <form action="/profiles" class="mb-5" method="GET">
+    <div id="search-form" class="form-group row justify-content-center">
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="searchbox" name="search" placeholder="Plumber" value="{{ params.search }}">
+
+        <div id="search-position" class="input-group">
+          <span class="input-group-addon icon icon-basic-geolocalize-01 ja-input-icon" id="basic-addon1"></span>
+          <select class="custom-select" name="city">
+            {% for city in allCities %}
+                <option value="{{ city.id }}" {{ "selected" if ( params.city == city.id) }}>{{ city.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div id="search-category" class="input-group">
+          <span class="input-group-addon icon icon-basic-geolocalize-01 ja-input-icon" id="basic-addon1"></span>
+          <select class="custom-select" name="category">
+            {% for category in allCategories %}
+                <option value="{{ category.id }}" {{ "selected" if ( params.category == category.id) }}>{{ category.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <button id="search" type="submit" class="btn btn-primary">Search</button>
+      </div>
+    </div>
+  </form>
+</div>
 
   {% block content %}{% endblock %}
 
   <script src="https://unpkg.com/jquery@3.1.1"></script>
   <script src="https://unpkg.com/tether@1.4.0"></script>
   <script src="https://unpkg.com/bootstrap@4.0.0-alpha.6"></script>
-  <script type="text/javascript" src="/js/jquery.barrating.min.js"></script>
+  {# <script type="text/javascript" src="/js/jquery.barrating.min.js"></script> #}
   {#<script type="text/javascript" src="/js/jquery-3.1.1.js"></script>#}
   {#<script type="text/javascript" src="/js/bootstrap.min.js"></script>#}
-  
+
   {% block javascript %}{% endblock %}
 </body>
 </html>
