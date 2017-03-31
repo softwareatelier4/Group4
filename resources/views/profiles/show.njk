@@ -11,8 +11,6 @@
 					<hr>
 				</div>
 			</div>
-
-
 			<div class="row">
 				<div class="col-4">
 					<img src="{{ profile.logo }}" class="img-fluid" alt="{{ profile.title }} logo">
@@ -34,7 +32,7 @@
 						<dt class="col-sm-3">Service type</dt>
 						<dd class="col-sm-9">
 							{% for category in categories %}
-							<a href="/profiles?category={{ category.name }}" class="badge-anchor">
+							<a href="/profiles?category={{ category.id }}" class="badge-anchor">
 								<span class="badge badge-pill badge-primary">{{ category.name }}</span>
 							</a>
 							{% endfor %}
