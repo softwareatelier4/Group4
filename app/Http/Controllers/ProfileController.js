@@ -21,10 +21,6 @@ class ProfileController {
       .search(request.input('search'))
       .paginate(page, 25)
 
-    // TODO: MAKE THIS AJAX
-    const allCategories = yield this.Category.query().has('profiles').fetch()
-    const allCities = yield this.City.query().has('profiles').fetch()
-
     const components = request.except('page')
 
     let nextPage = request.url() + '?'
@@ -44,10 +40,8 @@ class ProfileController {
     profiles.meta.previousPage = previousPage
 
     yield response.sendView('profiles.index', {
-      profiles: profiles.toJSON(),
-      allCategories: allCategories.toJSON(),
-      allCities: allCities.toJSON(),
-      params : request.all()
+      profiles: profiles.toJSON()
+
     })
   }
 
@@ -61,17 +55,11 @@ class ProfileController {
     profile.vote_price = yield profile.reviews().avg('vote_price as vote_price')
     profile.vote_overall = yield profile.reviews().avg('vote_overall as vote_overall')
 
-    // TODO: MAKE THIS AJAX
-    const allCategories = yield this.Category.query().has('profiles').fetch()
-    const allCities = yield this.City.query().has('profiles').fetch()
-
     yield response.sendView('profiles.show', {
       profile: profile.toJSON(),
       reviews: reviews.toJSON(),
       categories: categories.toJSON(),
-      cities: cities.toJSON(),
-      allCategories: allCategories.toJSON(),
-      allCities: allCities.toJSON()
+      cities: cities.toJSON()
     })
   }
 

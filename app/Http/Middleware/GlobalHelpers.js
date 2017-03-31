@@ -12,13 +12,14 @@ class GlobalHelpers {
   }
 
   * handle (request, response, next) {
-    // here goes your middleware logic
-    // yield next to pass the request to next middleware or controller
     const view = use('View')
+
     const allCategories = yield this.Category.all()
-    view.global('globals',  {
-      params : {}
-    })
+    const allCities = yield this.City.all()
+    view.global('allCategories', allCategories.toJSON())
+    view.global('allCities', allCities.toJSON())
+    view.global('request', request.all())
+
     yield next
   }
 

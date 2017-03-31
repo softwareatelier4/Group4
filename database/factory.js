@@ -33,7 +33,9 @@ Factory.blueprint('App/Model/Profile', (fake) => {
     website: faker.internet.url(),
     telephone: faker.phone.phoneNumber(),
     price: faker.commerce.price(),
-    logo: faker.image.business()
+    logo: faker.image.business(),
+    lat: faker.address.latitude(),
+    long: faker.address.longitude()
   }
 })
 
@@ -71,6 +73,6 @@ Factory.blueprint('App/Model/ProfileCity', () => {
     ) + 1,
     city_id: Math.floor(
       Math.random() * Factory.citiesNumber
-    ) + 1,
+    ) + 1
   }
 })

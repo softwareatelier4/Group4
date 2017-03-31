@@ -30,7 +30,9 @@
     "istanbul": "^0.4.5",
     "mocha-jenkins-reporter": "^0.3.6",
     "standard": "^8.6.0",
-    "youch": "^2.0.4"
+    "youch": "^2.0.4",
+    "geoip-lite": "^1.2.0",
+    "geolib": "^2.0.22"
   },
   "standard": {
     "ignore": [

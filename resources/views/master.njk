@@ -39,18 +39,18 @@
       </div>
     </div>
   </div>
+
 <div class="container">
-{{ ciao | dump }}
    <form action="/profiles" class="mb-5" method="GET">
     <div id="search-form" class="form-group row justify-content-center">
       <div class="col-sm-10">
-        <input type="text" class="form-control" id="searchbox" name="search" placeholder="Plumber" value="{{ params.search }}">
+        <input type="text" class="form-control" id="searchbox" name="search" placeholder="Plumber" value="{{ request.search }}">
 
         <div id="search-position" class="input-group">
           <span class="input-group-addon icon icon-basic-geolocalize-01 ja-input-icon" id="basic-addon1"></span>
           <select class="custom-select" name="city">
             {% for city in allCities %}
-                <option value="{{ city.id }}" {{ "selected" if ( params.city == city.id) }}>{{ city.name }}</option>
+                <option value="{{ city.id }}" {{ "selected" if ( request.city == city.id) }}>{{ city.name }}</option>
             {% endfor %}
           </select>
         </div>
@@ -58,7 +58,7 @@
           <span class="input-group-addon icon icon-basic-geolocalize-01 ja-input-icon" id="basic-addon1"></span>
           <select class="custom-select" name="category">
             {% for category in allCategories %}
-                <option value="{{ category.id }}" {{ "selected" if ( params.category == category.id) }}>{{ category.name }}</option>
+                <option value="{{ category.id }}" {{ "selected" if ( request.category == category.id) }}>{{ category.name }}</option>
             {% endfor %}
           </select>
         </div>
