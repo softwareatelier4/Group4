@@ -44,8 +44,8 @@ describe('ProfileController', function () {
     })
   })
 
-  describe('index:view searching for a freelance', function() {
-    before(function(done) {
+  describe('index:view searching for a freelance', function () {
+    before(function (done) {
       browser
         .fill('#searchbox', 'LLC')
         .pressButton('#search', done)
@@ -53,10 +53,9 @@ describe('ProfileController', function () {
 
     it('should be successeful', function () {
       browser.assert.success()
-
     })
     it('shuould contain the searchbox with the kewyord', function () {
-      browser.assert.text('#searchbox', 'LLC')
+      browser.assert.attribute('#searchbox', 'value', 'LLC')
     })
   })
 })

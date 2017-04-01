@@ -1,5 +1,4 @@
 'use strict'
-const Database = use('Database')
 
 class ProfileController {
 
@@ -18,10 +17,11 @@ class ProfileController {
 
     const profiles = yield this.Profile
       .query()
+      .inRange(3000, 'Lugano')
       .city(request.input('city'))
       .category(request.input('category'))
       .search(request.input('search'))
-      .inRange(30, request.ip())
+
       .paginate(page, 25)
 
     const components = request.except('page')

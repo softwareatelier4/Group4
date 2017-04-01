@@ -3,6 +3,7 @@
 const Lucid = use('Lucid')
 const Database = use('Database')
 const geoip = use('geoip-lite')
+const NodeGeocoder = require('node-geocoder')
 
 class Profile extends Lucid {
 
@@ -60,16 +61,25 @@ class Profile extends Lucid {
       }
     }
   }
-  static scopeInRange (builder, maxDistance, ip) {
-    ip = (ip === '127.0.0.1') ? '84.72.13.20' : ip
-    const userLocation = geoip.lookup(ip)
-    const lat = userLocation.ll[0]
-    const long = userLocation.ll[1]
-    if (maxDistance) {
-      builder.select(Database.raw('*, (6371 * acos (  cos ( radians(?) )    * cos( radians( lat ) )  * cos( radians( lng ) - radians(?) )   + sin ( radians(?) ) * sin( radians( lat ) ))) AS distance', [lat, long, lat]))
-      .groupBy('distance')
-      .having('distance', '<', maxDistance)
+  static scopeInRange (builder, maxDistance, address) {
+    var options = {
+      provider: 'google',
+      httpAdapter: 'https',
+      formatter: null
     }
+
+    var geocoder = NodeGeocoder(options)
+
+    geocoder.geocode(address).then(function (res) {
+      const lat = res[0].latitude
+      const long = res[0].longitude
+      console.log(long)
+      if (maxDistance) {
+        builder.select(Database.raw('*, (6371 * acos (  cos ( radians(?) )    * cos( radians( lat ) )  * cos( radians( lng ) - radians(?) )   + sin ( radians(?) ) * sin( radians( lat ) ))) AS distance', [lat, long, lat]))
+        .groupBy('distance')
+        .having('distance', '<', maxDistance)
+      }
+    })
   }
 }
 

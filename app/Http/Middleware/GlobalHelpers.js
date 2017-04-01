@@ -18,8 +18,10 @@ class GlobalHelpers {
     const allCities = yield this.City.all()
     view.global('allCategories', allCategories.toJSON())
     view.global('allCities', allCities.toJSON())
-    view.global('request', request.all())
 
+    response.viewInstance = use('View')
+    response.viewInstance.global('request', request.all())
+    console.log(response)
     yield next
   }
 

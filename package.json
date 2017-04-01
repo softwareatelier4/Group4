@@ -32,7 +32,8 @@
     "standard": "^8.6.0",
     "youch": "^2.0.4",
     "geoip-lite": "^1.2.0",
-    "geolib": "^2.0.22"
+    "geolib": "^2.0.22",
+    "node-geocoder": "^3.16.0"
   },
   "standard": {
     "ignore": [
