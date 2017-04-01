@@ -29,11 +29,13 @@ Factory.blueprint('App/Model/Profile', (fake) => {
   return {
     title: faker.company.companyName(),
     description: faker.lorem.paragraph(),
-    email: faker.internet.email(),
     website: faker.internet.url(),
     telephone: faker.phone.phoneNumber(),
     price: faker.commerce.price(),
-    logo: faker.image.business()
+    logo: faker.image.business(),
+    user_id: Math.floor(
+      Math.random() * Factory.usersNumber
+    ) + 1
   }
 })
 
@@ -72,5 +74,16 @@ Factory.blueprint('App/Model/ProfileCity', () => {
     city_id: Math.floor(
       Math.random() * Factory.citiesNumber
     ) + 1,
+  }
+})
+
+Factory.usersNumber = 3000
+
+Factory.blueprint('App/Model/User', () => {
+  return {
+    email: faker.internet.email(),
+    password: faker.internet.password(),
+    type: 'user',
+    name: faker.internet.userName()
   }
 })
