@@ -17,11 +17,9 @@ class ProfileController {
 
     const profiles = yield this.Profile
       .query()
-      .inRange(3000, 'Lugano')
-      .city(request.input('city'))
+      .inRange(3000, request.input('location'))
       .category(request.input('category'))
       .search(request.input('search'))
-
       .paginate(page, 25)
 
     const components = request.except('page')

@@ -28,7 +28,7 @@ class Profile extends Lucid {
   */
 
   static scopeCategory (builder, categoryQuery) {
-    if (categoryQuery) {
+    if (categoryQuery && categoryQuery != 0) {
       builder
       .innerJoin('profile_categories', 'profile_categories.profile_id', 'profiles.id')
       .innerJoin('categories', 'categories.id', 'profile_categories.category_id')
@@ -49,9 +49,9 @@ class Profile extends Lucid {
 
   static scopeSearch (builder, searchQuery) {
     if (searchQuery) {
-      var keywords = searchQuery.split(' ')
+      let keywords = searchQuery.split(' ')
 
-      for (var i = 0; i < keywords.length; i++) {
+      for (let i = 0; i < keywords.length; i++) {
         const key = keywords[i]
         builder.where(function () {
           this.orWhere('title', 'like', `%${key}%`)
@@ -62,24 +62,23 @@ class Profile extends Lucid {
     }
   }
   static scopeInRange (builder, maxDistance, address) {
-    var options = {
+    let options = {
       provider: 'google',
       httpAdapter: 'https',
       formatter: null
     }
 
-    var geocoder = NodeGeocoder(options)
+    let geocoder = NodeGeocoder(options)
 
-    geocoder.geocode(address).then(function (res) {
+    geocoder.geocode(address, function (err, res) {
       const lat = res[0].latitude
       const long = res[0].longitude
-      console.log(long)
-      if (maxDistance) {
-        builder.select(Database.raw('*, (6371 * acos (  cos ( radians(?) )    * cos( radians( lat ) )  * cos( radians( lng ) - radians(?) )   + sin ( radians(?) ) * sin( radians( lat ) ))) AS distance', [lat, long, lat]))
-        .groupBy('distance')
-        .having('distance', '<', maxDistance)
-      }
+      builder.select(Database.raw('*, (6371 * acos (  cos ( radians(?) )    * cos( radians( lat ) )  * cos( radians( lng ) - radians(?) )   + sin ( radians(?) ) * sin( radians( lat ) ))) AS distance', [lat, long, lat]))
+      .groupBy('distance')
+      .having('distance', '<', maxDistance)
     })
+
+    return builder
   }
 }
 

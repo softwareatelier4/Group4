@@ -48,6 +48,7 @@
         </div>
         <div id="search-category" class="input-group">
           <select class="custom-select" name="category">
+          <option value="0" {{ "selected" if ( request.category == 0) }}>All categories</option>
             {% for category in allCategories %}
                 <option value="{{ category.id }}" {{ "selected" if ( request.category == category.id) }}>{{ category.name }}</option>
             {% endfor %}
