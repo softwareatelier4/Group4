@@ -1,4 +1,5 @@
 'use strict'
+const Database = use('Database')
 
 class ProfileController {
 
@@ -14,11 +15,13 @@ class ProfileController {
 
   * index (request, response) {
     const page = request.input('page') || 1
+
     const profiles = yield this.Profile
       .query()
       .city(request.input('city'))
       .category(request.input('category'))
       .search(request.input('search'))
+      .inRange(30, request.ip())
       .paginate(page, 25)
 
     const components = request.except('page')
@@ -34,7 +37,7 @@ class ProfileController {
     }
 
     nextPage = `${nextPage}&page=${parseInt(page) + 1}`
-    previousPage = `${previousPage}&page=${parseInt(page) == 1 ? (parseInt(page) + 2) : (parseInt(page) - 1)}`
+    previousPage = `${previousPage}&page=${parseInt(page) === 1 ? (parseInt(page) + 2) : (parseInt(page) - 1)}`
 
     profiles.meta.nextPage = nextPage
     profiles.meta.previousPage = previousPage

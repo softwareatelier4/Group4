@@ -1,6 +1,8 @@
 'use strict'
 
 const Lucid = use('Lucid')
+const Database = use('Database')
+const geoip = use('geoip-lite')
 
 class Profile extends Lucid {
 
@@ -52,10 +54,21 @@ class Profile extends Lucid {
         const key = keywords[i]
         builder.where(function () {
           this.orWhere('title', 'like', `%${key}%`)
-        .orWhere('description', 'like', `%${key}%`)
-        .orWhere('website', 'like', `%${key}%`)
+          .orWhere('description', 'like', `%${key}%`)
+          .orWhere('website', 'like', `%${key}%`)
         })
       }
+    }
+  }
+  static scopeInRange (builder, maxDistance, ip) {
+    ip = (ip === '127.0.0.1') ? '84.72.13.20' : ip
+    const userLocation = geoip.lookup(ip)
+    const lat = userLocation.ll[0]
+    const long = userLocation.ll[1]
+    if (maxDistance) {
+      builder.select(Database.raw('*, (6371 * acos (  cos ( radians(?) )    * cos( radians( lat ) )  * cos( radians( lng ) - radians(?) )   + sin ( radians(?) ) * sin( radians( lat ) ))) AS distance', [lat, long, lat]))
+      .groupBy('distance')
+      .having('distance', '<', maxDistance)
     }
   }
 }

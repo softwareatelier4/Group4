@@ -1,6 +1,7 @@
 {% extends 'master' %}
 
 {% block content %}
+
 <div class="container">
 
   <div class="row justify-content-center">
@@ -12,9 +13,10 @@
         </div>
         <div class="col-md-8">
           <div class="row">
-            <div class="col-12 result-item-title">
+            <div class="col-8 result-item-title">
               <a href="/profiles/{{ profile.id }}">{{ profile.title }}</a>
             </div>
+            <div class="col-4 text-right"> {{ profile.distance | round }} km</a></div>
           </div>
           <div class="row result-item-detail">
             <div class="col"><a href="{{profile.website}}"> {{ profile.website }} </a></div>
