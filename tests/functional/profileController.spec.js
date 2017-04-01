@@ -36,7 +36,7 @@ describe('ProfileController', function () {
     })
 
     it('should contain a select input for city', function () {
-      browser.assert.element('#search-position select')
+      browser.assert.element('#search-position input')
     })
 
     it('should contain a select input for category', function () {
