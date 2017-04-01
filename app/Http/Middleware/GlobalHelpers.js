@@ -21,7 +21,6 @@ class GlobalHelpers {
 
     response.viewInstance = use('View')
     response.viewInstance.global('request', request.all())
-    console.log(response)
     yield next
   }
 
