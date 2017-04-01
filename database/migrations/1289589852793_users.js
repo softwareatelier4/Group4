@@ -9,7 +9,7 @@ class UsersTableSchema extends Schema {
       table.increments('id').primary()
       table.string('email')
       table.string('password')
-
+      table.enu('type', ['worker', 'user'])
       table.string('name').defaultTo('Anonymous')
     })
   }
