@@ -15,7 +15,7 @@ class UsersController {
 
     const email = request.input('email')
     const password = request.input('password')
-    const login = yield request.auth.loginViaId(1)
+    const login = yield request.auth.attempt(email, password)
 
     if (login) {
       yield response.sendView('index')
