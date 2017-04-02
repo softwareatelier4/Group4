@@ -1,5 +1,5 @@
 'use strict'
-
+const NodeGeocoder = require('node-geocoder')
 class ProfileController {
 
   static get inject () {
@@ -15,12 +15,21 @@ class ProfileController {
   * index (request, response) {
     const page = request.input('page') || 1
 
+    let options = {
+      provider: 'google',
+      httpAdapter: 'https',
+      formatter: null
+    }
+
+    let geocoder = NodeGeocoder(options)
+    const res = yield geocoder.geocode('Lugano')
+
     const profiles = yield this.Profile
-      .query()
-      .inRange(3000, request.input('location'))
-      .category(request.input('category'))
-      .search(request.input('search'))
-      .paginate(page, 25)
+        .query()
+        .inRange(3000, res)
+        .category(request.input('category'))
+        .search(request.input('search'))
+        .paginate(page, 25)
 
     const components = request.except('page')
 
@@ -42,8 +51,9 @@ class ProfileController {
 
     yield response.sendView('profiles.index', {
       profiles: profiles.toJSON()
-
     })
+
+
   }
 
   * show (request, response) {
