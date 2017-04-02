@@ -1,0 +1,37 @@
+{% extends 'master' %}
+
+{% block content %}
+
+
+{{ form.open({action: 'UsersController.store'}) }}
+
+  {{ csrfField }}
+
+  <div class="field">
+    {{ form.label('name', 'Choose a name') }}
+    {{ form.text('name') }}
+  </div>
+
+  <div class="field">
+    {{ form.label('email', 'Enter email address') }}
+    {{ form.text('email') }}
+  </div>
+
+  <div class="field">
+    {{ form.label('password', 'Choose a strong password') }}
+    {{ form.password('password') }}
+  </div>
+
+  <div class="field">
+    {{ form.label('type', 'Choose a profile type') }}
+    {{ form.select('type',['worker','user']) }}
+  </div>
+
+  <div class="butt  on">
+    {{ form.submit('Register') }}
+  </div>
+
+{{ form.close() }}
+
+
+{% endblock %}
