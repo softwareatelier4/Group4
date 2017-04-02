@@ -27,6 +27,8 @@
           <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
             <ul class="navbar-nav">
 
+              <li class="nav-item"><a class="nav-link" href="/profiles">BROWSE</a></li>
+
               <!-- Location dropdown button SHOULD BE AJAX -->
               <li class="dropdown nav-item">
                 <input type="text" class="dropdown-toggle form-control" placeholder="Location" aria-label="..." data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -51,38 +53,38 @@
                 </ul>
               </li>
 
-              <li class="nav-item"><a class="nav-link" href="/profiles">BROWSE</a></li>
-
-              <!-- LOGIN -->
-              {#<li class="nav-item"><a class="nav-link" href="#">LOGIN</a></li>#}
-              <li class="dropdown nav-item">
-
-                <button class="dropdown-toggle nav-item" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  Login
-                  <span class="caret"></span>
-                </button>
-
-                <ul class="dropdown-menu nav-item">
-                  {{ form.open({action: 'UsersController.index'}) }}
-                  {{ csrfField }}
-                  <li class="nav-item">
-                    {{ form.label('username', 'Username') }}
-                    {{ form.text('email') }}
-                  </li>
-                  <li class="nav-item">
-                    {{ form.label('password', 'Password') }}
-                    {{ form.password('password') }}
-                  </li>
-                  <li class="nav-item">
-                    {{ form.submit('Login') }}
-                  </li>
-                  {{ form.close() }}
-                </ul>
-
-              </li>
-
-              <li class="nav-item"><a class="nav-link" href="/users/create">REGISTER</a> </li>
-
+              <!-- LOGIN / LOGOUT -->
+              {% if currentUser %}
+                <li class="nav-item"><a class="nav-link" href="/users">LOGOUT</a></li>
+              {% else %}
+                <li class="dropdown">
+                  {#<a class="nav-link form-control" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">ACCOUNT</a>#}
+                  <button class="btn form-control" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    ACCOUNT
+                  </button>
+                  <ul class="dropdown-menu">
+                    {{ form.open({action: 'UsersController.index'}) }}
+                    {{ csrfField }}
+                    <li class="nav-link">
+                      {{ form.label('username', 'Username') }}
+                      {{ form.text('email') }}
+                    </li>
+                    <li class="nav-link">
+                      {{ form.label('password', 'Password') }}
+                      {{ form.password('password') }}
+                    </li>
+                    <li class="nav-link">
+                      {{ form.submit('Login') }}
+                    </li>
+                    {{ form.close() }}
+                    {{ form.open({action: 'UsersController.create'}) }}
+                    <li class="nav-link">
+                      {{ form.submit('Register') }}
+                    </li>
+                    {{ form.close() }}
+                  </ul>
+                </li>
+              {% endif %}
 
             </ul>
           </div>

@@ -11,18 +11,24 @@ class UsersController {
   }
 
   * index(request, response) {
-    //Return the current user
+    // Login and logout
 
-    const email = request.input('email')
-    const password = request.input('password')
-    const login = yield request.auth.attempt(email, password)
-
-    if (login) {
+    if (request.currentUser) {
+      yield request.auth.logout()
       yield response.sendView('index')
       return
     }
 
-    response.unauthorized('Invalid credentails')
+    const email = request.input('email')
+    const password = request.input('password')
+
+    try { yield request.auth.attempt(email, password) }
+    catch (e) {
+      response.unauthorized('Invalid credentails')
+      return
+    }
+
+    yield response.sendView('index')
   }
 
   * create(request, response) {
