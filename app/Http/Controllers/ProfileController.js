@@ -1,5 +1,7 @@
 'use strict'
 const NodeGeocoder = require('node-geocoder')
+const geoip = use('geoip-lite')
+
 class ProfileController {
 
   static get inject () {
@@ -22,14 +24,22 @@ class ProfileController {
     }
 
     let geocoder = NodeGeocoder(options)
-    const res = yield geocoder.geocode('Lugano')
+    let userLocation
+    if (!request.input('location')) {
+      const ip = (request.ip() === '127.0.0.1') ? '84.72.13.20' : request.ip()
+      userLocation = geoip.lookup(ip).city
+    } else {
+      userLocation = request.input('location')
+    }
+
+    const res = yield geocoder.geocode(userLocation)
 
     const profiles = yield this.Profile
-        .query()
-        .inRange(3000, res)
-        .category(request.input('category'))
-        .search(request.input('search'))
-        .paginate(page, 25)
+    .query()
+    .inRange(3000, res)
+    .category(request.input('category'))
+    .search(request.input('search'))
+    .paginate(page, 25)
 
     const components = request.except('page')
 
@@ -52,8 +62,6 @@ class ProfileController {
     yield response.sendView('profiles.index', {
       profiles: profiles.toJSON()
     })
-
-
   }
 
   * show (request, response) {

@@ -1,7 +1,6 @@
 'use strict'
 
 const geoip = use('geoip-lite') // npm module
-const geolib = use('geolib') // npm module
 
 class CountryDetector {
 
