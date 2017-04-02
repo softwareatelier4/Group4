@@ -14,80 +14,74 @@
   <link rel="stylesheet" type="text/css" href="/css/home.css">
 </head>
 <body>
-<div class="container">
-  <div class="row">
-    <div class="col-12">
-      <nav class="navbar navbar-toggleable-md navbar-inverse">
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand" href="#"><img src="/assets/logo.png" width=""/></a>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <nav class="navbar navbar-toggleable-md navbar-inverse">
+          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a class="navbar-brand" href="#"><img src="/assets/logo.png" width=""/></a>
 
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-          <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link" href="/profiles">BROWSE</a></li>
-            <!-- LOGIN / LOGOUT -->
-            {% if currentUser %}
-              <li class="nav-item"><a class="nav-link" href="/users">LOGOUT</a></li>
-            {% else %}
-              <li class="dropdown">
-                {#<a class="nav-link form-control" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">ACCOUNT</a>#}
-                <button class="btn form-control" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  ACCOUNT
-                </button>
-                <ul class="dropdown-menu">
-                  {{ form.open({action: 'UsersController.index'}) }}
-                  {{ csrfField }}
-                  <li class="nav-link">
-                    {{ form.label('username', 'Username') }}
-                    {{ form.text('email') }}
-                  </li>
-                  <li class="nav-link">
-                    {{ form.label('password', 'Password') }}
-                    {{ form.password('password') }}
-                  </li>
-                  <li class="nav-link">
-                    {{ form.submit('Login') }}
-                  </li>
-                  {{ form.close() }}
-                  {{ form.open({action: 'UsersController.create'}) }}
-                  <li class="nav-link">
-                    {{ form.submit('Register') }}
-                  </li>
-                  {{ form.close() }}
-                </ul>
-              </li>
-            {% endif %}
-          </ul>
+          <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item"><a class="nav-link" href="/profiles">BROWSE</a></li>
 
-        </div>
-      </nav>
-    </div>
-  </div>
-</div>
+              <!-- LOGIN / LOGOUT -->
+              {% if currentUser %}
+                <li class="nav-item"><a class="nav-link" href="/users">LOGOUT</a></li>
+              {% else %}
 
-<div class="center container">
-  <form action="/profiles" method="GET">
-    <div class="form-group row justify-content-center">
-      <div class=" col-sm-10">
-        <input type="text" class="form-control" id="searchbox" name="search" placeholder="Plumber">
-        <button id="search" type="submit" class="btn btn-primary">Search</button>
+                <li class="dropdown">
+                  {#<a class="nav-link form-control" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">ACCOUNT</a>#}
+                  <button class="btn form-control" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    ACCOUNT
+                  </button>
+                  <ul class="dropdown-menu">
+                    {{ form.open({action: 'UsersController.index'}) }}
+                    {{ csrfField }}
+                    <li class="nav-link">
+                      {{ form.label('username', 'Username') }}
+                      {{ form.text('email') }}
+                    </li>
+                    <li class="nav-link">
+                      {{ form.label('password', 'Password') }}
+                      {{ form.password('password') }}
+                    </li>
+                    <li class="nav-link">
+                      {{ form.submit('Login') }}
+                    </li>
+                    {{ form.close() }}
+                  </ul>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="/users/create">REGISTER</a></li>
+              {% endif %}
+
+
+            </ul>
+
+          </div>
+        </nav>
       </div>
     </div>
-  </form>
-</div>
+  </div>
 
-<script src="https://unpkg.com/jquery@3.1.1"></script>
-<script src="https://unpkg.com/tether@1.4.0"></script>
-<script src="https://unpkg.com/bootstrap@4.0.0-alpha.6"></script>
-{#<script type="text/javascript" src="/js/jquery-3.1.1.js"></script>#}
-{#<script type="text/javascript" src="/js/bootstrap.min.js"></script>#}
+  <div class="center container">
+    <form action="/profiles" method="GET">
+      <div class="form-group row justify-content-center">
+        <div class=" col-sm-10">
+        <input type="text" class="form-control" id="searchbox" name="search" placeholder="Plumber">
+          <button id="search" type="submit" class="btn btn-primary">Search</button>
+        </div>
+      </div>
+    </form>
+  </div>
 
-<script>
-  $(document).ready(function(){
-    $('[data-toggle="popover"]').popover();
-  });
-</script>
+  <script src="https://unpkg.com/jquery@3.1.1"></script>
+  <script src="https://unpkg.com/tether@1.4.0"></script>
+  <script src="https://unpkg.com/bootstrap@4.0.0-alpha.6"></script>
+  {#<script type="text/javascript" src="/js/jquery-3.1.1.js"></script>#}
+  {#<script type="text/javascript" src="/js/bootstrap.min.js"></script>#}
 
 </body>
 </html>
