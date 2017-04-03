@@ -103,19 +103,19 @@ class ProfileController {
 
      const validation = yield Validator.validate(profileData, rules)
 
-      if (validation.fails()) {
-
-        response.json(validation.messages())
-        return
-        yield request
-
-          .withonly('id', 'title', 'description')
-          .andwith({ errors: validation.messages()})
-          .flash()
-
-        response.redirect('back')
-        return
-      }
+      // if (validation.fails()) {
+      //
+      //   response.json(validation.messages())
+      //   return
+      //   yield request
+      //
+      //     .withonly('id', 'title', 'description')
+      //     .andwith({ errors: validation.messages()})
+      //     .flash()
+      //
+      //   response.redirect('back')
+      //   return
+      // }
       yield Profile.create(profileData)
       response.redirect('/')
   }
@@ -132,7 +132,7 @@ class ProfileController {
     const profileId = request.param('id')
     const profile = yield Profile.findOrFail('profileId')
 
-    
+
     const fileName = `${new Date().getTime()}.${logo.extension()}`
     yield logo.move(Helpers.storagePath(), fileName)
 
