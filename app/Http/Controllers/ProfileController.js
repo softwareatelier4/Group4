@@ -98,7 +98,7 @@ class ProfileController {
         id: 'required',
         title: 'required',
         description: 'required'
-       
+
       }
 
      const validation = yield Validator.validate(profileData, rules)
@@ -127,19 +127,19 @@ class ProfileController {
   * upload (request, response) {
     const logo = request.file('logo', {
       maxSize: '2mb',
-      alowedExtensions: ['jpg', 'png', 'jpeg'] 
+      alowedExtensions: ['jpg', 'png', 'jpeg']
     })
     const profileId = request.param('id')
     const profile = yield Profile.findOrFail('profileId')
 
-    const fileName = `provaa.${logo.extension()}`
+    
     const fileName = `${new Date().getTime()}.${logo.extension()}`
     yield logo.move(Helpers.storagePath(), fileName)
 
     if (!logo.moved()) {
       response.badRequest(logo.errors())
       return
-    } 
+    }
     Profile.logo = logo.uploadPath()
     yield Profile.save()
     response.ok('Logo uploaded succesfully!')
