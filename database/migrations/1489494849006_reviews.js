@@ -16,7 +16,7 @@ class ReviewsTableSchema extends Schema {
       table.foreign('profile_id').references('profiles.id').onDelete('cascade')
 
       table.integer('user_id').unsigned()
-      table.foreign('user_id').references('users.id').onDelete('set null')
+      table.foreign('user_id').references('user_accounts.id').onDelete('set null')
 
       table.timestamps()
     })
