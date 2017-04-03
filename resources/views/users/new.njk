@@ -1,0 +1,42 @@
+{% extends 'master' %}
+
+{% block content %}
+
+
+{{ form.open({action: 'UsersController.store'}) }}
+
+  {{ csrfField }}
+
+  <div class="register-form">
+
+  <div class="field register-item">
+    {{ form.label('name', 'Choose a name') }}
+    {{ form.text('name') }}
+  </div>
+
+  <div class="field register-item">
+    {{ form.label('email', 'Enter email address') }}
+    {{ form.text('email') }}
+  </div>
+
+  <div class="field register-item">
+    {{ form.label('password', 'Choose a strong password') }}
+    {{ form.password('password') }}
+  </div>
+
+  <div class="field register-item">
+    {{ form.label('type', 'Choose a profile type') }}
+    {{ form.select('type', ['worker','user'], { class: 'register-select' }) }}
+  </div>
+
+  <div class="button register-button">
+    {{ form.submit('Register', 'register', { class: 'btn btn-primary btn-block' }) }}
+
+    <input class="btn btn-primary btn-block" type="reset" value="Reset"></input>
+  </div>
+  </div>
+
+{{ form.close() }}
+
+
+{% endblock %}

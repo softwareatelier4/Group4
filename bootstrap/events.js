@@ -12,7 +12,7 @@
 | Listeners are saved in app/Listeners directory.
 |
 | @example
-| Event.when('login', 'User.login')
+| Event.when('login', 'UserAccount.login')
 |
 */
 const Event = use('Event')
