@@ -79,7 +79,7 @@ Factory.blueprint('App/Model/ProfileCity', () => {
 
 Factory.usersNumber = 3000
 
-Factory.blueprint('App/Model/User', () => {
+Factory.blueprint('App/Model/UserAccount', () => {
   return {
     email: faker.internet.email(),
     password: faker.internet.password(),

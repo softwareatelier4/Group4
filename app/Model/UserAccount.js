@@ -3,7 +3,7 @@
 const Lucid = use('Lucid')
 const Hash = use('Hash')
 
-class User extends Lucid {
+class UserAccount extends Lucid {
 
   static boot () {
     super.boot()
@@ -26,4 +26,4 @@ class User extends Lucid {
 
 }
 
-module.exports = User
+module.exports = UserAccount

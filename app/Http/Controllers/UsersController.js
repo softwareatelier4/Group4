@@ -3,7 +3,7 @@
 class UsersController {
 
   static get inject () {
-    return ['App/Model/User']
+    return ['App/Model/UserAccount']
   }
 
   constructor (User) {

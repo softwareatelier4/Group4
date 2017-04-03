@@ -18,7 +18,7 @@ class DatabaseSeeder {
 
   * run () {
     yield Factory.model('App/Model/Category').create(Factory.categoriesNumber)
-    yield Factory.model('App/Model/User').create(Factory.usersNumber)
+    yield Factory.model('App/Model/UserAccount').create(Factory.usersNumber)
     yield Factory.model('App/Model/Profile').create(Factory.profilesNumber)
     yield Factory.model('App/Model/City').create(Factory.citiesNumber)
     yield Factory.model('App/Model/ProfileCategory').create(Factory.profilesNumber)
