@@ -57,35 +57,35 @@
               {% if currentUser %}
                 <li class="nav-item"><a class="nav-link" href="/users">LOGOUT</a></li>
               {% else %}
+
                 <li class="dropdown">
-                  {#<a class="nav-link form-control" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">ACCOUNT</a>#}
-                  <button class="btn form-control" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  {#<a class="nav-item form-control" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">ACCOUNT</a>#}
+                  <button class="btn form-control nav-link account-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     ACCOUNT
                   </button>
-                  <ul class="dropdown-menu">
+                  <ul class="dropdown-menu login-dropdown">
                     {{ form.open({action: 'UsersController.index'}) }}
                     {{ csrfField }}
-                    <li class="nav-link">
+                    <li class="nav-link login-item">
                       {{ form.label('username', 'Username') }}
                       {{ form.text('email') }}
                     </li>
-                    <li class="nav-link">
+                    <li class="nav-link login-item">
                       {{ form.label('password', 'Password') }}
                       {{ form.password('password') }}
                     </li>
-                    <li class="nav-link">
-                      {{ form.submit('Login') }}
+                    <li class="nav-link login-item">
+                      {{ form.submit('Login', 'login', { class: 'btn btn-primary btn-block' }) }}
                     </li>
                     {{ form.close() }}
                     {{ form.open({action: 'UsersController.create'}) }}
                     <li class="nav-link">
-                      {{ form.submit('Register') }}
+                      {{ form.submit('Register', 'register', { class: 'btn btn-primary btn-block' }) }}
                     </li>
                     {{ form.close() }}
                   </ul>
                 </li>
               {% endif %}
-
             </ul>
           </div>
 
