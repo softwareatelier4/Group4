@@ -1,0 +1,61 @@
+{% extends 'master' %}
+
+{% block content %}
+<div class="container">
+  {% if old('errors') %}
+  <div class="alert alert-danger">
+    {% for error in old('errors') %}
+      <li> {{ error.message }} </li>
+    {% endfor %}
+  </div>
+{% endif %}
+  {{ form.open({action: 'ProfileController.store', files: true}) }}
+
+    {{ csrfField }}
+
+    <fieldset class="form-group">
+      {{ form.label('Profile Id') }}
+      {{ form.text('id', null, { class: 'form-control' }) }}
+    </fieldset>
+
+    <fieldset class="form-group">
+      {{ form.label('Title') }}
+      {{ form.text('title', null, { class: 'form-control' }) }}
+    </fieldset>
+
+    <fieldset class="form-group">
+      {{ form.label('Description') }}
+      {{ form.textarea('content', null, { class: 'form-control' }) }}
+    </fieldset>
+
+
+     <fieldset class="form-group">
+      {{ form.label('E-mail') }}
+      {{ form.textarea('email', null, { class: 'form-control' }) }}
+    </fieldset>
+
+     <fieldset class="form-group">
+      {{ form.label('Website') }}
+      {{ form.textarea('website', null, { class: 'form-control' }) }}
+    </fieldset>
+
+     <fieldset class="form-group">
+      {{ form.label('Telephone') }}
+      {{ form.textarea('telephone', null, { class: 'form-control' }) }}
+    </fieldset>
+
+     <fieldset class="form-group">
+      {{ form.label('Price') }}
+      {{ form.textarea('price', null, { class: 'form-control' }) }}
+    </fieldset>
+
+     <fieldset class="form-group">
+      {{ form.file('logo') }}
+     
+    </fieldset>
+
+    {{ form.submit('Publish', 'publish', { class: 'btn btn-primary btn-block' }) }}
+
+  {{ form.close() }}
+  </div>
+{% endblock %}
