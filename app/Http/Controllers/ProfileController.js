@@ -1,5 +1,9 @@
 'use strict'
 
+const Validator = use('Validator')
+const Profile = use('App/Model/Profile')
+const Helpers = use('Helpers')
+
 class ProfileController {
 
   static get inject () {
@@ -75,7 +79,7 @@ class ProfileController {
   }
 
   * create (request, response) {
-
+    yield response.sendView('profiles.create')
   }
 
   * edit (request, response) {
@@ -87,12 +91,58 @@ class ProfileController {
 
   }
 
-  * store (request, response) {
+  * store (request, response){
+      const profileData = request.only('id', 'title', 'description', 'logo')
 
+      const rules = {
+        id: 'required',
+        title: 'required',
+        description: 'required'
+       
+      }
+
+     const validation = yield Validator.validate(profileData, rules)
+
+      if (validation.fails()) {
+
+        response.json(validation.messages())
+        return
+        yield request
+
+          .withonly('id', 'title', 'description')
+          .andwith({ errors: validation.messages()})
+          .flash()
+
+        response.redirect('back')
+        return
+      }
+      yield Profile.create(profileData)
+      response.redirect('/')
   }
 
   * destroy (request, response) {
 
+  }
+
+  * upload (request, response) {
+    const logo = request.file('logo', {
+      maxSize: '2mb',
+      alowedExtensions: ['jpg', 'png', 'jpeg'] 
+    })
+    const profileId = request.param('id')
+    const profile = yield Profile.findOrFail('profileId')
+
+    const fileName = `provaa.${logo.extension()}`
+    const fileName = `${new Date().getTime()}.${logo.extension()}`
+    yield logo.move(Helpers.storagePath(), fileName)
+
+    if (!logo.moved()) {
+      response.badRequest(logo.errors())
+      return
+    } 
+    Profile.logo = logo.uploadPath()
+    yield Profile.save()
+    response.ok('Logo uploaded succesfully!')
   }
 }
 

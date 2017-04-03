@@ -20,7 +20,6 @@ const Route = use('Route')
 Route.get('/', 'HomeController.index')
 Route.resource('profiles', 'ProfileController')
 Route.resource('profiles.reviews', 'ReviewController')
-// Route.get('/profile:id', function * (request, response) {
-//   const id = request.param('id')
-//   response.send(`Profile page for user with id ${id}`)
-// })
+Route.resource('profiles.create', 'ProfileController.create')
+Route.put('/profiles/:id/logo', 'ProfileController.upload')
+
