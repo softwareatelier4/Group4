@@ -15,7 +15,7 @@ class ProfilesTableSchema extends Schema {
       table.string('price').nullable()
       table.string('logo').nullable()
       table.string('lat').nullable()
-      table.string('long').nullable()
+      table.string('lng').nullable()
 
       table.integer('user_id').unsigned().nullable()
       table.foreign('user_id').references('users.id').onDelete('SET NULL')

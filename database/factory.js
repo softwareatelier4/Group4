@@ -23,7 +23,7 @@ const faker = require('faker') // better than fake provided by Factory
 |
 */
 
-Factory.profilesNumber = 1000
+Factory.profilesNumber = 50
 
 Factory.blueprint('App/Model/Profile', (fake) => {
   return {
@@ -35,7 +35,7 @@ Factory.blueprint('App/Model/Profile', (fake) => {
     price: faker.commerce.price(),
     logo: faker.image.business(),
     lat: faker.address.latitude(),
-    long: faker.address.longitude()
+    lng: faker.address.longitude()
   }
 })
 
