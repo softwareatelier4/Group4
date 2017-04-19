@@ -27,8 +27,8 @@ describe('ProfileController', function () {
     })
 
     it('should contain an anchor to register', function () {
-      browser.assert.text('ul.navbar-nav li:nth-child(2) a', 'REGISTER')*/
-    })
+      browser.assert.text('ul.navbar-nav li:nth-child(2) a', 'REGISTER')
+    })/*
 
     it('should contain an empty searchbox with placeholder Plumber', function () {
       browser.assert.attribute('#searchbox', 'value', '')
