@@ -18,7 +18,7 @@ class Profile extends Lucid {
   }
 
   user () {
-    return this.belongsTo('App/Model/User')
+    return this.belongsTo('App/Model/UserAccount')
   }
 
   /*
