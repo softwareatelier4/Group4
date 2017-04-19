@@ -1,4 +1,6 @@
 'use strict'
+const NodeGeocoder = require('node-geocoder')
+const geoip = use('geoip-lite')
 
 class ProfileController {
 
@@ -14,16 +16,30 @@ class ProfileController {
 
   * index (request, response) {
     const page = request.input('page') || 1
-    const profiles = yield this.Profile
-      .query()
-      .city(request.input('city'))
-      .category(request.input('category'))
-      .search(request.input('search'))
-      .paginate(page, 25)
 
-    // TODO: MAKE THIS AJAX
-    const allCategories = yield this.Category.query().has('profiles').fetch()
-    const allCities = yield this.City.query().has('profiles').fetch()
+    let options = {
+      provider: 'google',
+      httpAdapter: 'https',
+      formatter: null
+    }
+
+    let geocoder = NodeGeocoder(options)
+    let userLocation
+    if (!request.input('location')) {
+      const ip = (request.ip() === '127.0.0.1') ? '84.72.13.20' : request.ip()
+      userLocation = geoip.lookup(ip).city
+    } else {
+      userLocation = request.input('location')
+    }
+
+    const res = yield geocoder.geocode(userLocation)
+
+    const profiles = yield this.Profile
+    .query()
+    .inRange(3000, res)
+    .category(request.input('category'))
+    .search(request.input('search'))
+    .paginate(page, 25)
 
     const components = request.except('page')
 
@@ -38,15 +54,13 @@ class ProfileController {
     }
 
     nextPage = `${nextPage}&page=${parseInt(page) + 1}`
-    previousPage = `${previousPage}&page=${parseInt(page) == 1 ? (parseInt(page) + 2) : (parseInt(page) - 1)}`
+    previousPage = `${previousPage}&page=${parseInt(page) === 1 ? (parseInt(page) + 2) : (parseInt(page) - 1)}`
 
     profiles.meta.nextPage = nextPage
     profiles.meta.previousPage = previousPage
 
     yield response.sendView('profiles.index', {
-      profiles: profiles.toJSON(),
-      allCategories: allCategories.toJSON(),
-      allCities: allCities.toJSON()
+      profiles: profiles.toJSON()
     })
   }
 
@@ -60,17 +74,11 @@ class ProfileController {
     profile.vote_price = yield profile.reviews().avg('vote_price as vote_price')
     profile.vote_overall = yield profile.reviews().avg('vote_overall as vote_overall')
 
-    // TODO: MAKE THIS AJAX
-    const allCategories = yield this.Category.query().has('profiles').fetch()
-    const allCities = yield this.City.query().has('profiles').fetch()
-
     yield response.sendView('profiles.show', {
       profile: profile.toJSON(),
       reviews: reviews.toJSON(),
       categories: categories.toJSON(),
-      cities: cities.toJSON(),
-      allCategories: allCategories.toJSON(),
-      allCities: allCities.toJSON()
+      cities: cities.toJSON()
     })
   }
 

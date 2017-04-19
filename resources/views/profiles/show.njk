@@ -2,14 +2,7 @@
 
 {% block content %}
 <div class="container">
-	<form action="/profiles" class="mb-5" method="GET">
-		<div id="search-form" class="form-group row justify-content-center">
-			<div class="col-sm-10">
-				<input type="text" class="form-control" id="searchbox" name="search" placeholder="Plumber">
-				<button id="search" type="submit" class="btn btn-primary">Search</button>
-			</div>
-		</div>
-	</form>
+
 	<div class="row justify-content-center">
 		<div class="col-10 result-item">
 			<div class="row">
@@ -39,7 +32,7 @@
 						<dt class="col-sm-3">Service type</dt>
 						<dd class="col-sm-9">
 							{% for category in categories %}
-							<a href="/profiles?category={{ category.name }}" class="badge-anchor">
+							<a href="/profiles?category={{ category.id }}" class="badge-anchor">
 								<span class="badge badge-pill badge-primary">{{ category.name }}</span>
 							</a>
 							{% endfor %}
@@ -136,6 +129,17 @@
 							</div>
 						</div>
 
+					</div>
+					<div class="form-group row">
+						<div class="col">
+							<label>Vote price</label>
+							<select id="price" name="vote_price" autocomplete="off" style="display: none;" required>
+								<option value="1" selected>1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
 						<div class="row mt-2">
 							<div class="col">
 								<label>Vote price</label>
@@ -159,6 +163,7 @@
 									<option value="5" {{ "selected" if (review.vote_price == 5) }}>5</option>
 								</select>
 							</div>
+
 						</div>
 					</div>
 				</div>
@@ -220,44 +225,39 @@
 	</div>
 	{% endblock %}
 
-	{% block javascript %}
-	<script type="text/javascript">
-		$(function() {
 
-			$('#quality, #price, #overall').barrating('show', {
-				theme: 'bars-square',
-				showValues: true,
-				showSelectedRating: false,
-				initialRating: 3
-			});
-
-			$('#display_quality').barrating('show', {
-				theme: 'bars-square',
-				showValues: true,
-				showSelectedRating: false,
-				readonly: true,
-				initialRating: {{ profile.vote_quality[0].vote_quality | round }}
-			});
-			$('#display_price').barrating('show', {
-				theme: 'bars-square',
-				showValues: true,
-				showSelectedRating: false,
-				readonly: true,
-				initialRating: {{ profile.vote_price[0].vote_price | round }}
-			});
-			$('#display_overall').barrating('show', {
-				theme: 'bars-square',
-				showValues: true,
-				showSelectedRating: false,
-				readonly: true,
-				initialRating: {{ profile.vote_price[0].vote_price | round }}
-			});
-			$('.ratings').barrating('show', {
-				theme: 'bars-square-small',
-				showValues: false,
-				showSelectedRating: false,
-				readonly: true,
-			});
+{% block javascript %}
+<script type="text/javascript">
+	$(function() {
+		$('#quality, #price, #overall').barrating('show', {
+			theme: 'bars-square',
+			showValues: true,
+			showSelectedRating: false,
+			initialRating: 3
 		});
-	</script>
-	{% endblock %}
+
+		$('#display_quality').barrating('show', {
+			theme: 'bars-square',
+			showValues: true,
+			showSelectedRating: false,
+			readonly: true,
+			initialRating: {{ profile.vote_quality[0].vote_quality | round }}
+		});
+		$('#display_price').barrating('show', {
+			theme: 'bars-square',
+			showValues: true,
+			showSelectedRating: false,
+			readonly: true,
+			initialRating: {{ profile.vote_price[0].vote_price | round }}
+		});
+		$('#display_overall').barrating('show', {
+			theme: 'bars-square',
+			showValues: true,
+			showSelectedRating: false,
+			readonly: true,
+			initialRating: {{ profile.vote_overall[0].vote_overall | round }}
+		});
+	});
+</script>
+{% endblock %}
+

@@ -23,7 +23,7 @@ const faker = require('faker') // better than fake provided by Factory
 |
 */
 
-Factory.profilesNumber = 1000
+Factory.profilesNumber = 50
 
 Factory.blueprint('App/Model/Profile', (fake) => {
   return {
@@ -33,9 +33,12 @@ Factory.blueprint('App/Model/Profile', (fake) => {
     telephone: faker.phone.phoneNumber(),
     price: faker.commerce.price(),
     logo: faker.image.business(),
+    lat: faker.address.latitude(),
+    lng: faker.address.longitude(),
     user_id: Math.floor(
       Math.random() * Factory.usersNumber
     ) + 1
+
   }
 })
 
@@ -73,11 +76,11 @@ Factory.blueprint('App/Model/ProfileCity', () => {
     ) + 1,
     city_id: Math.floor(
       Math.random() * Factory.citiesNumber
-    ) + 1,
+    ) + 1
   }
 })
 
-Factory.usersNumber = 3000
+Factory.usersNumber = 5
 
 Factory.blueprint('App/Model/UserAccount', () => {
   return {

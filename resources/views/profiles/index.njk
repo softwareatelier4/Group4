@@ -1,15 +1,8 @@
 {% extends 'master' %}
 
 {% block content %}
+
 <div class="container">
-  <form action="/profiles" class="mb-5" method="GET">
-    <div id="search-form" class="form-group row justify-content-center">
-      <div class="col-sm-10">
-        <input type="text" class="form-control" id="searchbox" name="search" placeholder="Plumber">
-        <button id="search" type="submit" class="btn btn-primary">Search</button>
-      </div>
-    </div>
-  </form>
 
   <div class="row justify-content-center">
     <div class="col-12 col-md-10">
@@ -20,9 +13,10 @@
         </div>
         <div class="col-md-8">
           <div class="row">
-            <div class="col-12 result-item-title">
+            <div class="col-8 result-item-title">
               <a href="/profiles/{{ profile.id }}">{{ profile.title }}</a>
             </div>
+            <div class="col-4 text-right"> {{ profile.distance | round }} km</a></div>
           </div>
           <div class="row result-item-detail">
             <div class="col"><a href="{{profile.website}}"> {{ profile.website }} </a></div>

@@ -14,6 +14,8 @@ class ProfilesTableSchema extends Schema {
       table.string('telephone').nullable()
       table.string('price').nullable()
       table.string('logo').nullable()
+      table.string('lat').nullable()
+      table.string('lng').nullable()
 
       table.integer('user_id').unsigned()
       table.foreign('user_id').references('user_accounts.id').onDelete('cascade')
