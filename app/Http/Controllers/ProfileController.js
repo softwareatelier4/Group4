@@ -1,9 +1,10 @@
 'use strict'
 const NodeGeocoder = require('node-geocoder')
 const geoip = use('geoip-lite')
+const q = require('q')
 const googleMapsClient = require('@google/maps').createClient({
   key: 'AIzaSyATbIT8xR4HJIV9-H_mFu4DaY3lqI0K6hE',
-  Promise: require('q').Promise
+  Promise: q.Promise
 })
 
 class ProfileController {
