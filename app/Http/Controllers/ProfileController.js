@@ -91,32 +91,57 @@ class ProfileController {
 
   }
 
+  * upload (request, response) {
+    // const logo = request.file('logo', {
+    //   maxSize: '2mb',
+    //   allowedExtensions: ['jpg', 'png', 'jpeg']
+    // })
+    // const profileId = request.param('id')
+    // const profile = yield Profile.findOrFail('profileId')
+    //
+    //
+    // const fileName = `${new Date().getTime()}.${logo.extension()}`
+    // console.log(fileName)
+    // yield logo.move(Helpers.storagePath(), fileName)
+    //
+    // if (!logo.moved()) {
+    //   response.badRequest(logo.errors())
+    //   return
+    // }
+    // Profile.logo = logo.uploadPath()
+    // yield Profile.save()
+    // response.ok('Logo uploaded succesfully!')
+  }
+
   * store (request, response){
-      const profileData = request.only('id', 'title', 'description', 'logo')
+     const profileData = request.only('id', 'title', 'description', 'email','telephone', 'website', 'price', 'logo');
+     const logo = request.param('logo');
 
-      const rules = {
-        id: 'required',
-        title: 'required',
-        description: 'required'
+     const rules = {
+       id: 'required',
+       title: 'required',
+       description: 'required',
+       email: 'required',
+       telephone: 'required',
+       website: 'required',
+       price: 'required',
 
-      }
-
+     }
      const validation = yield Validator.validate(profileData, rules)
 
-      // if (validation.fails()) {
-      //
-      //   response.json(validation.messages())
-      //   return
-      //   yield request
-      //
-      //     .withonly('id', 'title', 'description')
-      //     .andwith({ errors: validation.messages()})
-      //     .flash()
-      //
-      //   response.redirect('back')
-      //   return
-      // }
+     if (validation.fails()) {
+        console.log("there was an error")
+
+        yield request
+          .withOnly('id', 'title', 'description', 'email','telephone', 'website', 'price', 'logo')
+          .andWith({ errors: validation.messages()})
+          .flash()
+
+        response.redirect('/profiles/create')
+
+      }
       yield Profile.create(profileData)
+      
       response.redirect('/')
   }
 
@@ -124,26 +149,6 @@ class ProfileController {
 
   }
 
-  * upload (request, response) {
-    const logo = request.file('logo', {
-      maxSize: '2mb',
-      alowedExtensions: ['jpg', 'png', 'jpeg']
-    })
-    const profileId = request.param('id')
-    const profile = yield Profile.findOrFail('profileId')
-
-
-    const fileName = `${new Date().getTime()}.${logo.extension()}`
-    yield logo.move(Helpers.storagePath(), fileName)
-
-    if (!logo.moved()) {
-      response.badRequest(logo.errors())
-      return
-    }
-    Profile.logo = logo.uploadPath()
-    yield Profile.save()
-    response.ok('Logo uploaded succesfully!')
-  }
 }
 
 module.exports = ProfileController

@@ -25,33 +25,33 @@
 
     <fieldset class="form-group">
       {{ form.label('Description') }}
-      {{ form.textarea('content', null, { class: 'form-control' }) }}
+      {{ form.text('description', null, { class: 'form-control' }) }}
     </fieldset>
 
 
      <fieldset class="form-group">
       {{ form.label('E-mail') }}
-      {{ form.textarea('email', null, { class: 'form-control' }) }}
+    {{ form.text('email', null, { class: 'form-control' }) }}
     </fieldset>
 
      <fieldset class="form-group">
       {{ form.label('Website') }}
-      {{ form.textarea('website', null, { class: 'form-control' }) }}
+    {{ form.text('website', null, { class: 'form-control' }) }}
     </fieldset>
 
      <fieldset class="form-group">
       {{ form.label('Telephone') }}
-      {{ form.textarea('telephone', null, { class: 'form-control' }) }}
+      {{ form.text('telephone', null, { class: 'form-control' }) }}
     </fieldset>
 
      <fieldset class="form-group">
       {{ form.label('Price') }}
-      {{ form.textarea('price', null, { class: 'form-control' }) }}
+      {{ form.text('price', null, { class: 'form-control' }) }}
     </fieldset>
 
      <fieldset class="form-group">
-      {{ form.file('logo') }}
-     
+      {{ form.file('logo', null, { class: 'form-control' }) }}
+
     </fieldset>
 
     {{ form.submit('Publish', 'publish', { class: 'btn btn-primary btn-block' }) }}

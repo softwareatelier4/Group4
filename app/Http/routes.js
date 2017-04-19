@@ -21,5 +21,3 @@ Route.get('/', 'HomeController.index')
 Route.resource('profiles', 'ProfileController')
 Route.resource('profiles.reviews', 'ReviewController')
 Route.resource('profiles.create', 'ProfileController.create')
-Route.put('/profiles/:id/logo', 'ProfileController.upload')
-

@@ -4,6 +4,7 @@ const Lucid = use('Lucid')
 
 class Profile extends Lucid {
 
+
   categories () {
     return this.belongsToMany('App/Model/Category', 'profile_categories')
   }
@@ -19,6 +20,7 @@ class Profile extends Lucid {
   user () {
     return this.belongsTo('App/Model/User')
   }
+
 
   /*
   * QUERY SCOPES
