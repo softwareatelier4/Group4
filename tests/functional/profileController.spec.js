@@ -22,12 +22,12 @@ describe('ProfileController', function () {
       browser.assert.text('a[href="/profiles"]', 'BROWSE')
     })
 
-    it('should contain an anchor to login', function () {
-      browser.assert.text('ul.navbar-nav li:nth-child(2) a', 'LOGIN')
+    /*it('should contain an anchor to login', function () {
+      browser.assert.text('ul.navbar-nav li:nth-child(0) a', 'LOGIN')
     })
 
     it('should contain an anchor to register', function () {
-      browser.assert.text('ul.navbar-nav li:nth-child(3) a', 'REGISTER')
+      browser.assert.text('ul.navbar-nav li:nth-child(2) a', 'REGISTER')*/
     })
 
     it('should contain an empty searchbox with placeholder Plumber', function () {
