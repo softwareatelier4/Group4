@@ -80,7 +80,7 @@ Factory.blueprint('App/Model/ProfileCity', () => {
   }
 })
 
-Factory.usersNumber = 3000
+Factory.usersNumber = 5
 
 Factory.blueprint('App/Model/UserAccount', () => {
   return {
