@@ -66,7 +66,7 @@ class Profile extends Lucid {
     let str = '*, (6371 * acos (  cos ( radians(?) )    * cos( radians( lat ) )  * cos( radians( lng ) - radians(?) )   + sin ( radians(?) ) * sin( radians( lat ) ))) AS distance'
     builder.select(Database.raw(str, [lat, long, lat]))
     .groupBy('distance')
-    .having('distance', '<', 50)
+    .having('distance', '<', 18919819818919881)
   }
 }
 
