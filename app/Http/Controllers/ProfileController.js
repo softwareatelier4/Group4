@@ -21,6 +21,26 @@ class ProfileController {
   * index (request, response) {
     const page = request.input('page') || 1
 
+    // 0 by distance
+    // 1 by price
+    // 2 overall rating
+    let orderBy = request.input('orderBy') || 0
+
+    orderBy = parseInt(orderBy)
+
+    let order
+
+    switch(orderBy) {
+    case 1:
+      order = 'price'
+      break;
+    case 2:
+      order = 'rating'
+      break;
+    default:
+      order = 'distance'
+    }
+
     let options = {
       provider: 'google',
       httpAdapter: 'https',
@@ -43,6 +63,7 @@ class ProfileController {
     .inRange(3000, res)
     .category(request.input('category'))
     .search(request.input('search'))
+    .orderBy(order, 'asc')
     .paginate(page, 25)
 
     const components = request.except('page')

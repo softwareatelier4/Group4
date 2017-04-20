@@ -12,7 +12,7 @@ class ProfilesTableSchema extends Schema {
 
       table.string('website').nullable()
       table.string('telephone').nullable()
-      table.integer('price').unsigned().nullable()
+      table.decimal('price', 5, 2).nullable()
       table.string('logo').nullable()
       table.string('lat').nullable()
       table.string('lng').nullable()
