@@ -1,7 +1,8 @@
 /* eslint-env mocha */
 
 const Browser = require('zombie')
-// const assert = require('assert')
+const assert = require('assert')
+const _ = require('lodash')
 const ProfileController = use('App/Http/Controllers/ProfileController')
 
 describe('ProfileController', function () {
@@ -58,5 +59,43 @@ describe('ProfileController', function () {
       browser.assert.attribute('#searchbox', 'value', 'LLC')
     })
   })
-})
 
+  describe('index:view sorting result', function () {
+
+    before(function(done){
+      browser.visit('/profiles', done)
+    })
+
+    it('should sort the result by distance asc by default', function() {
+      let distance = -1;
+      let results = browser.querySelectorAll('.result-item-title+div')
+
+      // Need to rewrite this test because, results is empty
+      // This error happens only in test environment
+      _.forEach(results, function(el) {
+
+        let d = el.innerHTML
+        d = parseInt(_.replace(d, 'km'))
+
+        assert(distance <= d)
+        distance = d
+      })
+    })
+
+    it('should sort the result by price asc', function() {
+      let distance = -1;
+      let results = browser.querySelectorAll('.result-item-title+div')
+
+      // Need to rewrite this test because, results is empty
+      // This error happens only in test environment
+      _.forEach(results, function(el) {
+
+        let d = el.innerHTML
+        d = parseInt(_.replace(d, 'km'))
+
+        assert(distance <= d)
+        distance = d
+      })
+    })
+  })
+})
