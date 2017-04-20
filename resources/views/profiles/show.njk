@@ -32,13 +32,15 @@
 						<dt class="col-sm-3">Service type</dt>
 						<dd class="col-sm-9">
 							{% for category in categories %}
-							<a href="/profiles?category={{ category.id }}" class="badge-anchor">
+							<a href="/profiles?category={{ category.name }}" class="badge-anchor">
 								<span class="badge badge-pill badge-primary">{{ category.name }}</span>
 							</a>
 							{% endfor %}
 						</dd>
 						<dt class="col-sm-3">Rate per hour</dt>
 						<dd class="col-sm-9">${{ profile.price }}</dd>
+						<dt class="col-sm-3">Distance by car</dt>
+						<dd class="col-sm-9">{{ profile.distanceTime }}</dd>
 					</dl>
 				</div>
 			</div>
@@ -120,26 +122,15 @@
 							<div class="col">
 								<label>Vote overall</label>
 								<select class="ratings" autocomplete="off" style="display: none;" >
-									<option value="1" {{ "selected" if (review.vote_price == 1) }}>1</option>
-									<option value="2" {{ "selected" if (review.vote_price == 2) }}>2</option>
-									<option value="3" {{ "selected" if (review.vote_price == 3) }}>3</option>
-									<option value="4" {{ "selected" if (review.vote_price == 4) }}>4</option>
-									<option value="5" {{ "selected" if (review.vote_price == 5) }}>5</option>
+									<option value="1" {{ "selected" if (review.vote_overall == 1) }}>1</option>
+									<option value="2" {{ "selected" if (review.vote_overall == 2) }}>2</option>
+									<option value="3" {{ "selected" if (review.vote_overall == 3) }}>3</option>
+									<option value="4" {{ "selected" if (review.vote_overall == 4) }}>4</option>
+									<option value="5" {{ "selected" if (review.vote_overall == 5) }}>5</option>
 								</select>
 							</div>
 						</div>
 
-					</div>
-					<div class="form-group row">
-						<div class="col">
-							<label>Vote price</label>
-							<select id="price" name="vote_price" autocomplete="off" style="display: none;" required>
-								<option value="1" selected>1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-								<option value="5">5</option>
-							</select>
 						<div class="row mt-2">
 							<div class="col">
 								<label>Vote price</label>
@@ -156,14 +147,13 @@
 							<div class="col">
 								<label>Vote quality</label>
 								<select class="ratings" autocomplete="off" style="display: none;">
-									<option value="1" {{ "selected" if (review.vote_price == 1) }}>1</option>
-									<option value="2" {{ "selected" if (review.vote_price == 2) }}>2</option>
-									<option value="3" {{ "selected" if (review.vote_price == 3) }}>3</option>
-									<option value="4" {{ "selected" if (review.vote_price == 4) }}>4</option>
-									<option value="5" {{ "selected" if (review.vote_price == 5) }}>5</option>
+									<option value="1" {{ "selected" if (review.vote_quality == 1) }}>1</option>
+									<option value="2" {{ "selected" if (review.vote_quality == 2) }}>2</option>
+									<option value="3" {{ "selected" if (review.vote_quality == 3) }}>3</option>
+									<option value="4" {{ "selected" if (review.vote_quality == 4) }}>4</option>
+									<option value="5" {{ "selected" if (review.vote_quality == 5) }}>5</option>
 								</select>
 							</div>
-
 						</div>
 					</div>
 				</div>
@@ -225,39 +215,44 @@
 	</div>
 	{% endblock %}
 
+	{% block javascript %}
+	<script type="text/javascript">
+		$(function() {
 
-{% block javascript %}
-<script type="text/javascript">
-	$(function() {
-		$('#quality, #price, #overall').barrating('show', {
-			theme: 'bars-square',
-			showValues: true,
-			showSelectedRating: false,
-			initialRating: 3
-		});
+			$('#quality, #price, #overall').barrating('show', {
+				theme: 'bars-square',
+				showValues: true,
+				showSelectedRating: false,
+				initialRating: 3
+			});
 
-		$('#display_quality').barrating('show', {
-			theme: 'bars-square',
-			showValues: true,
-			showSelectedRating: false,
-			readonly: true,
-			initialRating: {{ profile.vote_quality[0].vote_quality | round }}
+			$('#display_quality').barrating('show', {
+				theme: 'bars-square',
+				showValues: true,
+				showSelectedRating: false,
+				readonly: true,
+				initialRating: {{ profile.vote_quality[0].vote_quality | round }}
+			});
+			$('#display_price').barrating('show', {
+				theme: 'bars-square',
+				showValues: true,
+				showSelectedRating: false,
+				readonly: true,
+				initialRating: {{ profile.vote_price[0].vote_price | round }}
+			});
+			$('#display_overall').barrating('show', {
+				theme: 'bars-square',
+				showValues: true,
+				showSelectedRating: false,
+				readonly: true,
+				initialRating: {{ profile.vote_price[0].vote_price | round }}
+			});
+			$('.ratings').barrating('show', {
+				theme: 'bars-square-small',
+				showValues: false,
+				showSelectedRating: false,
+				readonly: true,
+			});
 		});
-		$('#display_price').barrating('show', {
-			theme: 'bars-square',
-			showValues: true,
-			showSelectedRating: false,
-			readonly: true,
-			initialRating: {{ profile.vote_price[0].vote_price | round }}
-		});
-		$('#display_overall').barrating('show', {
-			theme: 'bars-square',
-			showValues: true,
-			showSelectedRating: false,
-			readonly: true,
-			initialRating: {{ profile.vote_overall[0].vote_overall | round }}
-		});
-	});
-</script>
-{% endblock %}
-
+	</script>
+	{% endblock %}

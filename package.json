@@ -34,7 +34,8 @@
     "youch": "^2.0.4",
     "geoip-lite": "^1.2.0",
     "geolib": "^2.0.22",
-    "node-geocoder": "^3.16.0"
+    "node-geocoder": "^3.16.0",
+    "@google/maps": "^0.3.1"
   },
   "standard": {
     "ignore": [
