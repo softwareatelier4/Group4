@@ -20,6 +20,7 @@ const Route = use('Route')
 Route.get('/', 'HomeController.index')
 Route.resource('profiles', 'ProfileController')
 Route.resource('profiles.reviews', 'ReviewController')
+Route.resource('reviews.answer', 'AnswerController')
 Route.resource('users', 'UsersController')
 // Route.get('/profile:id', function * (request, response) {
 //   const id = request.param('id')

@@ -71,7 +71,7 @@ class ProfileController {
 
   * show (request, response) {
     const profile = yield this.Profile.find(request.param('id'))
-    const reviews = yield profile.reviews().fetch()
+    const reviews = yield profile.reviews().with('answer').fetch()
     const categories = yield profile.categories().fetch()
     const cities = yield profile.cities().fetch()
 
