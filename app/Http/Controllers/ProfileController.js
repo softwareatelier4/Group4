@@ -36,7 +36,7 @@ class ProfileController {
       order = 'price'
       break;
     case 2:
-      order = 'rating'
+      order = 'overall_rating'
       break;
     default:
       order = 'distance'
