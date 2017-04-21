@@ -3,7 +3,7 @@
 class ReviewController {
 
   static get inject () {
-    return ['App/Model/Review']
+    return ['App/Model/Review', 'App/Model/Profile']
   }
 
   constructor (Review) {
@@ -38,6 +38,22 @@ class ReviewController {
       vote_overall: request.input('vote_overall'),
       profile_id: request.params().profiles_id
     })
+
+    const sum_overall_reviews = yield Database.from('review')
+          .where('profile_id', request.params().profile_id)
+          .sum('vote_overall')
+
+    const count_overall_reviews = yield Database.from('review')
+          .where('profile_id', request.params().profile_id)
+          .count('vote_overall')
+
+    const overall_rating = sum_overall_reviews / count_overall_reviews
+
+    const profile = yield Profile.findBy('id', request.params().profile_id)
+    profile.overall_rating = overall_rating
+
+    profile.save()
+
     response.redirect('back')
   }
 

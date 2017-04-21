@@ -17,6 +17,8 @@ class ProfilesTableSchema extends Schema {
       table.string('lat').nullable()
       table.string('lng').nullable()
 
+      table.integer('overall_rating').nullable()
+
       table.integer('user_id').unsigned()
       table.foreign('user_id').references('user_accounts.id').onDelete('cascade')
 
