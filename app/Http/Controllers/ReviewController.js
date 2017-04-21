@@ -6,8 +6,9 @@ class ReviewController {
     return ['App/Model/Review', 'App/Model/Profile']
   }
 
-  constructor (Review) {
+  constructor (Review, Profile) {
     this.Review = Review
+    this.Profile = Profile
   }
 
   * index (request, response) {
@@ -39,20 +40,21 @@ class ReviewController {
       profile_id: request.params().profiles_id
     })
 
-    const sum_overall_reviews = yield Database.from('review')
-          .where('profile_id', request.params().profile_id)
-          .sum('vote_overall')
+    const sum_overall_reviews = yield this.Review.query()
+          .where('profile_id', request.params().profiles_id)
+          .sum('vote_overall as sum')
 
-    const count_overall_reviews = yield Database.from('review')
-          .where('profile_id', request.params().profile_id)
-          .count('vote_overall')
+    const count_overall_reviews = yield this.Review.query()
+          .where('profile_id', request.params().profiles_id)
+          .count('id as count')
 
-    const overall_rating = sum_overall_reviews / count_overall_reviews
+    const overall_rating = sum_overall_reviews[0].sum / count_overall_reviews[0].count
 
-    const profile = yield Profile.findBy('id', request.params().profile_id)
-    profile.overall_rating = overall_rating
+    let profile = yield this.Profile.findBy('id', request.params().profiles_id)
 
-    profile.save()
+    profile.overall_rating = Math.round(overall_rating)
+
+    yield profile.save()
 
     response.redirect('back')
   }
