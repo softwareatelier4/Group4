@@ -18,6 +18,8 @@ class ProfilesTableSchema extends Schema {
       table.string('lng').nullable()
       table.string('city').nullable()
 
+      table.integer('overall_rating').nullable()
+
       table.integer('user_id').unsigned()
       table.foreign('user_id').references('user_accounts.id').onDelete('cascade')
 
