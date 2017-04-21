@@ -16,7 +16,7 @@
             <div class="col-8 result-item-title">
               <a href="/profiles/{{ profile.id }}">{{ profile.title }}</a>
             </div>
-            <div class="col-4 text-right"> {{ profile.distance | round }} km</a></div>
+              <div class="col-4 text-right"> {{ profile.distance | round }} km</a></div>
           </div>
           <div class="row result-item-detail">
             <div class="col"><a href="{{profile.website}}"> {{ profile.website }} </a></div>
@@ -25,9 +25,20 @@
           </div>
           <div class="row mt-1">
             <div class="col">
-             {{ profile.description | truncate(300)}}
-           </div>
-         </div>
+              {{ profile.description | truncate(300)}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 justify-content-end">
+              <select class="ratings" autocomplete="off" style="display: none;" >
+								<option value="1" {{ "selected" if (profile.overall_rating == 1) }}>1</option>
+								<option value="2" {{ "selected" if (profile.overall_rating == 2) }}>2</option>
+								<option value="3" {{ "selected" if (profile.overall_rating == 3) }}>3</option>
+								<option value="4" {{ "selected" if (profile.overall_rating == 4) }}>4</option>
+								<option value="5" {{ "selected" if (profile.overall_rating == 5) }}>5</option>
+							</select>
+            </div>
+          </div>
        </div>
      </div>
      {% else %}
@@ -71,12 +82,23 @@
           </ul>
         </nav>
       </div>
-    </div>
-    <!-- END Pagination -->
-    {% endif %}
+     </div>
+     <!-- END Pagination -->
+     {% endif %}
 
+    </div>
   </div>
-</div>
 
 </div>
 {% endblock %}
+
+{% block javascript %}
+  <script type="text/javascript">
+  	$('.ratings').barrating('show', {
+			theme: 'bars-square',
+			showValues: true,
+			showSelectedRating: false,
+			readonly: true,
+		});
+  </script>
+{% endblock  %}
