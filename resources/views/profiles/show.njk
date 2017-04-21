@@ -96,7 +96,7 @@
 			</div>
 
 			{% for review in reviews %}
-			<div class="row mt-3 mb-3 align-items-center">
+			<div class="row mt-3 mb-3 ml-2 mr-2 align-items-center result-item">
 				<div class="col-12">
 					<div class="row align-items-center">
 						<div class="col-1">
@@ -109,150 +109,181 @@
 					<hr>
 				</div>
 				<div class="col-8">
-					<p>
+					<p class="ml-2">
 						{% if review.comment %}
 						{{ review.comment }}
 						{% else %}
 						<i>No comment</i>
 						{% endif %}
 					</p>
-					</div>
-					<div class="col-4">
-						<div class="row mt-2">
-							<div class="col">
-								<label>Vote overall</label>
-								<select class="ratings" autocomplete="off" style="display: none;" >
-									<option value="1" {{ "selected" if (review.vote_overall == 1) }}>1</option>
-									<option value="2" {{ "selected" if (review.vote_overall == 2) }}>2</option>
-									<option value="3" {{ "selected" if (review.vote_overall == 3) }}>3</option>
-									<option value="4" {{ "selected" if (review.vote_overall == 4) }}>4</option>
-									<option value="5" {{ "selected" if (review.vote_overall == 5) }}>5</option>
-								</select>
-							</div>
-						</div>
-
-						<div class="row mt-2">
-							<div class="col">
-								<label>Vote price</label>
-								<select class="ratings" autocomplete="off" style="display: none;">
-									<option value="1" {{ "selected" if (review.vote_price == 1) }}>1</option>
-									<option value="2" {{ "selected" if (review.vote_price == 2) }}>2</option>
-									<option value="3" {{ "selected" if (review.vote_price == 3) }}>3</option>
-									<option value="4" {{ "selected" if (review.vote_price == 4) }}>4</option>
-									<option value="5" {{ "selected" if (review.vote_price == 5) }}>5</option>
-								</select>
-							</div>
-						</div>
-						<div class="row mt-2">
-							<div class="col">
-								<label>Vote quality</label>
-								<select class="ratings" autocomplete="off" style="display: none;">
-									<option value="1" {{ "selected" if (review.vote_quality == 1) }}>1</option>
-									<option value="2" {{ "selected" if (review.vote_quality == 2) }}>2</option>
-									<option value="3" {{ "selected" if (review.vote_quality == 3) }}>3</option>
-									<option value="4" {{ "selected" if (review.vote_quality == 4) }}>4</option>
-									<option value="5" {{ "selected" if (review.vote_quality == 5) }}>5</option>
-								</select>
-							</div>
-						</div>
-					</div>
 				</div>
-				{% endfor %}
-
-				<div class="row">
-					<div class="col">
-						<h4>Add your review</h4>
-						{{ form.open({ action: 'ReviewController.store', params: {profiles_id: profile.id} }) }}
-						{{ csrfField }}
-						<div class="form-group">
-							<label>Message</label>
-							<textarea class="form-control" name="comment" rows="3"></textarea>
+				<div class="col-4">
+					<div class="row mt-2">
+						<div class="col text-center">
+							<label>Vote overall</label><br>
+							<select class="ratings" autocomplete="off" style="display: none;" >
+								<option value="1" {{ "selected" if (review.vote_overall == 1) }}>1</option>
+								<option value="2" {{ "selected" if (review.vote_overall == 2) }}>2</option>
+								<option value="3" {{ "selected" if (review.vote_overall == 3) }}>3</option>
+								<option value="4" {{ "selected" if (review.vote_overall == 4) }}>4</option>
+								<option value="5" {{ "selected" if (review.vote_overall == 5) }}>5</option>
+							</select>
 						</div>
-						<div class="form-group row">
-							<div class="col">
-								<label>Vote overall</label>
-								<select id="overall" name="vote_overall" autocomplete="off" style="display: none;" required>
-									<option value="1" selected>1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
-								</select>
-							</div>
-						</div>
-						<div class="form-group row">
-							<div class="col">
-								<label>Vote price</label> 
-								<select id="price" name="vote_price" autocomplete="off" style="display: none;" required>
-									<option value="1" selected>1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
-								</select>
-							</div>
-						</div>
-						<div class="form-group row">
-							<div class="col">
-								<label>Vote quality</label>
-								<select id="quality" name="vote_quality" autocomplete="off" style="display: none;" required>
-									<option value="1" selected>1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
-								</select>
-							</div>
-						</div>
-						<button type="submit" class="btn btn-primary">Submit</button>
-						{{ form.close() }}
 					</div>
+					<div class="row mt-2">
+						<div class="col text-center">
+							<label>Vote price</label><br>
+							<select class="ratings" autocomplete="off" style="display: none;">
+								<option value="1" {{ "selected" if (review.vote_price == 1) }}>1</option>
+								<option value="2" {{ "selected" if (review.vote_price == 2) }}>2</option>
+								<option value="3" {{ "selected" if (review.vote_price == 3) }}>3</option>
+								<option value="4" {{ "selected" if (review.vote_price == 4) }}>4</option>
+								<option value="5" {{ "selected" if (review.vote_price == 5) }}>5</option>
+							</select>
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col text-center">
+							<label>Vote quality</label><br>
+							<select class="ratings" autocomplete="off" style="display: none;">
+								<option value="1" {{ "selected" if (review.vote_quality == 1) }}>1</option>
+								<option value="2" {{ "selected" if (review.vote_quality == 2) }}>2</option>
+								<option value="3" {{ "selected" if (review.vote_quality == 3) }}>3</option>
+								<option value="4" {{ "selected" if (review.vote_quality == 4) }}>4</option>
+								<option value="5" {{ "selected" if (review.vote_quality == 5) }}>5</option>
+							</select>
+						</div>
+					</div>
+					<div class="row mt-3">
+						<div class="col text-center">
+							{% if not review.answer %}
+							<button class="btn btn-primary btn-sm answerButton" data-id="{{ review.id }}">Answer</button>
+							{% endif %}
+						</div>
+					</div>
+					
 				</div>
+				{% if review.answer %}
+				<div class="col-12 mt-3">
+					<hr>
+					<h5>Answer from the owner</h5>
+					<p>{{ review.answer.comment }}</p>
+				</div>
+				{% else %}
+				<div id="answer{{review.id}}" class="col-12 mt-3 hidden-xs-up">
+					<h5>Add your answer</h5>
+					{{ form.open({ action: 'AnswerController.store', params: {reviews_id: review.id} }) }}
+					{{ csrfField }}
+					<div class="form-group">
+						<label>Answer</label>
+						<textarea class="form-control" name="comment" rows="3"></textarea>
+					</div>
+					<button type="submit" class="btn btn-primary">Submit</button>
+					{{ form.close() }}
+				</div>
+				{% endif %}
+				
 
+			</div>
+			{% endfor %}
+
+			<div class="row">
+				<div class="col">
+					<h4>Add your review</h4>
+					{{ form.open({ action: 'ReviewController.store', params: {profiles_id: profile.id} }) }}
+					{{ csrfField }}
+					<div class="form-group">
+						<label>Message</label>
+						<textarea class="form-control" name="comment" rows="3"></textarea>
+					</div>
+					<div class="form-group row">
+						<div class="col">
+							<label>Vote overall</label>
+							<select id="overall" name="vote_overall" autocomplete="off" style="display: none;" required>
+								<option value="1" selected>1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col">
+							<label>Vote price</label> 
+							<select id="price" name="vote_price" autocomplete="off" style="display: none;" required>
+								<option value="1" selected>1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group row">
+						<div class="col">
+							<label>Vote quality</label>
+							<select id="quality" name="vote_quality" autocomplete="off" style="display: none;" required>
+								<option value="1" selected>1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
+						</div>
+					</div>
+					<button type="submit" class="btn btn-primary">Submit</button>
+					{{ form.close() }}
+				</div>
 			</div>
 
 		</div>
+
 	</div>
-	{% endblock %}
+</div>
+{% endblock %}
 
-	{% block javascript %}
-	<script type="text/javascript">
-		$(function() {
+{% block javascript %}
+<script type="text/javascript">
+	$(".answerButton").click(function() {
+		$("#answer"+$(this).data('id')).toggleClass('hidden-xs-up')
+	});
 
-			$('#quality, #price, #overall').barrating('show', {
-				theme: 'bars-square',
-				showValues: true,
-				showSelectedRating: false,
-				initialRating: 3
-			});
-
-			$('#display_quality').barrating('show', {
-				theme: 'bars-square',
-				showValues: true,
-				showSelectedRating: false,
-				readonly: true,
-				initialRating: {{ profile.vote_quality[0].vote_quality | round }}
-			});
-			$('#display_price').barrating('show', {
-				theme: 'bars-square',
-				showValues: true,
-				showSelectedRating: false,
-				readonly: true,
-				initialRating: {{ profile.vote_price[0].vote_price | round }}
-			});
-			$('#display_overall').barrating('show', {
-				theme: 'bars-square',
-				showValues: true,
-				showSelectedRating: false,
-				readonly: true,
-				initialRating: {{ profile.vote_price[0].vote_price | round }}
-			});
-			$('.ratings').barrating('show', {
-				theme: 'bars-square-small',
-				showValues: false,
-				showSelectedRating: false,
-				readonly: true,
-			});
+	$(function() {
+		$('#quality, #price, #overall').barrating('show', {
+			theme: 'bars-square',
+			showValues: true,
+			showSelectedRating: false,
+			initialRating: 3
 		});
-	</script>
-	{% endblock %}
+
+		$('#display_quality').barrating('show', {
+			theme: 'bars-square',
+			showValues: true,
+			showSelectedRating: false,
+			readonly: true,
+			initialRating: {{ profile.vote_quality[0].vote_quality | round }}
+		});
+		$('#display_price').barrating('show', {
+			theme: 'bars-square',
+			showValues: true,
+			showSelectedRating: false,
+			readonly: true,
+			initialRating: {{ profile.vote_price[0].vote_price | round }}
+		});
+		$('#display_overall').barrating('show', {
+			theme: 'bars-square',
+			showValues: true,
+			showSelectedRating: false,
+			readonly: true,
+			initialRating: {{ profile.vote_price[0].vote_price | round }}
+		});
+		$('.ratings').barrating('show', {
+			theme: 'bars-square-small',
+			showValues: false,
+			showSelectedRating: false,
+			readonly: true,
+		});
+	});
+</script>
+{% endblock %}

@@ -106,3 +106,7 @@
     color: black;
   }
 }
+
+.br-wrapper.br-theme-bars-square-small{
+  display: inline-block;
+}
