@@ -13,7 +13,7 @@
 			</div>
 			<div class="row">
 				<div class="col-4">
-					<img src="{{ profile.logo }}" class="img-fluid" alt="{{ profile.title }} logo">
+					<img src="/profile_images/{{ profile.logo }}" class="img-fluid" alt="{{ profile.title }} logo">
 				</div>
 				<div class="col-8">
 					<dl class="row">
@@ -23,12 +23,8 @@
 						<dd class="col-sm-9"><a href="tel:{{ profile.telephone }}">{{ profile.telephone }}</a></dd>
 						<dt class="col-sm-3">Website</dt>
 						<dd class="col-sm-9"><a href="{{ profile.website }}" target="_blank" rel="nofollow">{{ profile.website }}</a></dd>
-						<dt class="col-sm-3">Range of operation</dt>
-						<dd class="col-sm-9">
-							{% for city in cities %}
-							{{ city.name }} {% if not loop.last %}, {% endif %}
-							{% endfor %}
-						</dd>
+						<dt class="col-sm-3">City</dt>
+						<dd class="col-sm-9">{{ profile.city }}</dd>
 						<dt class="col-sm-3">Service type</dt>
 						<dd class="col-sm-9">
 							{% for category in categories %}

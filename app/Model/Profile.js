@@ -9,10 +9,6 @@ class Profile extends Lucid {
     return this.belongsToMany('App/Model/Category', 'profile_categories')
   }
 
-  cities () {
-    return this.belongsToMany('App/Model/City', 'profile_cities')
-  }
-
   reviews () {
     return this.hasMany('App/Model/Review')
   }
@@ -31,16 +27,6 @@ class Profile extends Lucid {
       .innerJoin('profile_categories', 'profile_categories.profile_id', 'profiles.id')
       .innerJoin('categories', 'categories.id', 'profile_categories.category_id')
       .where('profile_categories.category_id', categoryQuery)
-      .select('profiles.*')
-    }
-  }
-
-  static scopeCity (builder, cityQuery) {
-    if (cityQuery) {
-      builder
-      .innerJoin('profile_cities', 'profile_cities.profile_id', 'profiles.id')
-      .innerJoin('cities', 'cities.id', 'profile_cities.city_id')
-      .where('profile_cities.city_id', cityQuery)
       .select('profiles.*')
     }
   }
