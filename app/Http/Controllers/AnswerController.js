@@ -31,7 +31,6 @@ class AnswerController {
   }
 
   * store (request, response) {
-    console.log(request.params())
     yield this.Answer.create({
       comment: request.input('comment'),
       review_id: request.params().reviews_id

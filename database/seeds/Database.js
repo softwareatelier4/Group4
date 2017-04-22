@@ -16,6 +16,9 @@ const Factory = use('Factory')
 const Profile = use('App/Model/Profile')
 const Review = use('App/Model/Review')
 const Answer = use('App/Model/Answer')
+const Category = use('App/Model/Category')
+const ProfileCategory = use('App/Model/ProfileCategory')
+const User = use('App/Model/UserAccount')
 
 class DatabaseSeeder {
 
@@ -30,6 +33,7 @@ class DatabaseSeeder {
       logo: '1.jpg',
       lat: '46.020569',
       lng: '8.970071',
+      city: 'Lugano',
       user_id: null
     })
 
@@ -43,6 +47,7 @@ class DatabaseSeeder {
       logo: '2.jpg',
       lat: '46.091604',
       lng: '8.922933',
+      city: 'Mezzovico-Vira',
       user_id: null
     })
 
@@ -56,6 +61,7 @@ class DatabaseSeeder {
       logo: '3.jpg',
       lat: '45.967347',
       lng: '8.924697',
+      city: 'Lugano',
       user_id: null
     })
 
@@ -69,6 +75,7 @@ class DatabaseSeeder {
       logo: '4.jpg',
       lat: '46.537320',
       lng: '9.875321',
+      city: 'Samaden',
       user_id: null
     })
 
@@ -82,6 +89,7 @@ class DatabaseSeeder {
       logo: '5.jpg',
       lat: '46.031668',
       lng: '8.973651',
+      city: 'Davesco-Soragno',
       user_id: null
     })
 
@@ -95,6 +103,7 @@ class DatabaseSeeder {
       logo: '6.jpg',
       lat: '45.837612',
       lng: '9.031572',
+      city: 'Chiasso',
       user_id: null
     })
 
@@ -108,6 +117,7 @@ class DatabaseSeeder {
       logo: '',
       lat: '45.966269',
       lng: '8.923949',
+      city: 'Lugano',
       user_id: null
     })
 
@@ -121,6 +131,7 @@ class DatabaseSeeder {
       logo: '8.png',
       lat: '46.157442',
       lng: '8.773200',
+      city: 'Ascona',
       user_id: null
     })
 
@@ -134,6 +145,7 @@ class DatabaseSeeder {
       logo: '9.jpg',
       lat: '46.014447',
       lng: '8.963594',
+      city: 'Viganello',
       user_id: null
     })
 
@@ -147,6 +159,7 @@ class DatabaseSeeder {
       logo: '10.jpg',
       lat: '47.376887',
       lng: '8.541694',
+      city: 'Cremenaga',
       user_id: null
     })
 
@@ -182,6 +195,52 @@ class DatabaseSeeder {
     yield Answer.create({ comment: 'Per garantire la qualità migliore i costi sono sempre alti', review_id: 4 })
     yield Answer.create({ comment: 'Ok', review_id: 5 })
     yield Answer.create({ comment: 'Grazie!', review_id: 10 })
+
+    yield Category.create({ name: 'Idraulico'})
+    yield Category.create({ name: 'Meccanico'})
+    yield Category.create({ name: 'Lattoniere'})
+    yield Category.create({ name: 'Dottore'})
+    yield Category.create({ name: 'Dentista'})
+    yield Category.create({ name: 'Informatico'})
+    yield Category.create({ name: 'Giardiniere'})
+
+    yield ProfileCategory.create({ profile_id: 6, category_id: 2})
+    yield ProfileCategory.create({ profile_id: 6, category_id: 4})
+    yield ProfileCategory.create({ profile_id: 7, category_id: 2})
+    yield ProfileCategory.create({ profile_id: 1, category_id: 2})
+    yield ProfileCategory.create({ profile_id: 3, category_id: 3})
+    yield ProfileCategory.create({ profile_id: 8, category_id: 3})
+    yield ProfileCategory.create({ profile_id: 6, category_id: 1})
+    yield ProfileCategory.create({ profile_id: 6, category_id: 5})
+    yield ProfileCategory.create({ profile_id: 1, category_id: 5})
+    yield ProfileCategory.create({ profile_id: 8, category_id: 4})
+    yield ProfileCategory.create({ profile_id: 1, category_id: 3})
+    yield ProfileCategory.create({ profile_id: 1, category_id: 6})
+    yield ProfileCategory.create({ profile_id: 4, category_id: 6})
+    yield ProfileCategory.create({ profile_id: 3, category_id: 1})
+    yield ProfileCategory.create({ profile_id: 9, category_id: 6})
+    yield ProfileCategory.create({ profile_id: 8, category_id: 5})
+    yield ProfileCategory.create({ profile_id: 2, category_id: 1})
+    yield ProfileCategory.create({ profile_id: 8, category_id: 1})
+    yield ProfileCategory.create({ profile_id: 4, category_id: 1})
+
+    yield User.create({
+      email: 'admin@jobadvisor.com',
+      password: 'admin',
+      name: 'admin'
+    })
+
+    yield User.create({
+      email: 'worker@jobadvisor.com',
+      password: 'worker',
+      name: 'worker'
+    })
+
+    yield User.create({
+      email: 'user@jobadvisor.com',
+      password: 'user',
+      name: 'user'
+    })
   }
 
 }
