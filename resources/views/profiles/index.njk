@@ -3,7 +3,18 @@
 {% block content %}
 
 <div class="container">
-
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10">
+      <div class="row">
+        <nav id="orderBy" class="nav">
+          <a class="nav-link disabled" href="#">Sort by</a>
+          <a class="nav-link active" href="{{ queryWithoutOrder + 'orderBy=0' }}">Distance</a>
+          <a class="nav-link active" href="{{ queryWithoutOrder + 'orderBy=1' }}">Price</a>
+          <a class="nav-link active" href="{{ queryWithoutOrder + 'orderBy=2' }}">Rating</a>
+        </nav>
+      </div>
+    </div>
+  </div>
   <div class="row justify-content-center">
     <div class="col-12 col-md-10">
       {% for profile in profiles.data %}
@@ -37,6 +48,9 @@
 								<option value="4" {{ "selected" if (profile.overall_rating == 4) }}>4</option>
 								<option value="5" {{ "selected" if (profile.overall_rating == 5) }}>5</option>
 							</select>
+            </div>
+            <div class="col-8 text-right item-price">
+              $<span>{{ profile.price }}</span>
             </div>
           </div>
        </div>
