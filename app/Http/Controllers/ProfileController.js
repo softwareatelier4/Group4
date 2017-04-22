@@ -10,13 +10,12 @@ const googleMapsClient = require('@google/maps').createClient({
 class ProfileController {
 
   static get inject () {
-    return ['App/Model/Profile', 'App/Model/Category', 'App/Model/City']
+    return ['App/Model/Profile', 'App/Model/Category']
   }
 
-  constructor (Profile, Category, City) {
+  constructor (Profile, Category) {
     this.Profile = Profile
     this.Category = Category
-    this.City = City
   }
 
   * index (request, response) {
@@ -73,7 +72,6 @@ class ProfileController {
     const profile = yield this.Profile.find(request.param('id'))
     const reviews = yield profile.reviews().with('answer').fetch()
     const categories = yield profile.categories().fetch()
-    const cities = yield profile.cities().fetch()
 
     const ip = (request.ip() === '127.0.0.1') ? '84.72.13.20' : request.ip()
 
@@ -95,8 +93,7 @@ class ProfileController {
     yield response.sendView('profiles.show', {
       profile: profile.toJSON(),
       reviews: reviews.toJSON(),
-      categories: categories.toJSON(),
-      cities: cities.toJSON()
+      categories: categories.toJSON()
     })
   }
 

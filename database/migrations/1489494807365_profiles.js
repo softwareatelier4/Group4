@@ -12,10 +12,11 @@ class ProfilesTableSchema extends Schema {
 
       table.string('website').nullable()
       table.string('telephone').nullable()
-      table.string('price').nullable()
+      table.integer('price').unsigned().nullable()
       table.string('logo').nullable()
       table.string('lat').nullable()
       table.string('lng').nullable()
+      table.string('city').nullable()
 
       table.integer('user_id').unsigned()
       table.foreign('user_id').references('user_accounts.id').onDelete('cascade')
