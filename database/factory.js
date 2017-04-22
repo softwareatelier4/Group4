@@ -35,6 +35,7 @@ Factory.blueprint('App/Model/Profile', (fake) => {
     logo: faker.image.business(),
     lat: faker.address.latitude(),
     lng: faker.address.longitude(),
+    overall_rating: faker.random.number({ 'min' : 0, 'max': 5 }),
     user_id: Math.floor(
       Math.random() * Factory.usersNumber
     ) + 1

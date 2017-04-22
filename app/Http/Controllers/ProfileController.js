@@ -2,6 +2,7 @@
 const NodeGeocoder = require('node-geocoder')
 const geoip = use('geoip-lite')
 const q = require('q')
+
 const googleMapsClient = require('@google/maps').createClient({
   key: 'AIzaSyATbIT8xR4HJIV9-H_mFu4DaY3lqI0K6hE',
   Promise: q.Promise
@@ -20,6 +21,26 @@ class ProfileController {
 
   * index (request, response) {
     const page = request.input('page') || 1
+
+    // 0 by distance
+    // 1 by price
+    // 2 overall rating
+    let orderBy = request.input('orderBy') || 0
+
+    orderBy = parseInt(orderBy)
+
+    let order = 'distance'
+
+    switch(orderBy) {
+    case 1:
+      order = 'price'
+      break;
+    case 2:
+      order = 'overall_rating'
+      break;
+    default:
+      order = 'distance'
+    }
 
     let options = {
       provider: 'google',
@@ -43,6 +64,7 @@ class ProfileController {
     .inRange(3000, res)
     .category(request.input('category'))
     .search(request.input('search'))
+    .orderBy(order, orderBy == 2 ? 'desc' : 'asc')
     .paginate(page, 25)
 
     const components = request.except('page')
