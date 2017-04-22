@@ -34,7 +34,8 @@ class DatabaseSeeder {
       lat: '46.020569',
       lng: '8.970071',
       city: 'Lugano',
-      user_id: null
+      user_id: null,
+      overall_rating: 1
     })
 
     yield Profile.create({
@@ -48,7 +49,8 @@ class DatabaseSeeder {
       lat: '46.091604',
       lng: '8.922933',
       city: 'Mezzovico-Vira',
-      user_id: null
+      user_id: null,
+      overall_rating: 2
     })
 
     yield Profile.create({
@@ -62,7 +64,8 @@ class DatabaseSeeder {
       lat: '45.967347',
       lng: '8.924697',
       city: 'Lugano',
-      user_id: null
+      user_id: null,
+      overall_rating: 4
     })
 
     yield Profile.create({
@@ -76,7 +79,8 @@ class DatabaseSeeder {
       lat: '46.537320',
       lng: '9.875321',
       city: 'Samaden',
-      user_id: null
+      user_id: null,
+      overall_rating: 2
     })
 
     yield Profile.create({
@@ -90,7 +94,8 @@ class DatabaseSeeder {
       lat: '46.031668',
       lng: '8.973651',
       city: 'Davesco-Soragno',
-      user_id: null
+      user_id: null,
+      overall_rating: 4
     })
 
     yield Profile.create({
@@ -104,7 +109,8 @@ class DatabaseSeeder {
       lat: '45.837612',
       lng: '9.031572',
       city: 'Chiasso',
-      user_id: null
+      user_id: null,
+      overall_rating: 1
     })
 
     yield Profile.create({
@@ -118,7 +124,8 @@ class DatabaseSeeder {
       lat: '45.966269',
       lng: '8.923949',
       city: 'Lugano',
-      user_id: null
+      user_id: null,
+      overall_rating: 5
     })
 
     yield Profile.create({
@@ -132,7 +139,8 @@ class DatabaseSeeder {
       lat: '46.157442',
       lng: '8.773200',
       city: 'Ascona',
-      user_id: null
+      user_id: null,
+      overall_rating: 1
     })
 
     yield Profile.create({
@@ -146,7 +154,8 @@ class DatabaseSeeder {
       lat: '46.014447',
       lng: '8.963594',
       city: 'Viganello',
-      user_id: null
+      user_id: null,
+      overall_rating: 2
     })
 
     yield Profile.create({
@@ -160,7 +169,8 @@ class DatabaseSeeder {
       lat: '47.376887',
       lng: '8.541694',
       city: 'Cremenaga',
-      user_id: null
+      user_id: null,
+      overall_rating: 3
     })
 
     yield Review.create({ comment: 'Did a decent job', vote_price: 2, vote_quality: 2, vote_overall: 1, profile_id: 5 })

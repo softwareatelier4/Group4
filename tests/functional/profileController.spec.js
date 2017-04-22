@@ -113,13 +113,13 @@ describe('ProfileController', function () {
       })
     })
 
-    it('should sort the result by overall rating asc', function() {
+    it('should sort the result by overall rating desc', function() {
 
       before(function(done){
         browser.visit('/profiles?orderBy=2', done)
       })
 
-      let rating = -1;
+      let rating = 50;
       let results = browser.querySelectorAll('.ratings > option:checked')
 
       // Need to rewrite this test because, results is empty
@@ -127,7 +127,8 @@ describe('ProfileController', function () {
       _.forEach(results, function(el) {
 
         let r = parseFloat(el.innerHTML)
-        assert(rating <= r)
+        console.log(r)
+        assert(rating >= r)
         rating = r
 
       })
