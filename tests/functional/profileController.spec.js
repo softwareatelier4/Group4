@@ -1,3 +1,4 @@
+'use strict'
 /* eslint-env mocha */
 
 const Browser = require('zombie')
