@@ -1,5 +1,7 @@
 'use strict'
 
+const URL = require('url').URL;
+
 class GlobalHelpers {
 
   static get inject () {
@@ -16,8 +18,17 @@ class GlobalHelpers {
     const allCategories = yield this.Category.all()
     view.global('allCategories', allCategories.toJSON())
 
+
+    let queryWithoutOrder = '/profiles?'
+
+    const components = request.except('orderBy')
+
+    for ( var key in request.except('orderBy') )
+          queryWithoutOrder += `${key}=${decodeURIComponent(components[key])}&`
+
     response.viewInstance = use('View')
     response.viewInstance.global('request', request.all())
+    response.viewInstance.global('queryWithoutOrder', queryWithoutOrder)
     yield next
   }
 
