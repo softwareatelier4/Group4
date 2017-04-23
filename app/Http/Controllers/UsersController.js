@@ -11,22 +11,6 @@ class UsersController {
   }
 
   * index (request, response) {
-    // // Login and logout
-
-    // if (request.currentUser) {
-    //   yield request.auth.logout()
-    //   yield response.sendView('index')
-    //   return
-    // }
-
-    // const email = request.input('email')
-    // const password = request.input('password')
-
-    // try { yield request.auth.attempt(email, password) } catch (e) {
-    //   response.unauthorized('Invalid credentails')
-    //   return
-    // }
-
     yield response.redirect('/')
   }
 
@@ -47,7 +31,6 @@ class UsersController {
     if (request.currentUser) {
       yield request.auth.logout()
     }
-
     response.redirect('back')
   }
   * create (request, response) {
