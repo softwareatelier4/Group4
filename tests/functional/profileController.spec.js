@@ -144,8 +144,8 @@ describe('ProfileController', function () {
       browser.assert.element('input[name="login"][type="submit"]')
     })
 
-    it('should contain input to register', function () {
-      browser.assert.element('input[name="register"][type="submit"]')
+    it('should contain button to register', function () {
+      browser.assert.link('a', 'Register', '/register')
     })
   })
 })
