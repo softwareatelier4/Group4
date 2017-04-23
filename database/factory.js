@@ -37,7 +37,7 @@ Factory.blueprint('App/Model/Profile', (fake) => {
   }
 })
 
-Factory.categoriesNumber = 5
+Factory.categoriesNumber = 2
 
 Factory.blueprint('App/Model/Category', () => {
   return {
