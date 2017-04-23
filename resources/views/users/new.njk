@@ -2,41 +2,32 @@
 
 {% block content %}
 
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-6 result-item">
+      {{ form.open({action: 'UsersController.store'}) }}
 
-{{ form.open({action: 'UsersController.store'}) }}
+      {{ csrfField }}
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" name="name" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
+      </div>  
+      <div class="form-group">
+        <label>Email address</label>
+        <input type="email" name="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" name="password" class="form-control" placeholder="Password">
+      </div>
 
-  {{ csrfField }}
+      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="reset" class="btn btn-primary">Reset</button>
+      {{ form.close() }}
 
-  <div class="register-form">
-
-  <div class="field register-item">
-    {{ form.label('name', 'Choose a name') }}
-    {{ form.text('name') }}
+    </div>
   </div>
-
-  <div class="field register-item">
-    {{ form.label('email', 'Enter email address') }}
-    {{ form.text('email') }}
-  </div>
-
-  <div class="field register-item">
-    {{ form.label('password', 'Choose a strong password') }}
-    {{ form.password('password') }}
-  </div>
-
-  <div class="field register-item">
-    {{ form.label('type', 'Choose a profile type') }}
-    {{ form.select('type', ['worker','user'], { class: 'register-select' }) }}
-  </div>
-
-  <div class="button register-button">
-    {{ form.submit('Register', 'register', { class: 'btn btn-primary btn-block' }) }}
-
-    <input class="btn btn-primary btn-block" type="reset" value="Reset"></input>
-  </div>
-  </div>
-
-{{ form.close() }}
+</div>
 
 
 {% endblock %}

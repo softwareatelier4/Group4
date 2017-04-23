@@ -39,7 +39,7 @@
                     ACCOUNT
                   </button>
                   <ul class="dropdown-menu login-dropdown">
-                    {{ form.open({action: 'UsersController.index'}) }}
+                    {{ form.open({action: 'UsersController.login', method: 'POST'}) }}
                     {{ csrfField }}
                     <li class="nav-link login-item">
                       {{ form.label('username', 'Username') }}
@@ -53,9 +53,11 @@
                       {{ form.submit('Login', 'login', { class: 'btn btn-primary btn-block' }) }}
                     </li>
                     {{ form.close() }}
+                    <li class="nav-link">
+                      <a href="/register" class="btn btn-primary btn-block">Register</a>
+                    </li>  
                   </ul>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="/users/create">REGISTER</a></li>
               {% endif %}
 
 

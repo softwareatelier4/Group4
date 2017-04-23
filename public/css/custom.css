@@ -185,3 +185,8 @@ a.badge-anchor{
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
 }
 
+
+.nav-item.username{
+  margin-top: 7px;
+}
+

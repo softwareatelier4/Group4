@@ -24,9 +24,19 @@ describe('ProfileController', function () {
       browser.assert.text('a[href="/profiles"]', 'BROWSE')
     })
 
-    it('should contain an empty searchbox with placeholder Plumber', function () {
+
+    /* it('should contain an anchor to login', function () {
+      browser.assert.text('ul.navbar-nav li:nth-child(0) a', 'LOGIN')
+      })
+
+      it('should contain an anchor to register', function () {
+      browser.assert.text('ul.navbar-nav li:nth-child(2) a', 'REGISTER')
+      }) */
+
+    it('should contain an empty searchbox with placeholder Search', function () {
+
       browser.assert.attribute('#searchbox', 'value', '')
-      browser.assert.attribute('#searchbox', 'placeholder', 'Plumber')
+      browser.assert.attribute('#searchbox', 'placeholder', 'Search')
     })
 
     it('should contain a select input for city', function () {
@@ -54,31 +64,27 @@ describe('ProfileController', function () {
   })
 
   describe('index:view sorting result', function () {
-
-    before(function(done){
+    before(function (done) {
       browser.visit('/profiles', done)
     })
 
-    it('should contain anchors to sort by Distance', function() {
+    it('should contain anchors to sort by Distance', function () {
       browser.assert.link('a', 'Distance', /orderBy=0/)
     })
 
-    it('should contain anchors to sort by Price', function() {
+    it('should contain anchors to sort by Price', function () {
       browser.assert.link('a', 'Price', /orderBy=1/)
-
     })
 
-    it('should contain anchors to sort by Overall rating', function() {
+    it('should contain anchors to sort by Overall rating', function () {
       browser.assert.link('a', 'Rating', /orderBy=2/)
     })
 
-    it('should sort the result by distance asc by default', function() {
-
-      let distance = -1;
+    it('should sort the result by distance asc by default', function () {
+      let distance = -1
       let results = browser.querySelectorAll('.result-item-title+div')
 
-      _.forEach(results, function(el) {
-
+      _.forEach(results, function (el) {
         let d = el.innerHTML
         d = parseInt(_.replace(d, 'km'))
         assert(distance <= d)
@@ -86,47 +92,40 @@ describe('ProfileController', function () {
       })
     })
 
-    it('should sort the result by price asc', function() {
-
-      before(function(done){
+    it('should sort the result by price asc', function () {
+      before(function (done) {
         browser.visit('/profiles?orderBy=1', done)
       })
 
-      let price = -1;
+      let price = -1
       let results = browser.querySelectorAll('.item-price > span')
 
       // Need to rewrite this test because, results is empty
       // This error happens only in test environment
-      _.forEach(results, function(el) {
-
+      _.forEach(results, function (el) {
         let p = parseFloat(el.innerHTML)
         assert(price <= p)
         distance = p
-
       })
     })
 
-    it('should sort the result by overall rating desc', function() {
-
-      before(function(done){
+    it('should sort the result by overall rating desc', function () {
+      before(function (done) {
         browser.visit('/profiles?orderBy=2', done)
       })
 
-      let rating = 50;
+      let rating = 50
       let results = browser.querySelectorAll('.ratings > option:checked')
 
       // Need to rewrite this test because, results is empty
       // This error happens only in test environment
-      _.forEach(results, function(el) {
-
+      _.forEach(results, function (el) {
         let r = parseFloat(el.innerHTML)
         console.log(r)
         assert(rating >= r)
         rating = r
-
       })
     })
-
   })
   describe('master:view login interface', function () {
 
@@ -145,8 +144,8 @@ describe('ProfileController', function () {
       browser.assert.element('input[name="login"][type="submit"]')
     })
 
-    it('should contain input to register', function () {
-      browser.assert.element('input[name="register"][type="submit"]')
+    it('should contain button to register', function () {
+      browser.assert.link('a', 'Register', '/register')
     })
   })
 })
