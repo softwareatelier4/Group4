@@ -21,9 +21,13 @@ Route.get('/', 'HomeController.index')
 Route.resource('profiles', 'ProfileController')
 Route.resource('profiles.reviews', 'ReviewController')
 Route.resource('reviews.answer', 'AnswerController')
-//Route.resource('users', 'UsersController')
+// Route.resource('users', 'UsersController')
+
 Route.post('/login', 'UsersController.login')
 Route.get('/logout', 'UsersController.logout')
+Route.get('register', 'UsersController.create')
+Route.get('store', 'UsersController.store')
+
 // Route.get('/profile:id', function * (request, response) {
 //   const id = request.param('id')
 //   response.send(`Profile page for user with id ${id}`)

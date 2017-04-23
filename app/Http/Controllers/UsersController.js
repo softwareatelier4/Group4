@@ -10,29 +10,27 @@ class UsersController {
     this.User = User
   }
 
-  // * index (request, response) {
-  //   // // Login and logout
+  * index (request, response) {
+    // // Login and logout
 
-  //   // if (request.currentUser) {
-  //   //   yield request.auth.logout()
-  //   //   yield response.sendView('index')
-  //   //   return
-  //   // }
+    // if (request.currentUser) {
+    //   yield request.auth.logout()
+    //   yield response.sendView('index')
+    //   return
+    // }
 
-  //   // const email = request.input('email')
-  //   // const password = request.input('password')
+    // const email = request.input('email')
+    // const password = request.input('password')
 
-  //   // try { yield request.auth.attempt(email, password) } catch (e) {
-  //   //   response.unauthorized('Invalid credentails')
-  //   //   return
-  //   // }
+    // try { yield request.auth.attempt(email, password) } catch (e) {
+    //   response.unauthorized('Invalid credentails')
+    //   return
+    // }
 
-  //   yield response.sendView('index')
+    yield response.redirect('/')
+  }
 
-  // }
-
-  * login(request, response) {
-
+  * login (request, response) {
     const email = request.input('email')
     const password = request.input('password')
     const login = yield request.auth.attempt(email, password)
@@ -45,19 +43,20 @@ class UsersController {
     response.unauthorized('Invalid credentails')
   }
 
-
-  * logout(request, response) {
-
+  * logout (request, response) {
     if (request.currentUser) {
       yield request.auth.logout()
     }
 
     response.redirect('back')
-
   }
   * create (request, response) {
     // Display a form to create a new user
-    yield response.sendView('users.new')
+    if (!request.currentUser) {
+      yield response.sendView('users.new')
+    } else {
+      response.redirect('profiles')
+    }
   }
 
   * store (request, response) {

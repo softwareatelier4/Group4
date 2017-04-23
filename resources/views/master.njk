@@ -26,11 +26,14 @@
           <a class="navbar-brand" href="/profiles"><img src="/assets/logo.png"/></a>
           <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
             <ul class="navbar-nav">
-
+              {% if currentUser %}
+                <li class="nav-item username">Welcome <b>{{ currentUser.name }}</b></li>
+                
+              {% endif %}
               <li class="nav-item"><a class="nav-link" href="/profiles">BROWSE</a></li>
 
               <!-- LOGIN / LOGOUT -->
-
+        
               {% if currentUser %}
                 <li class="nav-item"><a class="nav-link" href="/logout">LOGOUT</a></li>
               {% else %}
@@ -55,11 +58,9 @@
                       {{ form.submit('Login', 'login', { class: 'btn btn-primary btn-block' }) }}
                     </li>
                     {{ form.close() }}
-                    {#{ form.open({action: 'UsersController.create'}) }#}
                     <li class="nav-link">
-                      {{ form.submit('Register', 'register', { class: 'btn btn-primary btn-block' }) }}
-                    </li>
-                    {#{ form.close() }#}
+                      <a href="/register" class="btn btn-primary btn-block">Register</a>
+                    </li>  
                   </ul>
                 </li>
               {% endif %}
