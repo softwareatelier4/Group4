@@ -75,35 +75,136 @@ a.badge-anchor{
 
 .register-form {
   /*background-color: red;*/
-  margin-left: 5%;
-  margin-right: 10%;
-  margin-top: 2%;
   text-align: justify;
-
+  margin: auto;
+  margin-top: 3%;
+  width: 75%;
+  border-top:1.5px solid;
+  border-bottom:1.5px solid;
+  border-color: #0275d8;
+  /*border-radius: 0.25rem;*/
+  padding: 10px;
 }
 
 .register-item {
-  margin-top: 8px;
-  padding: 0.5rem 0.75rem;
-  font-size: 1rem;
-  line-height: 1.25;
-  color: #464a4c;
+  margin-top: 2%;
 }
 
-.register-button{
+.btn-custom{
+  color: #fff;
+  background-color: #0275d8;
+  border-color: #0275d8;
+  font-weight: normal;
+  line-height: 1.25;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  width: 100px;
+  margin-left: 12px;
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  margin-top: 5%;
+}
+
+.text-custom{
+  color: #fff;
+  background-color: #0275d8;
+  border-color: #0275d8;
+  font-weight: normal;
+  line-height: 1.25;
   text-align: left;
-  margin-right: 25px;
-  /*text-align: center; !important;*/
-  width: 200px;!important;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  width: 150px;
+  margin-left: 12px;
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+.field-custom{
+  color: #0275d8;
+  /*background-color: #0275d8;*/
+  border-color: #0275d8;
+  font-weight: normal;
+  line-height: 1.25;
+  text-align: center;
+  white-space: nowrap;
+  /*vertical-align: middle;*/
+  user-select: none;
+  border: 1px solid;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  width: 200px;
+
+  /*margin-bottom: auto;*/
+  margin-left: 12px;
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+.name-custom {
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: contain;
+  background-image: url("../imgs/ic_account_circle_white_24px.svg");
+}
+
+.email-custom {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: right;
+  background-image: url("../imgs/ic_email_white_24px.svg");
+}
+
+.type-custom {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: right;
+  background-image: url("../imgs/ic_work_white_24px.svg");
+}
+
+.pass-custom {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: right;
+  background-image: url("../imgs/ic_lock_outline_white_24px.svg");
 }
 
 .register-item #type {
-  font-size: 1rem;
+  color: #0275d8;
+  /*background-color: #0275d8;*/
+  border-color: #0275d8;
+  font-weight: normal;
   line-height: 1.25;
-  color: #464a4c;
-  background-color: rgba(250,250,250,1);
+  text-align: center;
+  white-space: nowrap;
+  /*vertical-align: middle;*/
+  user-select: none;
+  /*border: 1px solid transparent;*/
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  width: 200px;
+  /*margin-bottom: auto;*/
+  margin-left: 12px;
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
-
 
 .login-dropdown{
   border: solid;
@@ -114,7 +215,6 @@ a.badge-anchor{
 }
 
 .account-item {
-
   display: block;
   width: 100%;
   padding: 0.5rem 0.75rem;
@@ -135,7 +235,6 @@ a.badge-anchor{
 }
 
 .account-item:focus{
-
   display: block;
   width: 100%;
   padding: 0.5rem 0.75rem;

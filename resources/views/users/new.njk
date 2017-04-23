@@ -10,29 +10,28 @@
   <div class="register-form">
 
   <div class="field register-item">
-    {{ form.label('name', 'Choose a name') }}
-    {{ form.text('name') }}
+    {{ form.label('name', 'Name', { class: 'text-custom name-custom' }) }}
+    {{ form.text('name', 'name',{ class: 'field-custom' }) }}
   </div>
 
   <div class="field register-item">
-    {{ form.label('email', 'Enter email address') }}
-    {{ form.text('email') }}
+    {{ form.label('email', 'E-mail', { class: 'text-custom email-custom' }) }}
+    {{ form.text('email', 'email' ,{ class: 'field-custom' }) }}
   </div>
 
   <div class="field register-item">
-    {{ form.label('password', 'Choose a strong password') }}
-    {{ form.password('password') }}
+    {{ form.label('password', 'Password', { class: 'text-custom pass-custom' }) }}
+    {{ form.password('password', 'password', { class: 'field-custom' }) }}
   </div>
 
   <div class="field register-item">
-    {{ form.label('type', 'Choose a profile type') }}
-    {{ form.select('type', ['worker','user'], { class: 'register-select' }) }}
+    {{ form.label('type', 'Profile type', { class: 'text-custom type-custom' }) }}
+    {{ form.select('type', ['worker','user'], { class: 'select-custom' }) }}
   </div>
 
   <div class="button register-button">
-    {{ form.submit('Register', 'register', { class: 'btn btn-primary btn-block' }) }}
-
-    <input class="btn btn-primary btn-block" type="reset" value="Reset"></input>
+    {{ form.submit('Register', 'register', { class: 'btn-custom' }) }}
+    <input class="btn-custom" type="reset" value="Reset">
   </div>
   </div>
 
