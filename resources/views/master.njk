@@ -12,8 +12,10 @@
   {#<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">#}
   <link rel="stylesheet" type="text/css" href="/css/custom.css">
   <link rel="stylesheet" type="text/css" href="/css/bars-square.css">
+
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+
   <link rel="stylesheet" type="text/css" href="/css/font-icon.css">
 </head>
 <body>
@@ -24,10 +26,15 @@
           <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <a class="navbar-brand" href="/"><img src="/assets/logo.png"/></a>
-
+          <a class="navbar-brand" href="/profiles"><img src="/assets/logo.png"/></a>
           <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
             <ul class="navbar-nav">
+              {% if currentUser %}
+                <li class="nav-item username">Welcome <b>{{ currentUser.name }}</b></li>
+                
+              {% endif %}
+              <li class="nav-item"><a class="nav-link" href="/profiles">BROWSE</a></li>
+
 
               <!-- Location dropdown button SHOULD BE AJAX -->
               <li class="dropdown nav-item">
@@ -57,13 +64,71 @@
               <li class="nav-item"><a class="nav-link" href="#">LOGIN</a></li>
               <li class="nav-item"><a class="nav-link" href="#">REGISTER</a> </li>
 
+              <!-- LOGIN / LOGOUT -->
+        
+              {% if currentUser %}
+                <li class="nav-item"><a class="nav-link" href="/logout">LOGOUT</a></li>
+              {% else %}
+
+                <li class="dropdown">
+                  {#<a class="nav-item form-control" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">ACCOUNT</a>#}
+                  <button class="btn form-control nav-link account-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    ACCOUNT
+                  </button>
+                  <ul class="dropdown-menu login-dropdown">
+                    {{ form.open({action: 'UsersController.login', method: 'POST'}) }}
+                    {{ csrfField }}
+                    <li class="nav-link login-item">
+                      {{ form.label('username', 'Username') }}
+                      {{ form.text('email') }}
+                    </li>
+                    <li class="nav-link login-item">
+                      {{ form.label('password', 'Password') }}
+                      {{ form.password('password') }}
+                    </li>
+                    <li class="nav-link login-item">
+                      {{ form.submit('Login', 'login', { class: 'btn btn-primary btn-block' }) }}
+                    </li>
+                    {{ form.close() }}
+                    <li class="nav-link">
+                      <a href="/register" class="btn btn-primary btn-block">Register</a>
+                    </li>  
+                  </ul>
+                </li>
+              {% endif %}
+
+
             </ul>
           </div>
-
         </nav>
       </div>
     </div>
   </div>
+
+<div class="container">
+   <form action="/profiles" class="mb-5" method="GET">
+    <div id="search-form" class="form-group row justify-content-center">
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="searchbox" name="search" placeholder="Search" value="{{ request.search }}">
+
+        <div id="search-position" class="input-group">
+          <span class="input-group-addon icon icon-basic-geolocalize-01 ja-input-icon" id="basic-addon1"></span>
+          <input type="text" class="form-control" id="searchlocationbox" name="location" placeholder="City" value="{{ request.location if (request.location) else userLocation.city }}">
+        </div>
+        <div id="search-category" class="input-group">
+          <select class="custom-select" name="category">
+          <option value="0" {{ "selected" if ( request.category == 0) }}>All categories</option>
+            {% for category in allCategories %}
+                <option value="{{ category.id }}" {{ "selected" if ( request.category == category.id) }}>{{ category.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <button id="search" type="submit" class="btn btn-primary">Search</button>
+      </div>
+    </div>
+  </form>
+</div>
 
   {% block content %}{% endblock %}
 
@@ -73,7 +138,9 @@
   <script type="text/javascript" src="/js/jquery.barrating.min.js"></script>
   {#<script type="text/javascript" src="/js/jquery-3.1.1.js"></script>#}
   {#<script type="text/javascript" src="/js/bootstrap.min.js"></script>#}
+
   <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+
 
   {% block javascript %}{% endblock %}
 </body>

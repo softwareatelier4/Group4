@@ -9,14 +9,19 @@ class ProfilesTableSchema extends Schema {
       table.increments('id').primary()
       table.text('title')
       table.text('description')
-      table.string('email').nullable()
+
       table.string('website').nullable()
       table.string('telephone').nullable()
-      table.string('price').nullable()
+      table.decimal('price', 5, 2).nullable()
       table.string('logo').nullable()
+      table.string('lat').nullable()
+      table.string('lng').nullable()
+      table.string('city').nullable()
 
-      table.integer('user_id').unsigned().nullable()
-      table.foreign('user_id').references('users.id').onDelete('SET NULL')
+      table.integer('overall_rating').nullable()
+
+      table.integer('user_id').unsigned()
+      table.foreign('user_id').references('user_accounts.id').onDelete('cascade')
 
       table.timestamps()
     })

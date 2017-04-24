@@ -1,6 +1,7 @@
 'use strict'
 
 const Lucid = use('Lucid')
+const Database = use('Database')
 
 class Profile extends Lucid {
 
@@ -9,16 +10,12 @@ class Profile extends Lucid {
     return this.belongsToMany('App/Model/Category', 'profile_categories')
   }
 
-  cities () {
-    return this.belongsToMany('App/Model/City', 'profile_cities')
-  }
-
   reviews () {
     return this.hasMany('App/Model/Review')
   }
 
   user () {
-    return this.belongsTo('App/Model/User')
+    return this.belongsTo('App/Model/UserAccount')
   }
 
 
@@ -27,38 +24,37 @@ class Profile extends Lucid {
   */
 
   static scopeCategory (builder, categoryQuery) {
-    if (categoryQuery) {
+    if (categoryQuery && categoryQuery != 0) {
       builder
       .innerJoin('profile_categories', 'profile_categories.profile_id', 'profiles.id')
       .innerJoin('categories', 'categories.id', 'profile_categories.category_id')
-      .where('categories.name', categoryQuery)
-      .select('profiles.*')
-    }
-  }
-
-  static scopeCity (builder, cityQuery) {
-    if (cityQuery) {
-      builder
-      .innerJoin('profile_cities', 'profile_cities.profile_id', 'profiles.id')
-      .innerJoin('cities', 'cities.id', 'profile_cities.city_id')
-      .where('cities.name', cityQuery)
+      .where('profile_categories.category_id', categoryQuery)
       .select('profiles.*')
     }
   }
 
   static scopeSearch (builder, searchQuery) {
     if (searchQuery) {
-      var keywords = searchQuery.split(' ')
+      let keywords = searchQuery.split(' ')
 
-      for (var i = 0; i < keywords.length; i++) {
+      for (let i = 0; i < keywords.length; i++) {
         const key = keywords[i]
         builder.where(function () {
           this.orWhere('title', 'like', `%${key}%`)
-        .orWhere('description', 'like', `%${key}%`)
-        .orWhere('website', 'like', `%${key}%`)
+          .orWhere('description', 'like', `%${key}%`)
+          .orWhere('website', 'like', `%${key}%`)
         })
       }
     }
+  }
+  static scopeInRange (builder, maxDistance, res) {
+    const lat = res[0].latitude
+    const long = res[0].longitude
+
+    let str = '*, (6371 * acos (  cos ( radians(?) )    * cos( radians( lat ) )  * cos( radians( lng ) - radians(?) )   + sin ( radians(?) ) * sin( radians( lat ) ))) AS distance'
+    builder.select(Database.raw(str, [lat, long, lat]))
+    .groupBy('distance')
+    .having('distance', '<', 18919819818919881)
   }
 }
 

@@ -5,7 +5,7 @@
   "scripts": {
     "start": "echo \"\\033[31mWARN: 'start' will be depreciated soon. Instead use 'npm run serve'\" && npm run serve",
     "dev": "echo \"\\033[31mWARN: 'dev' will be depreciated soon. Instead use 'npm run serve:dev'\" && npm run serve:dev",
-    "serve:webstorm": "nodemon --watch app --watch bootstrap --watch config --watch .env -x \"node --harmony $NODE_DEBUG_OPTION server.js\"",
+    "serve:webstorm": "nodemon --watch app --watch bootstrap --watch config --watch .env -x \"node --harmony_proxies $NODE_DEBUG_OPTION server.js\"",
     "serve:dev": "nodemon --watch app --watch bootstrap --watch config --watch .env -x \"node --harmony_proxies server.js\"",
     "serve": "node --harmony_proxies server.js",
     "lint": "standard",
@@ -18,6 +18,7 @@
   "repository": "softwareatelier4/Group4",
   "private": true,
   "dependencies": {
+    "@google/maps": "^0.3.1",
     "adonis-ace": "^3.0.7",
     "adonis-auth": "^1.0.5",
     "adonis-commands": "^2.1.5",
@@ -27,8 +28,13 @@
     "adonis-middleware": "^1.0.11",
     "adonis-websocket": "^1.0.3",
     "faker": "^4.1.0",
+    "geoip-lite": "^1.2.0",
+    "geolib": "^2.0.22",
     "istanbul": "^0.4.5",
     "mocha-jenkins-reporter": "^0.3.6",
+    "mysql": "^2.13.0",
+    "node-geocoder": "^3.16.0",
+    "q": "^1.5.0",
     "standard": "^8.6.0",
     "youch": "^2.0.4",
     "adonis-validation-provider": "^3.0.5"

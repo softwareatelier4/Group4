@@ -20,7 +20,9 @@ const Route = use('Route')
 Route.get('/', 'HomeController.index')
 Route.resource('profiles', 'ProfileController')
 Route.resource('profiles.reviews', 'ReviewController')
+
 Route.resource('profiles.create', 'ProfileController.create')
+
 
 Route.resource('reviews.answer', 'AnswerController')
 
