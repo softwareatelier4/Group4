@@ -15,9 +15,19 @@
   </div>
 
   <div class="field register-item">
+    {{ form.label('lastname', 'Last Name', { class: 'text-custom name-custom' }) }}
+    {{ form.text('lastname', 'last name',{ class: 'field-custom' }) }}
+  </div>
+
+  <div class="field register-item">
     {{ form.label('email', 'E-mail', { class: 'text-custom email-custom' }) }}
     {{ form.text('email', 'email' ,{ class: 'field-custom' }) }}
   </div>
+
+    <div class="field register-item">
+      {{ form.label('location', 'Location', { class: 'text-custom location-custom' }) }}
+      {{ form.password('location', 'location', { class: 'field-custom' }) }}
+    </div>
 
   <div class="field register-item">
     {{ form.label('password', 'Password', { class: 'text-custom pass-custom' }) }}
