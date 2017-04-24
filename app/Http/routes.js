@@ -21,3 +21,10 @@ Route.get('/', 'HomeController.index')
 Route.resource('profiles', 'ProfileController')
 Route.resource('profiles.reviews', 'ReviewController')
 Route.resource('profiles.create', 'ProfileController.create')
+
+Route.resource('reviews.answer', 'AnswerController')
+
+Route.post('/login', 'UsersController.login')
+Route.get('/logout', 'UsersController.logout')
+Route.get('register', 'UsersController.create')
+Route.get('store', 'UsersController.store')
