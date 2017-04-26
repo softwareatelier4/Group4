@@ -4,10 +4,66 @@
 
 <div class="container">
   <div class="row justify-content-center">
+    <div class="col-12 col-md-10 text-right">
+      <a href="#" id="showFilters">Show filters</a>
+    </div>
+  </div>
+  <div id="filters" class="row justify-content-center hidden-xs-up text-center">
+    <div class="col-12 col-md-10">
+      <form action="/profiles" class="mb-5" method="GET">
+        <div class="row result-item">
+          <div class="col-12 col-md-4">
+            Distance (km)
+            <hr>
+            <div class="row mb-3">
+              <div class="col-4">
+                <input type="number" id="distance-min-value" class="form-control" min="0" max="500" value="0">
+              </div>
+              <div class="col-4 offset-4 float-right">
+                <input type="number" id="distance-max-value" class="form-control" min="0" max="500" value="500">
+              </div>
+            </div>
+            <div id="slider-distance"></div>
+          </div>
+          <div class="col-12 col-md-4">
+            Price
+            <hr>
+            <div class="row mb-3">
+              <div class="col-4">
+                <input type="number" id="price-min-value" class="form-control" min="0" max="1000" value="0">
+              </div>
+              <div class="col-4 offset-4 float-right">
+                <input type="number" id="price-max-value" class="form-control" min="0" max="1000" value="1000">
+              </div>
+            </div>
+            <div id="slider-price"></div>
+          </div>
+          <div class="col-12 col-md-4">
+            Rating
+            <hr>
+            <div class="row mb-3">
+              <div class="col-4">
+                <input type="number" id="rating-min-value" class="form-control" min="1" max="5" value="1">
+              </div>
+              <div class="col-4 offset-4 float-right">
+                <input type="number" id="rating-max-value" class="form-control" min="1" max="5" value="5">
+              </div>
+            </div>
+            <div id="slider-rating"></div>
+          </div>
+          <div class="col-12 float-right">
+            <hr>
+            <button type="submit" class="btn btn-primary btn-md float-right">Filter</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row justify-content-center">
     <div class="col-12 col-md-10">
       <div class="row">
         <nav id="orderBy" class="nav">
-          <a class="nav-link disabled" href="#">Sort by</a>
+          <span class="nav-link " href="#">Sort by</span>
           <a class="nav-link active" href="{{ queryWithoutOrder + 'orderBy=0' }}">Distance</a>
           <a class="nav-link active" href="{{ queryWithoutOrder + 'orderBy=1' }}">Price</a>
           <a class="nav-link active" href="{{ queryWithoutOrder + 'orderBy=2' }}">Rating</a>
@@ -27,7 +83,7 @@
             <div class="col-8 result-item-title">
               <a href="/profiles/{{ profile.id }}">{{ profile.title }}</a>
             </div>
-              <div class="col-4 text-right"> {{ profile.distance | round }} km</a></div>
+            <div class="col-4 text-right"> {{ profile.distance | round }} km</a></div>
           </div>
           <div class="row result-item-detail">
             <div class="col"><a href="{{profile.website}}"> {{ profile.website }} </a></div>
@@ -42,21 +98,21 @@
           <div class="row">
             <div class="col-4 justify-content-end">
               <select class="ratings" autocomplete="off" style="display: none;" >
-								<option value="1" {{ "selected" if (profile.overall_rating == 1) }}>1</option>
-								<option value="2" {{ "selected" if (profile.overall_rating == 2) }}>2</option>
-								<option value="3" {{ "selected" if (profile.overall_rating == 3) }}>3</option>
-								<option value="4" {{ "selected" if (profile.overall_rating == 4) }}>4</option>
-								<option value="5" {{ "selected" if (profile.overall_rating == 5) }}>5</option>
-							</select>
+                <option value="1" {{ "selected" if (profile.overall_rating == 1) }}>1</option>
+                <option value="2" {{ "selected" if (profile.overall_rating == 2) }}>2</option>
+                <option value="3" {{ "selected" if (profile.overall_rating == 3) }}>3</option>
+                <option value="4" {{ "selected" if (profile.overall_rating == 4) }}>4</option>
+                <option value="5" {{ "selected" if (profile.overall_rating == 5) }}>5</option>
+              </select>
             </div>
             <div class="col-8 text-right item-price">
               $<span>{{ profile.price }}</span>
             </div>
           </div>
-       </div>
-     </div>
-     {% else %}
-     <div class="alert alert-warning font-italic" role="alert">
+        </div>
+      </div>
+      {% else %}
+      <div class="alert alert-warning font-italic" role="alert">
        Your search did not match any profile.
      </div>
 
@@ -96,23 +152,94 @@
           </ul>
         </nav>
       </div>
-     </div>
-     <!-- END Pagination -->
-     {% endif %}
-
     </div>
+    <!-- END Pagination -->
+    {% endif %}
+
   </div>
+</div>
 
 </div>
 {% endblock %}
 
 {% block javascript %}
-  <script type="text/javascript">
-  	$('.ratings').barrating('show', {
-			theme: 'bars-square',
-			showValues: true,
-			showSelectedRating: false,
-			readonly: true,
-		});
-  </script>
+<script type="text/javascript">
+ $('.ratings').barrating('show', {
+   theme: 'bars-square',
+   showValues: true,
+   showSelectedRating: false,
+   readonly: true,
+ });
+
+ $("#showFilters").click(function() {
+  $("#filters").toggleClass('hidden-xs-up')
+});
+
+ $( "#slider-distance" ).slider({
+  range: true,
+  min: 0,
+  max: 500,
+  values: [ 0, 500 ],
+  step: 10,
+  slide: function(event, ui) {
+    $("#distance-min-value").val(ui.values[0]);
+    $("#distance-max-value").val(ui.values[1]);
+  }
+});
+
+ $( "#slider-price" ).slider({
+  range: true,
+  min: 0,
+  max: 1000,
+  values: [ 0, 1000 ],
+  step: 10,
+  slide: function(event, ui) {
+    $("#price-min-value").val(ui.values[0]);
+    $("#price-max-value").val(ui.values[1]);
+  }
+});
+
+ $( "#slider-rating" ).slider({
+  range: true,
+  min: 1,
+  max: 5,
+  values: [ 1, 5 ],
+  step: 1,
+  slide: function(event, ui) {
+    $("#rating-min-value").val(ui.values[0]);
+    $("#rating-max-value").val(ui.values[1]);
+  }
+});
+
+
+ $("#distance-min-value").change(function(){
+  $("#slider-distance").slider("values", 0, $("#distance-min-value").val())
+})
+
+ $("#distance-max-value").change(function(){
+  $("#slider-distance").slider("values", 1, $("#distance-max-value").val())
+})
+
+
+ $("#price-min-value").change(function(){
+  $("#slider-price").slider("values", 0, $("#price-min-value").val())
+})
+
+ $("#price-max-value").change(function(){
+  $("#slider-price").slider("values", 1, $("#price-max-value").val())
+})
+
+ $("#rating-min-value").change(function(){
+  $("#slider-rating").slider("values", 0, $("#rating-min-value").val())
+})
+
+ $("#rating-max-value").change(function(){
+  $("#slider-rating").slider("values", 1, $("#rating-max-value").val())
+})
+
+
+
+
+
+</script>
 {% endblock  %}
