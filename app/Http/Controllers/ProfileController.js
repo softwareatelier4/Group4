@@ -31,15 +31,15 @@ class ProfileController {
 
     let order = 'distance'
 
-    switch(orderBy) {
-    case 1:
-      order = 'price'
-      break;
-    case 2:
-      order = 'overall_rating'
-      break;
-    default:
-      order = 'distance'
+    switch (orderBy) {
+      case 1:
+        order = 'price'
+        break
+      case 2:
+        order = 'overall_rating'
+        break
+      default:
+        order = 'distance'
     }
 
     let options = {
@@ -61,8 +61,10 @@ class ProfileController {
 
     const profiles = yield this.Profile
     .query()
-    .inRange(3000, res)
     .category(request.input('category'))
+    .price(request.input('minPrice'), request.input('maxPrice'))
+    .rating(request.input('minRate'), request.input('maxRate'))
+    .distance(request.input('minDist'), request.input('maxDist'), res)
     .search(request.input('search'))
     .orderBy(order, orderBy == 2 ? 'desc' : 'asc')
     .paginate(page, 25)

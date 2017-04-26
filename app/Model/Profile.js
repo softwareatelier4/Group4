@@ -45,14 +45,30 @@ class Profile extends Lucid {
       }
     }
   }
-  static scopeInRange (builder, maxDistance, res) {
+
+  static scopePrice (builder, min, max) {
+    min = min || 0
+    max = max || 1000
+    builder.whereBetween('price', [min, max]).orWhere('price', null)
+  }
+
+  static scopeRating (builder, min, max) {
+    min = min || 1
+    max = max || 5
+    builder.whereBetween('overall_rating', [min, max]).orWhere('overall_rating', null)
+  }
+
+  static scopeDistance (builder, min, max, res) {
+    min = min || 0
+    max = max || 500
     const lat = res[0].latitude
     const long = res[0].longitude
 
     let str = '*, (6371 * acos (  cos ( radians(?) )    * cos( radians( lat ) )  * cos( radians( lng ) - radians(?) )   + sin ( radians(?) ) * sin( radians( lat ) ))) AS distance'
     builder.select(Database.raw(str, [lat, long, lat]))
     .groupBy('distance')
-    .having('distance', '<', 18919819818919881)
+    .having('distance', '>=', min)
+    .having('distance', '<=', max)
   }
 }
 

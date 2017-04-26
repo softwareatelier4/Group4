@@ -13,14 +13,14 @@
       <form action="/profiles" class="mb-5" method="GET">
         <div class="row result-item">
           <div class="col-12 col-md-4">
-            Distance (km)
+            Distance (km) 
             <hr>
             <div class="row mb-3">
               <div class="col-4">
-                <input type="number" id="distance-min-value" class="form-control" min="0" max="500" value="0">
+                <input type="number" id="distance-min-value" name="minDist" class="form-control" min="0" max="500" value="{{ request.minDist or 0 }}">
               </div>
               <div class="col-4 offset-4 float-right">
-                <input type="number" id="distance-max-value" class="form-control" min="0" max="500" value="500">
+                <input type="number" id="distance-max-value" name="maxDist" class="form-control" min="0" max="500" value="{{ request.maxDist or 500 }}">
               </div>
             </div>
             <div id="slider-distance"></div>
@@ -30,10 +30,10 @@
             <hr>
             <div class="row mb-3">
               <div class="col-4">
-                <input type="number" id="price-min-value" class="form-control" min="0" max="1000" value="0">
+                <input type="number" id="price-min-value" name="minPrice" class="form-control" min="0" max="1000" value="{{ request.minPrice or 0 }}">
               </div>
               <div class="col-4 offset-4 float-right">
-                <input type="number" id="price-max-value" class="form-control" min="0" max="1000" value="1000">
+                <input type="number" id="price-max-value" name="maxPrice" class="form-control" min="0" max="1000" value="{{ request.maxPrice or 1000 }}">
               </div>
             </div>
             <div id="slider-price"></div>
@@ -43,10 +43,10 @@
             <hr>
             <div class="row mb-3">
               <div class="col-4">
-                <input type="number" id="rating-min-value" class="form-control" min="1" max="5" value="1">
+                <input type="number" id="rating-min-value" name="minRate" class="form-control" min="1" max="5" value="{{ request.minRate or 1 }}">
               </div>
               <div class="col-4 offset-4 float-right">
-                <input type="number" id="rating-max-value" class="form-control" min="1" max="5" value="5">
+                <input type="number" id="rating-max-value" name="maxRate" class="form-control" min="1" max="5" value="{{ request.maxRate or 5 }}">
               </div>
             </div>
             <div id="slider-rating"></div>
@@ -179,7 +179,7 @@
   range: true,
   min: 0,
   max: 500,
-  values: [ 0, 500 ],
+  values: [ {{ request.minDist or 0 }}, {{ request.maxDist or 500 }} ],
   step: 10,
   slide: function(event, ui) {
     $("#distance-min-value").val(ui.values[0]);
@@ -191,7 +191,7 @@
   range: true,
   min: 0,
   max: 1000,
-  values: [ 0, 1000 ],
+  values: [ {{ request.minPrice or 0 }}, {{ request.maxPrice or 1000 }} ],
   step: 10,
   slide: function(event, ui) {
     $("#price-min-value").val(ui.values[0]);
@@ -203,7 +203,7 @@
   range: true,
   min: 1,
   max: 5,
-  values: [ 1, 5 ],
+  values: [ {{ request.minRate or 1 }}, {{ request.maxRate or 5 }} ],
   step: 1,
   slide: function(event, ui) {
     $("#rating-min-value").val(ui.values[0]);
