@@ -8,6 +8,7 @@ const ProfileController = use('App/Http/Controllers/ProfileController')
 
 describe('ProfileController', function () {
   const browser = new Browser()
+  this.timeout(15000)
 
   before(function (done) {
     browser.visit('/profiles', done)
@@ -24,7 +25,6 @@ describe('ProfileController', function () {
       browser.assert.text('a[href="/profiles"]', 'BROWSE')
     })
 
-
     /* it('should contain an anchor to login', function () {
       browser.assert.text('ul.navbar-nav li:nth-child(0) a', 'LOGIN')
       })
@@ -34,7 +34,6 @@ describe('ProfileController', function () {
       }) */
 
     it('should contain an empty searchbox with placeholder Search', function () {
-
       browser.assert.attribute('#searchbox', 'value', '')
       browser.assert.attribute('#searchbox', 'placeholder', 'Search')
     })
@@ -128,8 +127,7 @@ describe('ProfileController', function () {
     })
   })
   describe('master:view login interface', function () {
-
-    before(function(done) {
+    before(function (done) {
       browser.visit('/profiles', done)
     })
 
