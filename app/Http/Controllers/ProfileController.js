@@ -37,7 +37,6 @@ class ProfileController {
 
     switch(orderBy) {
     case 1:
-      order = 'distance'
       asc = 'desc'
       break;
     case 2:
@@ -54,8 +53,6 @@ class ProfileController {
       order = 'overall_rating'
       asc = 'desc'
       break;
-    default:
-      order = 'distance'
     }
 
     let options = {

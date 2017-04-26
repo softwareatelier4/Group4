@@ -153,20 +153,18 @@ describe('ProfileController', function () {
     })
 
     it('should sort the result by Distance DESC', function () {
+
       before(function (done) {
-        browser.visit('/profiles?orderBy=1', done)
+        browser.select("#orderBy", "Distance High")
+        // browser.visit('/profiles?orderBy=1', done)
       })
 
-      let distance = Number.max_value
+      let distance = Number.MAX_VALUE
       let results = browser.querySelectorAll('.result-item-title+div')
 
-      // Need to rewrite this test because, results is empty
-      // This error happens only in test environment
-      _.forEach(results, function (el) {
-        let d = el.innerHTML
-        d = parseInt(_.replace(d, 'km'))
-        assert(distance >= d)
-        console.log(d)
+      _.forEach(results, function(el) {
+        let d = _.parseInt(_.replace(el.textContent, 'km'))
+        assert( distance >= d)
         distance = d
       })
     })
@@ -186,7 +184,9 @@ describe('ProfileController', function () {
       })
     })
 
+
     it('should sort the result by Price DESC', function () {
+
       before(function (done) {
         browser.visit('/profiles?orderBy=3', done)
       })
@@ -195,6 +195,7 @@ describe('ProfileController', function () {
       let results = browser.querySelectorAll('.item-price > span')
 
       browser.assert.text('.item-price > span', function(actual){
+        // actual = parseFloat(actual)
         let r = actual < price
         price = actual
         return r
@@ -215,11 +216,8 @@ describe('ProfileController', function () {
       let rating = 50
       let results = browser.querySelectorAll('.ratings > option:checked')
 
-      // Need to rewrite this test because, results is empty
-      // This error happens only in test environment
       _.forEach(results, function (el) {
         let r = parseFloat(el.innerHTML)
-        console.log(r)
         assert(rating >= r)
         rating = r
       })
