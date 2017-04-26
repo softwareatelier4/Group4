@@ -21,7 +21,7 @@ describe('ProfileController', function () {
 
   describe('index:view state at init', function () {
     it('should contain a link to profiles index page with text BROWSE', function () {
-      browser.assert.text('a[href="/profiles"]', 'BROWSE')
+      browser.assert.link('a', 'BROWSE', '/profiles')
     })
 
 
