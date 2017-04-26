@@ -3,16 +3,16 @@
 {% block content %}
 
 <div class="container">
-  <div class="row justify-content-center">
+  <div class="row justify-content-center mb-3">
     <div class="col-12 col-md-10">
-      <div class="row">
-        <nav id="orderBy" class="nav">
-          <a class="nav-link disabled" href="#">Sort by</a>
-          <a class="nav-link active" href="{{ queryWithoutOrder + 'orderBy=0' }}">Distance</a>
-          <a class="nav-link active" href="{{ queryWithoutOrder + 'orderBy=1' }}">Price</a>
-          <a class="nav-link active" href="{{ queryWithoutOrder + 'orderBy=2' }}">Rating</a>
-        </nav>
-      </div>
+            <select class="custom-select " name="category" onchange="location= this.value;">
+              <option {{ "selected" if ( request.orderBy == 0) }} value="{{ queryWithoutOrder + 'orderBy=0' }}">Distance Low</option>
+              <option {{ "selected" if ( request.orderBy == 1) }} value="{{ queryWithoutOrder + 'orderBy=1' }}">Distance High</option>
+              <option {{ "selected" if ( request.orderBy == 2) }} value="{{ queryWithoutOrder + 'orderBy=2' }}">Price Low</option>
+              <option {{ "selected" if ( request.orderBy == 3) }} value="{{ queryWithoutOrder + 'orderBy=3' }}">Price High</option>
+              <option {{ "selected" if ( request.orderBy == 4) }} value="{{ queryWithoutOrder + 'orderBy=4' }}">Rating Low</option>
+              <option {{ "selected" if ( request.orderBy == 5) }} value="{{ queryWithoutOrder + 'orderBy=5' }}">Rating High</option>
+            </select>
     </div>
   </div>
   <div class="row justify-content-center">

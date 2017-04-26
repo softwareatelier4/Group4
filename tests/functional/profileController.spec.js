@@ -68,19 +68,79 @@ describe('ProfileController', function () {
       browser.visit('/profiles', done)
     })
 
-    it('should contain anchors to sort by Distance', function () {
-      browser.assert.link('a', 'Distance', /orderBy=0/)
+    it('should contain anchors to sort by Distance ASC', function () {
+
+      const a = browser.querySelectorAll('option')
+      let exist = false
+      _.forEach(a, function (el) {
+        const expected = /orderBy=0/
+
+        exist = exist || expected.test(el.getAttribute('value'))
+      })
+      assert(exist)
     })
 
-    it('should contain anchors to sort by Price', function () {
-      browser.assert.link('a', 'Price', /orderBy=1/)
+    it('should contain anchors to sort by Distance DESC', function () {
+
+      const a = browser.querySelectorAll('option')
+      let exist = false
+      _.forEach(a, function (el) {
+        const expected = /orderBy=1/
+
+        exist = exist || expected.test(el.getAttribute('value'))
+      })
+      assert(exist)
     })
 
-    it('should contain anchors to sort by Overall rating', function () {
-      browser.assert.link('a', 'Rating', /orderBy=2/)
+    it('should contain anchors to sort by Price ASC', function () {
+
+      const a = browser.querySelectorAll('option')
+      let exist = false
+      _.forEach(a, function (el) {
+        const expected = /orderBy=2/
+
+        exist = exist || expected.test(el.getAttribute('value'))
+      })
+      assert(exist)
     })
 
-    it('should sort the result by distance asc by default', function () {
+    it('should contain anchors to sort by Price DESC', function () {
+
+      const a = browser.querySelectorAll('option')
+      let exist = false
+      _.forEach(a, function (el) {
+        const expected = /orderBy=3/
+
+        exist = exist || expected.test(el.getAttribute('value'))
+      })
+      assert(exist)
+    })
+
+    it('should contain anchors to sort by Overall Rating ASC', function () {
+
+      const a = browser.querySelectorAll('option')
+      let exist = false
+      _.forEach(a, function (el) {
+        const expected = /orderBy=4/
+
+        exist = exist || expected.test(el.getAttribute('value'))
+      })
+      assert(exist)
+    })
+
+    it('should contain anchors to sort by Overall Rating DESC', function () {
+
+      const a = browser.querySelectorAll('option')
+      let exist = false
+      _.forEach(a, function (el) {
+        const expected = /orderBy=5/
+
+        exist = exist || expected.test(el.getAttribute('value'))
+      })
+      assert(exist)
+    })
+
+    it('should sort the result by Distance ASC by default', function () {
       let distance = -1
       let results = browser.querySelectorAll('.result-item-title+div')
 
@@ -92,21 +152,59 @@ describe('ProfileController', function () {
       })
     })
 
-    it('should sort the result by price asc', function () {
+    it('should sort the result by Distance DESC', function () {
       before(function (done) {
         browser.visit('/profiles?orderBy=1', done)
+      })
+
+      let distance = Number.max_value
+      let results = browser.querySelectorAll('.result-item-title+div')
+
+      // Need to rewrite this test because, results is empty
+      // This error happens only in test environment
+      _.forEach(results, function (el) {
+        let d = el.innerHTML
+        d = parseInt(_.replace(d, 'km'))
+        assert(distance >= d)
+        console.log(d)
+        distance = d
+      })
+    })
+
+    it('should sort the result by Price ASC', function () {
+      before(function (done) {
+        browser.visit('/profiles?orderBy=2', done)
       })
 
       let price = -1
       let results = browser.querySelectorAll('.item-price > span')
 
-      // Need to rewrite this test because, results is empty
-      // This error happens only in test environment
       _.forEach(results, function (el) {
         let p = parseFloat(el.innerHTML)
         assert(price <= p)
-        distance = p
+        price = p
       })
+    })
+
+    it('should sort the result by Price DESC', function () {
+      before(function (done) {
+        browser.visit('/profiles?orderBy=3', done)
+      })
+
+      let price = Number.MAX_SAFE_INTEGER
+      let results = browser.querySelectorAll('.item-price > span')
+
+      browser.assert.text('.item-price > span', function(actual){
+        let r = actual < price
+        price = actual
+        return r
+      })
+      // _.forEach(results, function (el) {
+      //   let p = parseFloat(el.innerHTML)
+      //   assert(price >= p)
+      //   price = p
+      // })
+
     })
 
     it('should sort the result by overall rating desc', function () {
