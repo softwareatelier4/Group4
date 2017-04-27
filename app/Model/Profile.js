@@ -24,10 +24,8 @@ class Profile extends Lucid {
   static scopeCategory (builder, categoryQuery) {
     if (categoryQuery && categoryQuery != 0) {
       builder
-      .innerJoin('profile_categories', 'profile_categories.profile_id', 'profiles.id')
-      .innerJoin('categories', 'categories.id', 'profile_categories.category_id')
-      .where('profile_categories.category_id', categoryQuery)
-      .select('profiles.*')
+      .innerJoin('profile_categories', 'profiles.id', 'profile_categories.profile_id')
+      .where('category_id', categoryQuery)
     }
   }
 

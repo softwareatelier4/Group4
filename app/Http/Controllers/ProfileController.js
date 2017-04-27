@@ -64,9 +64,10 @@ class ProfileController {
     .category(request.input('category'))
     .price(request.input('minPrice'), request.input('maxPrice'))
     .rating(request.input('minRate'), request.input('maxRate'))
-    .distance(request.input('minDist'), request.input('maxDist'), res)
     .search(request.input('search'))
+    .distance(request.input('minDist'), request.input('maxDist'), res)
     .orderBy(order, orderBy == 2 ? 'desc' : 'asc')
+    .select('profiles.*')
     .paginate(page, 25)
 
     const components = request.except('page')
