@@ -9,6 +9,8 @@ const ProfileController = use('App/Http/Controllers/ProfileController')
 describe('ProfileController', function () {
   const browser = new Browser()
 
+  this.timeout(5000);
+
   before(function (done) {
     browser.visit('/profiles', done)
   })
@@ -192,14 +194,30 @@ describe('ProfileController', function () {
     })
   })
 
+  describe('profile:index sorting by Rating ASC', function () {
+    before(function (done) {
+      browser.visit('/profiles?orderBy=4', done)
+    })
+
+    it('should sort the result by overall rating asc', function () {
+
+      let rating = Number.MIN_VALUE
+      let results = browser.querySelectorAll('.ratings > option:checked')
+
+      _.forEach(results, function (el) {
+        let r = parseFloat(el.innerHTML)
+        assert(rating <= r)
+        rating = r
+      })
+    })
+  })
+
   describe('profile:index sorting by Rating DESC', function () {
     before(function (done) {
-      browser.select('#orderBy', 'Rating High', done)
-      // this.browser.visit('/profiles?orderBy=5', done)
+      browser.visit('/profiles?orderBy=5', done)
     })
 
     it('should sort the result by overall rating desc', function () {
-
 
       let rating = Number.MAX_VALUE
       let results = browser.querySelectorAll('.ratings > option:checked')
