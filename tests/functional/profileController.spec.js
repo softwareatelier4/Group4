@@ -21,17 +21,18 @@ describe('ProfileController', function () {
   })
 
   describe('index:view state at init', function () {
+
     it('should contain a link to profiles index page with text BROWSE', function () {
       browser.assert.text('a[href="/profiles"]', 'BROWSE')
     })
 
     /* it('should contain an anchor to login', function () {
-      browser.assert.text('ul.navbar-nav li:nth-child(0) a', 'LOGIN')
-      })
+       browser.assert.text('ul.navbar-nav li:nth-child(0) a', 'LOGIN')
+       })
 
-      it('should contain an anchor to register', function () {
-      browser.assert.text('ul.navbar-nav li:nth-child(2) a', 'REGISTER')
-      }) */
+       it('should contain an anchor to register', function () {
+       browser.assert.text('ul.navbar-nav li:nth-child(2) a', 'REGISTER')
+       }) */
 
     it('should contain an empty searchbox with placeholder Search', function () {
       browser.assert.attribute('#searchbox', 'value', '')
@@ -96,11 +97,9 @@ describe('ProfileController', function () {
         browser.visit('/profiles?orderBy=1', done)
       })
 
-      let price = -1
-      let results = browser.querySelectorAll('.item-price > span')
+      let price = -
+        let results = browser.querySelectorAll('.item-price > span')
 
-      // Need to rewrite this test because, results is empty
-      // This error happens only in test environment
       _.forEach(results, function (el) {
         let p = parseFloat(el.innerHTML)
         assert(price <= p)
@@ -146,4 +145,78 @@ describe('ProfileController', function () {
       browser.assert.link('a', 'Register', '/register')
     })
   })
+
+  describe('index:view default filtering options collapse', function () {
+    before(function(done) {
+      browser.visit('/profiles', done)
+    })
+
+    it('should have the filtering block non collapsed by default', function(){
+      browser.assert.hasClass('#filters', 'hidden-xs-up')
+    })
+
+    it('should become visible when clicking Show filter', function() {
+      browser.clickLink('#showFilters')
+      browser.assert.hasNoClass('#filters', 'hidden-xs-up')
+    })
+  })
+
+
+  before(function(done) {
+    browser.visit('/profiles', done)
+  })
+
+  describe('index:view default filtering by distance', function () {
+
+    let min = 25
+    let max = 50
+
+    before(function(done) {
+      browser
+        .fill('minDist', min)
+        .fill('maxDist', max)
+        .pressButton('Filter', done)
+    })
+
+    it(`should return only items between ${min} <= distance <= ${max}`, function () {
+
+      let results = browser.querySelectorAll('.result-item-title+div')
+
+      _.forEach(results, function (el) {
+        let d = el.innerHTML
+        d = parseInt(_.replace(d, 'km'))
+        assert(d >= min)
+        assert(d <= max)
+      })
+    })
+
+  })
+
+
+  describe('index:view default filtering by price', function () {
+
+    let min = 25
+    let max = 50
+
+    before(function(done) {
+      browser
+        .fill('minDist', min)
+        .fill('maxDist', max)
+        .pressButton('Filter', done)
+    })
+
+    it(`should return only items between ${min} <= price <= ${max}`, function () {
+
+      let results = browser.querySelectorAll('.item-price > span')
+
+      _.forEach(results, function (el) {
+        let d = el.innerHTML
+        d = parseFloat(d)
+        assert(d >= min)
+        assert(d <= max)
+      })
+    })
+
+  })
+
 })
