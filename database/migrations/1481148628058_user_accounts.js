@@ -13,7 +13,8 @@ class UsersTableSchema extends Schema {
 
       table.string('name').defaultTo('Anonymous')
       table.enu('type', ['worker', 'user'])
-
+      table.text('token').nullable()
+      table.integer('expiry_date').nullable()
       table.timestamps()
     })
   }

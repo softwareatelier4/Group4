@@ -1,6 +1,6 @@
 'use strict'
 
-const URL = require('url').URL;
+const URL = require('url').URL
 
 class GlobalHelpers {
 
@@ -18,15 +18,17 @@ class GlobalHelpers {
     const allCategories = yield this.Category.all()
     view.global('allCategories', allCategories.toJSON())
 
-
     let queryWithoutOrder = '/profiles?'
 
     const components = request.except('orderBy')
 
-    for ( var key in request.except('orderBy') )
-          queryWithoutOrder += `${key}=${decodeURIComponent(components[key])}&`
+    for (var key in request.except('orderBy')) {
+      queryWithoutOrder += `${key}=${decodeURIComponent(components[key])}&`
+    }
 
     response.viewInstance = use('View')
+    request.currentUser = yield request.auth.getUser()
+    view.global('currentUser', request.currentUser)
     response.viewInstance.global('request', request.all())
     response.viewInstance.global('queryWithoutOrder', queryWithoutOrder)
     yield next
