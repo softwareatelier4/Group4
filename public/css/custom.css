@@ -10,6 +10,10 @@ a{
   color: #025aa5;
 }
 
+input,select,option {
+  border-radius: 0px !important;
+}
+
 #searchbox{
   height: 50px;
   box-shadow: none;
