@@ -2,244 +2,248 @@
 
 {% block content %}
 
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-12 col-md-10 text-right">
-      <a href="#" id="showFilters">Show filters</a>
+
+  <div class="container">
+
+    <div class="row justify-content-center mb-3">
+      <div class="col-5 col-md-10 ">
+        <button id="showFilters" type="button" class="btn btn-secondary float-right ml-3">Show filters</button>
+        <select id="orderBy" class="custom-select float-right " name="category" onchange="location= this.value;">
+          <option {{ "selected" if ( request.orderBy == 0) }} value="{{ queryWithoutOrder + 'orderBy=0' }}">Distance Low</option>
+          <option {{ "selected" if ( request.orderBy == 1) }} value="{{ queryWithoutOrder + 'orderBy=1' }}">Distance High</option>
+          <option {{ "selected" if ( request.orderBy == 2) }} value="{{ queryWithoutOrder + 'orderBy=2' }}">Price Low</option>
+          <option {{ "selected" if ( request.orderBy == 3) }} value="{{ queryWithoutOrder + 'orderBy=3' }}">Price High</option>
+          <option {{ "selected" if ( request.orderBy == 4) }} value="{{ queryWithoutOrder + 'orderBy=4' }}">Rating Low</option>
+          <option {{ "selected" if ( request.orderBy == 5) }} value="{{ queryWithoutOrder + 'orderBy=5' }}">Rating High</option>
+        </select>
+      </div>
     </div>
-  </div>
-  <div id="filters" class="row justify-content-center hidden-xs-up text-center">
-    <div class="col-12 col-md-10">
-      <form action="/profiles" class="mb-5" method="GET">
-        <div class="row result-item">
-          <div class="col-12 col-md-4">
-            Distance (km) 
-            <hr>
-            <div class="row mb-3">
-              <div class="col-4">
-                <input type="number" id="distance-min-value" name="minDist" class="form-control" min="0" max="500" value="{{ request.minDist or 0 }}">
+
+    <div id="filters" class="row justify-content-center hidden-xs-up text-center">
+      <div class="col-12 col-md-10">
+        <form action="/profiles" class="mb-5" method="GET">
+          <div class="row result-item">
+            <div class="col-12 col-md-4">
+              Distance (km)
+              <hr>
+              <div class="row mb-3">
+                <div class="col-4">
+                  <input type="number" id="distance-min-value" name="minDist" class="form-control" min="0" max="500" value="{{ request.minDist or 0 }}">
+                </div>
+                <div class="col-4 offset-4 float-right">
+                  <input type="number" id="distance-max-value" name="maxDist" class="form-control" min="0" max="500" value="{{ request.maxDist or 500 }}">
+                </div>
               </div>
-              <div class="col-4 offset-4 float-right">
-                <input type="number" id="distance-max-value" name="maxDist" class="form-control" min="0" max="500" value="{{ request.maxDist or 500 }}">
-              </div>
+              <div id="slider-distance"></div>
             </div>
-            <div id="slider-distance"></div>
-          </div>
-          <div class="col-12 col-md-4">
-            Price
-            <hr>
-            <div class="row mb-3">
-              <div class="col-4">
-                <input type="number" id="price-min-value" name="minPrice" class="form-control" min="0" max="1000" value="{{ request.minPrice or 0 }}">
+            <div class="col-12 col-md-4">
+              Price
+              <hr>
+              <div class="row mb-3">
+                <div class="col-4">
+                  <input type="number" id="price-min-value" name="minPrice" class="form-control" min="0" max="1000" value="{{ request.minPrice or 0 }}">
+                </div>
+                <div class="col-4 offset-4 float-right">
+                  <input type="number" id="price-max-value" name="maxPrice" class="form-control" min="0" max="1000" value="{{ request.maxPrice or 1000 }}">
+                </div>
               </div>
-              <div class="col-4 offset-4 float-right">
-                <input type="number" id="price-max-value" name="maxPrice" class="form-control" min="0" max="1000" value="{{ request.maxPrice or 1000 }}">
-              </div>
+              <div id="slider-price"></div>
             </div>
-            <div id="slider-price"></div>
-          </div>
-          <div class="col-12 col-md-4">
-            Rating
-            <hr>
-            <div class="row mb-3">
-              <div class="col-4">
-                <input type="number" id="rating-min-value" name="minRate" class="form-control" min="1" max="5" value="{{ request.minRate or 1 }}">
+            <div class="col-12 col-md-4">
+              Rating
+              <hr>
+              <div class="row mb-3">
+                <div class="col-4">
+                  <input type="number" id="rating-min-value" name="minRate" class="form-control" min="1" max="5" value="{{ request.minRate or 1 }}">
+                </div>
+                <div class="col-4 offset-4 float-right">
+                  <input type="number" id="rating-max-value" name="maxRate" class="form-control" min="1" max="5" value="{{ request.maxRate or 5 }}">
+                </div>
               </div>
-              <div class="col-4 offset-4 float-right">
-                <input type="number" id="rating-max-value" name="maxRate" class="form-control" min="1" max="5" value="{{ request.maxRate or 5 }}">
-              </div>
+              <div id="slider-rating"></div>
             </div>
-            <div id="slider-rating"></div>
+            <div class="col-12 float-right">
+              <hr>
+              <button type="submit" class="btn btn-primary btn-md float-right">Filter</button>
+            </div>
           </div>
-          <div class="col-12 float-right">
-            <hr>
-            <button type="submit" class="btn btn-primary btn-md float-right">Filter</button>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
-  </div>
-  <div class="row justify-content-center">
-    <div class="col-12 col-md-10">
-      <div class="row">
-        <nav id="orderBy" class="nav">
-          <span class="nav-link " href="#">Sort by</span>
-          <a class="nav-link active" href="{{ queryWithoutOrder + 'orderBy=0' }}">Distance</a>
-          <a class="nav-link active" href="{{ queryWithoutOrder + 'orderBy=1' }}">Price</a>
-          <a class="nav-link active" href="{{ queryWithoutOrder + 'orderBy=2' }}">Rating</a>
-        </nav>
+
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-10">
+        {% for profile in profiles.data %}
+          <div class="row result-item align-items-center">
+            <div class="col-md-4 text-center">
+              <img src="/profile_images/{{ profile.logo }}" class="img-fluid" alt="{{ profile.title }} logo">
+            </div>
+            <div class="col-md-8">
+              <div class="row align-items-center mb-3">
+                <div class="col-8 result-item-title">
+                  <a href="/profiles/{{ profile.id }}">{{ profile.title }}</a>
+                </div>
+                <div class="col-4 text-right"> {{ profile.distance | round }} km</a></div>
+              </div>
+              <div class="row result-item-detail">
+                <div class="col"><a href="{{profile.website}}"> {{ profile.website }} </a></div>
+                <div class="col">{{ profile.telephone }}</div>
+                <div class="col">{{ profile.city }}</div>
+              </div>
+              <div class="row mt-1">
+                <div class="col">
+                  {{ profile.description | truncate(300)}}
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col-4 justify-content-end">
+                  <select class="ratings" autocomplete="off" style="display: none;" >
+								    <option value="1" {{ "selected" if (profile.overall_rating == 1) }}>1</option>
+								    <option value="2" {{ "selected" if (profile.overall_rating == 2) }}>2</option>
+								    <option value="3" {{ "selected" if (profile.overall_rating == 3) }}>3</option>
+								    <option value="4" {{ "selected" if (profile.overall_rating == 4) }}>4</option>
+								    <option value="5" {{ "selected" if (profile.overall_rating == 5) }}>5</option>
+							    </select>
+                </div>
+                <div class="col-8 text-right item-price">
+                  $<span>{{ profile.price }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+{% else %}
+          <div class="alert alert-warning font-italic" role="alert">
+            Your search did not match any profile.
+          </div>
+
+        {% endfor %}
+
+        {% if profiles.total > 25 %}
+          <!-- START Pagination -->
+          <div class="row justify-content-center">
+            <div class="col-md-4">
+              <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+
+                  {% if  profiles.currentPage == 1 %}
+
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="{{ profiles.nextPage }}">{{ profiles.currentPage + 1 }}</a></li>
+                    <li class="page-item "><a class="page-link" href="{{ profiles.previousPage }}">{{ profiles.currentPage + 2 }}</a></li>
+                      <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                      </li>
+                  {% else %}
+
+
+                      <li class="page-item disabled">
+                        <a class="page-link" href="#" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                          <span class="sr-only">Next</span>
+                        </a>
+                      </li>
+                      <li class="page-item "><a class="page-link" href="{{ profiles.previousPage }}">{{ profiles.currentPage -1 }}</a></li>
+                      <li class="page-item active"><a class="page-link" href="#">{{ profiles.currentPage }}</a></li>
+                      <li class="page-item"><a class="page-link" href="{{ profiles.nextPage }}">{{ profiles.currentPage + 1 }}</a></li>
+                      <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                      </li>
+                  {% endif %}
+                </ul>
+              </nav>
+            </div>
+          </div>
+          <!-- END Pagination -->
+        {% endif %}
+
       </div>
     </div>
   </div>
-  <div class="row justify-content-center">
-    <div class="col-12 col-md-10">
-      {% for profile in profiles.data %}
-      <div class="row result-item align-items-center">
-        <div class="col-md-4 text-center">
-          <img src="/profile_images/{{ profile.logo }}" class="img-fluid" alt="{{ profile.title }} logo">
-        </div>
-        <div class="col-md-8">
-          <div class="row align-items-center">
-            <div class="col-8 result-item-title">
-              <a href="/profiles/{{ profile.id }}">{{ profile.title }}</a>
-            </div>
-            <div class="col-4 text-right"> {{ profile.distance | round }} km</a></div>
-          </div>
-          <div class="row result-item-detail">
-            <div class="col"><a href="//{{profile.website}}" target="_blank"> {{ profile.website }} </a></div>
-            <div class="col">{{ profile.telephone }}</div>
-            <div class="col">{{ profile.city }}</div>
-          </div>
-          <div class="row mt-1">
-            <div class="col">
-              {{ profile.description | truncate(300)}}
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-4 justify-content-end">
-              <select class="ratings" autocomplete="off" style="display: none;" >
-                <option value="1" {{ "selected" if (profile.overall_rating == 1) }}>1</option>
-                <option value="2" {{ "selected" if (profile.overall_rating == 2) }}>2</option>
-                <option value="3" {{ "selected" if (profile.overall_rating == 3) }}>3</option>
-                <option value="4" {{ "selected" if (profile.overall_rating == 4) }}>4</option>
-                <option value="5" {{ "selected" if (profile.overall_rating == 5) }}>5</option>
-              </select>
-            </div>
-            <div class="col-8 text-right item-price">
-              $<span>{{ profile.price }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      {% else %}
-      <div class="alert alert-warning font-italic" role="alert">
-       Your search did not match any profile.
-     </div>
-
-     {% endfor %}
-
-     {% if profiles.total > 25 %}
-     <!-- START Pagination -->
-     <div class="row justify-content-center">
-      <div class="col-md-4">
-        <nav aria-label="Page navigation example">
-          <ul class="pagination justify-content-center">
-
-            {% if  profiles.currentPage == 1 %}
-
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="{{ profiles.nextPage }}">{{ profiles.currentPage + 1 }}</a></li>
-            <li class="page-item "></a><a class="page-link" href="{{ profiles.previousPage }}">{{ profiles.currentPage + 2 }}</li>
-            <li class="page-item">
-              <a class="page-link" href="#">Next</a>
-            </li>
-            {% else %}
-
-
-            <li class="page-item disabled">
-              <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-                <span class="sr-only">Next</span>
-              </a>
-            </li>
-            <li class="page-item "><a class="page-link" href="{{ profiles.previousPage }}">{{ profiles.currentPage -1 }}</a></li>
-            <li class="page-item active"><a class="page-link" href="#">{{ profiles.currentPage }}</a></li>
-            <li class="page-item"><a class="page-link" href="{{ profiles.nextPage }}">{{ profiles.currentPage + 1 }}</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#">Next</a>
-            </li>
-            {% endif %}
-          </ul>
-        </nav>
-      </div>
-    </div>
-    <!-- END Pagination -->
-    {% endif %}
-
-  </div>
-</div>
-
-</div>
 {% endblock %}
 
 {% block javascript %}
-<script type="text/javascript">
- $('.ratings').barrating('show', {
-   theme: 'bars-square',
-   showValues: true,
-   showSelectedRating: false,
-   readonly: true,
- });
+  <script type="text/javascript">
+    $('.ratings').barrating('show', {
+      theme: 'bars-square',
+      showValues: true,
+      showSelectedRating: false,
+      readonly: true,
+    });
 
- $("#showFilters").click(function() {
-  $("#filters").toggleClass('hidden-xs-up')
-});
+    $("#showFilters").click(function() {
+      $("#filters").toggleClass('hidden-xs-up')
 
- $( "#slider-distance" ).slider({
-  range: true,
-  min: 0,
-  max: 500,
-  values: [ {{ request.minDist or 0 }}, {{ request.maxDist or 500 }} ],
-  step: 10,
-  slide: function(event, ui) {
-    $("#distance-min-value").val(ui.values[0]);
-    $("#distance-max-value").val(ui.values[1]);
-  }
-});
+      if ( $('#filters').hasClass('hidden-xs-up') )
+        $(this).text('Show filters')
+      else
+        $(this).text('Hide filters')
+    });
 
- $( "#slider-price" ).slider({
-  range: true,
-  min: 0,
-  max: 1000,
-  values: [ {{ request.minPrice or 0 }}, {{ request.maxPrice or 1000 }} ],
-  step: 10,
-  slide: function(event, ui) {
-    $("#price-min-value").val(ui.values[0]);
-    $("#price-max-value").val(ui.values[1]);
-  }
-});
+      $( "#slider-distance" ).slider({
+        range: true,
+        min: 0,
+        max: 500,
+        values: [ {{ request.minDist or 0 }}, {{ request.maxDist or 500 }} ],
+        step: 10,
+        slide: function(event, ui) {
+          $("#distance-min-value").val(ui.values[0]);
+          $("#distance-max-value").val(ui.values[1]);
+        }
+      });
 
- $( "#slider-rating" ).slider({
-  range: true,
-  min: 1,
-  max: 5,
-  values: [ {{ request.minRate or 1 }}, {{ request.maxRate or 5 }} ],
-  step: 1,
-  slide: function(event, ui) {
-    $("#rating-min-value").val(ui.values[0]);
-    $("#rating-max-value").val(ui.values[1]);
-  }
-});
+      $( "#slider-price" ).slider({
+        range: true,
+        min: 0,
+        max: 1000,
+        values: [ {{ request.minPrice or 0 }}, {{ request.maxPrice or 1000 }} ],
+        step: 10,
+        slide: function(event, ui) {
+          $("#price-min-value").val(ui.values[0]);
+          $("#price-max-value").val(ui.values[1]);
+        }
+      });
 
-
- $("#distance-min-value").change(function(){
-  $("#slider-distance").slider("values", 0, $("#distance-min-value").val())
-})
-
- $("#distance-max-value").change(function(){
-  $("#slider-distance").slider("values", 1, $("#distance-max-value").val())
-})
+      $( "#slider-rating" ).slider({
+        range: true,
+        min: 1,
+        max: 5,
+        values: [ {{ request.minRate or 1 }}, {{ request.maxRate or 5 }} ],
+        step: 1,
+        slide: function(event, ui) {
+          $("#rating-min-value").val(ui.values[0]);
+          $("#rating-max-value").val(ui.values[1]);
+        }
+      });
 
 
- $("#price-min-value").change(function(){
-  $("#slider-price").slider("values", 0, $("#price-min-value").val())
-})
+      $("#distance-min-value").change(function(){
+        $("#slider-distance").slider("values", 0, $("#distance-min-value").val())
+      })
 
- $("#price-max-value").change(function(){
-  $("#slider-price").slider("values", 1, $("#price-max-value").val())
-})
-
- $("#rating-min-value").change(function(){
-  $("#slider-rating").slider("values", 0, $("#rating-min-value").val())
-})
-
- $("#rating-max-value").change(function(){
-  $("#slider-rating").slider("values", 1, $("#rating-max-value").val())
-})
+      $("#distance-max-value").change(function(){
+        $("#slider-distance").slider("values", 1, $("#distance-max-value").val())
+      })
 
 
+      $("#price-min-value").change(function(){
+        $("#slider-price").slider("values", 0, $("#price-min-value").val())
+      })
+
+      $("#price-max-value").change(function(){
+        $("#slider-price").slider("values", 1, $("#price-max-value").val())
+      })
+
+      $("#rating-min-value").change(function(){
+        $("#slider-rating").slider("values", 0, $("#rating-min-value").val())
+      })
+
+      $("#rating-max-value").change(function(){
+        $("#slider-rating").slider("values", 1, $("#rating-max-value").val())
+      })
 
 
 
-</script>
+
+
+  </script>
 {% endblock  %}

@@ -10,6 +10,10 @@ a{
   color: #025aa5;
 }
 
+input,select,option,button {
+  border-radius: 0px !important;
+}
+
 #searchbox{
   height: 50px;
   box-shadow: none;
@@ -78,7 +82,6 @@ a{
 .result-item-title{
   font-size: 1.4rem;
   font-weight: bold;
-  margin-bottom: 1.2rem;
 }
 
 .result-item-details{
@@ -189,4 +192,3 @@ a.badge-anchor{
 .nav-item.username{
   margin-top: 7px;
 }
-

@@ -22,24 +22,37 @@ class ProfileController {
   * index (request, response) {
     const page = request.input('page') || 1
 
-    // 0 by distance
-    // 1 by price
-    // 2 overall rating
+    // 0 by distance low
+    // 1 by distance high
+    // 2 price low
+    // 3 price high
+    // 4 rating low
+    // 5 rating high
     let orderBy = request.input('orderBy') || 0
 
     orderBy = parseInt(orderBy)
 
     let order = 'distance'
+    let asc = 'asc'
 
-    switch (orderBy) {
-      case 1:
-        order = 'price'
-        break
-      case 2:
-        order = 'overall_rating'
-        break
-      default:
-        order = 'distance'
+    switch(orderBy) {
+    case 1:
+      asc = 'desc'
+      break;
+    case 2:
+      order = 'price'
+      break;
+    case 3:
+      order = 'price'
+      asc = 'desc'
+      break;
+    case 4:
+      order = 'overall_rating'
+      break;
+    case 5:
+      order = 'overall_rating'
+      asc = 'desc'
+      break;
     }
 
     let options = {
@@ -66,8 +79,8 @@ class ProfileController {
     .rating(request.input('minRate'), request.input('maxRate'))
     .search(request.input('search'))
     .distance(request.input('minDist'), request.input('maxDist'), res)
-    .orderBy(order, orderBy == 2 ? 'desc' : 'asc')
     .select('profiles.*')
+    .orderBy(order, asc)
     .paginate(page, 25)
 
     const components = request.except('page')
