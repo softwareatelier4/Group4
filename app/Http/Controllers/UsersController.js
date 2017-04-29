@@ -4,6 +4,7 @@ const google = require('googleapis')
 const googleCal = google.calendar('v3')
 const OAuth2 = google.auth.OAuth2
 const q = require('q')
+const fs = require('fs')
 const oauth2Client = new OAuth2(
   '862466608226-00t2dpfcsf3kn63s9imf93a58hmbvm7l.apps.googleusercontent.com',
   '9mUHdNS9yure_CAcSS44s0iN',
@@ -14,6 +15,8 @@ const oauth2Client = new OAuth2(
 const scopes = [
   'https://www.googleapis.com/auth/calendar'
 ]
+
+const Helpers = use('Helpers')
 
 class UsersController {
 
@@ -105,6 +108,29 @@ class UsersController {
 
   * update (request, response) {
     // Update the user given an id
+
+    const user = yield request.auth.getUser()
+
+    user.email = request.input('email')
+    user.name = request.input('name')
+    const avatar = request.file('avatar')
+
+    if (avatar.clientSize()) {
+      const fileName = `${user.id}.${avatar.extension()}`
+      if (fs.existsSync(Helpers.publicPath() + '/avatar/' + fileName)) {
+        fs.unlinkSync(Helpers.publicPath() + '/avatar/' + fileName)
+      }
+
+      yield avatar.move(Helpers.publicPath() + '/avatar', fileName)
+      if (!avatar.moved()) {
+        response.badRequest(avatar.errors())
+        return
+      }
+      user.avatar = avatar.uploadPath()
+    }
+    yield user.save()
+
+    response.redirect('back')
   }
 
   * destroy (request, response) {
