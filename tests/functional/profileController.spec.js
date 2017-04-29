@@ -304,8 +304,8 @@ describe('ProfileController', function () {
 
     before(function(done) {
       browser
-        .fill('minDist', min)
-        .fill('maxDist', max)
+        .fill('minPrice', min)
+        .fill('maxPric', max)
         .pressButton('Filter', done)
     })
 
@@ -320,7 +320,4 @@ describe('ProfileController', function () {
         assert(d <= max)
       })
     })
-
   })
-
-})

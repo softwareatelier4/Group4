@@ -179,67 +179,67 @@
         $(this).text('Hide filters')
     });
 
-      $( "#slider-distance" ).slider({
-        range: true,
-        min: 0,
-        max: 500,
-        values: [ {{ request.minDist or 0 }}, {{ request.maxDist or 500 }} ],
-        step: 10,
-        slide: function(event, ui) {
-          $("#distance-min-value").val(ui.values[0]);
-          $("#distance-max-value").val(ui.values[1]);
-        }
-      });
+    $( "#slider-distance" ).slider({
+      range: true,
+      min: 0,
+      max: 500,
+      values: [ {{ request.minDist or 0 }}, {{ request.maxDist or 500 }} ],
+      step: 10,
+      slide: function(event, ui) {
+        $("#distance-min-value").val(ui.values[0]);
+        $("#distance-max-value").val(ui.values[1]);
+      }
+    });
 
-      $( "#slider-price" ).slider({
-        range: true,
-        min: 0,
-        max: 1000,
-        values: [ {{ request.minPrice or 0 }}, {{ request.maxPrice or 1000 }} ],
-        step: 10,
-        slide: function(event, ui) {
-          $("#price-min-value").val(ui.values[0]);
-          $("#price-max-value").val(ui.values[1]);
-        }
-      });
+    $( "#slider-price" ).slider({
+      range: true,
+      min: 0,
+      max: 1000,
+      values: [ {{ request.minPrice or 0 }}, {{ request.maxPrice or 1000 }} ],
+      step: 10,
+      slide: function(event, ui) {
+        $("#price-min-value").val(ui.values[0]);
+        $("#price-max-value").val(ui.values[1]);
+      }
+    });
 
-      $( "#slider-rating" ).slider({
-        range: true,
-        min: 1,
-        max: 5,
-        values: [ {{ request.minRate or 1 }}, {{ request.maxRate or 5 }} ],
-        step: 1,
-        slide: function(event, ui) {
-          $("#rating-min-value").val(ui.values[0]);
-          $("#rating-max-value").val(ui.values[1]);
-        }
-      });
-
-
-      $("#distance-min-value").change(function(){
-        $("#slider-distance").slider("values", 0, $("#distance-min-value").val())
-      })
-
-      $("#distance-max-value").change(function(){
-        $("#slider-distance").slider("values", 1, $("#distance-max-value").val())
-      })
+    $( "#slider-rating" ).slider({
+      range: true,
+      min: 1,
+      max: 5,
+      values: [ {{ request.minRate or 1 }}, {{ request.maxRate or 5 }} ],
+      step: 1,
+      slide: function(event, ui) {
+        $("#rating-min-value").val(ui.values[0]);
+        $("#rating-max-value").val(ui.values[1]);
+      }
+    });
 
 
-      $("#price-min-value").change(function(){
-        $("#slider-price").slider("values", 0, $("#price-min-value").val())
-      })
+    $("#distance-min-value").change(function(){
+      $("#slider-distance").slider("values", 0, $("#distance-min-value").val())
+    })
 
-      $("#price-max-value").change(function(){
-        $("#slider-price").slider("values", 1, $("#price-max-value").val())
-      })
+    $("#distance-max-value").change(function(){
+      $("#slider-distance").slider("values", 1, $("#distance-max-value").val())
+    })
 
-      $("#rating-min-value").change(function(){
-        $("#slider-rating").slider("values", 0, $("#rating-min-value").val())
-      })
 
-      $("#rating-max-value").change(function(){
-        $("#slider-rating").slider("values", 1, $("#rating-max-value").val())
-      })
+    $("#price-min-value").change(function(){
+      $("#slider-price").slider("values", 0, $("#price-min-value").val())
+    })
+
+    $("#price-max-value").change(function(){
+      $("#slider-price").slider("values", 1, $("#price-max-value").val())
+    })
+
+    $("#rating-min-value").change(function(){
+      $("#slider-rating").slider("values", 0, $("#rating-min-value").val())
+    })
+
+    $("#rating-max-value").change(function(){
+      $("#slider-rating").slider("values", 1, $("#rating-max-value").val())
+    })
 
 
 
