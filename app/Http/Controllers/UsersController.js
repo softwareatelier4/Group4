@@ -73,19 +73,17 @@ class UsersController {
     // Show user details using the id
     if (request.currentUser.id == request.param('id')) {
       var url = oauth2Client.generateAuthUrl({
-        access_type: 'online',
+        access_type: 'offline',
         scope: scopes
       })
+
       let calendars = null
       const user = yield request.auth.getUser()
-      if (user.token) {
-        oauth2Client.setCredentials({ access_token: user.token })
-        // googleCal.calendarList.list({
-        //   auth: oauth2Client
-        // }, function (err, response) {
-        //   console.log(response)
-        //   console.log(err)
-        // })
+      if (user.access_token) {
+        oauth2Client.setCredentials({
+          access_token: user.access_token,
+          refresh_token: user.refresh_token
+        })
         calendars = yield q.ninvoke(googleCal.calendarList, 'list', {auth: oauth2Client}).spread(function (response) {
           return response
         })
@@ -120,8 +118,11 @@ class UsersController {
       return tokens
     })
 
+    console.log(tokens)
+
     const user = yield request.auth.getUser()
-    user.token = tokens.access_token
+    user.access_token = tokens.access_token
+    user.refresh_token = tokens.refresh_token
     user.expiry_date = tokens.expiry_date
     yield user.save()
 

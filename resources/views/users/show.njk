@@ -6,7 +6,7 @@
   <div class="row justify-content-center">
     <div class="col-10 result-item">
 
-      {% if not currentUser.token %}
+      {% if not currentUser.access_token %}
       <a href="{{ auth_url }}"> 
         <button type="button" class="btn btn-secondary">Sign In With Google</button>
       </a>
