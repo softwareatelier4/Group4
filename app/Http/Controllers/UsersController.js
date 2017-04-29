@@ -1,16 +1,17 @@
 'use strict'
 
-var google = require('googleapis')
-var OAuth2 = google.auth.OAuth2
-
-var oauth2Client = new OAuth2(
+const google = require('googleapis')
+const googleCal = google.calendar('v3')
+const OAuth2 = google.auth.OAuth2
+const q = require('q')
+const oauth2Client = new OAuth2(
   '862466608226-00t2dpfcsf3kn63s9imf93a58hmbvm7l.apps.googleusercontent.com',
   '9mUHdNS9yure_CAcSS44s0iN',
   'http://localhost:3333/saveToken'
   )
 
 // generate a url that asks permissions for Google+ and Google Calendar scopes
-var scopes = [
+const scopes = [
   'https://www.googleapis.com/auth/calendar'
 ]
 
@@ -75,10 +76,25 @@ class UsersController {
         access_type: 'online',
         scope: scopes
       })
+      let calendars = null
+      const user = yield request.auth.getUser()
+      if (user.token) {
+        oauth2Client.setCredentials({ access_token: user.token })
+        // googleCal.calendarList.list({
+        //   auth: oauth2Client
+        // }, function (err, response) {
+        //   console.log(response)
+        //   console.log(err)
+        // })
+        calendars = yield q.ninvoke(googleCal.calendarList, 'list', {auth: oauth2Client}).spread(function (response) {
+          return response
+        })
+      }
 
       yield response.sendView('users.show',
         {
-          'auth_url': url
+          'auth_url': url,
+          'calendars': calendars
         })
     } else {
       response.redirect('/register')
@@ -99,14 +115,17 @@ class UsersController {
 
   * saveToken (request, response) {
     const code = request.input('code')
-    const user = yield request.auth.getUser()
-    yield oauth2Client.getToken(code, function (err, tokens) {
-      if (!err) {
-        user.token = tokens.access_token
-        user.expiry_date = tokens.expiry_date
-        user.save()
-      }
+
+    const tokens = yield q.ninvoke(oauth2Client, 'getToken', code).spread(function (tokens) {
+      return tokens
     })
+
+    const user = yield request.auth.getUser()
+    user.token = tokens.access_token
+    user.expiry_date = tokens.expiry_date
+    yield user.save()
+
+    response.redirect('/users/' + user.id)
   }
 
 }

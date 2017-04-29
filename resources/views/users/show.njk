@@ -5,11 +5,23 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-10 result-item">
-        {{ currentUser | dump }}<br>
-        <a href="{{ auth_url }}">Auth Calendar</a>
+
+      {% if not currentUser.token %}
+      <a href="{{ auth_url }}"> 
+        <button type="button" class="btn btn-secondary">Sign In With Google</button>
+      </a>
+      {% else %}
+      <div class="form-group">
+        <label for="calendarSelect">Your working calendar</label>
+        <select class="form-control" id="calendarSelect">
+          {% for item in calendars.items %}
+          <option value="{{ item.id }}">{{ item.summary }}</option>
+          {% endfor %}
+        </select>  
+        {% endif %}
+      </div>
     </div>
   </div>
-</div>
 
 
-{% endblock %}
+  {% endblock %}
