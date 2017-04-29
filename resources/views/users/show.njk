@@ -27,14 +27,16 @@
       </div>
       {% else %}
       <div class="form-group">
-        <label for="calendarSelect">Your working calendar</label>
-        <select class="form-control" id="calendarSelect">
+        <label>Your working calendar</label>
+        <select class="form-control" name="calendar">
           {% for item in calendars.items %}
-          <option value="{{ item.id }}">{{ item.summary }}</option>
+            {% if item.accessRole == "owner" %}
+            <option value="{{ item.id }}">{{ item.summary }}</option>
+            {% endif %}
           {% endfor %}
         </select>  
       </div>
-       {% endif %}
+      {% endif %}
       <button type="submit" class="btn btn-primary">Submit</button>
       {{ form.close() }}
     </div>
@@ -42,4 +44,4 @@
 </div>
 
 
-  {% endblock %}
+{% endblock %}

@@ -21,11 +21,12 @@ const Helpers = use('Helpers')
 class UsersController {
 
   static get inject () {
-    return ['App/Model/UserAccount']
+    return ['App/Model/UserAccount', 'App/Model/Calendar']
   }
 
-  constructor (User) {
+  constructor (User, Calendar) {
     this.User = User
+    this.Calendar = Calendar
   }
 
   * index (request, response) {
@@ -120,13 +121,25 @@ class UsersController {
       if (fs.existsSync(Helpers.publicPath() + '/avatar/' + fileName)) {
         fs.unlinkSync(Helpers.publicPath() + '/avatar/' + fileName)
       }
-
       yield avatar.move(Helpers.publicPath() + '/avatar', fileName)
       if (!avatar.moved()) {
         response.badRequest(avatar.errors())
         return
       }
       user.avatar = avatar.uploadPath()
+    }
+
+    if (request.input('calendar')) {
+      yield this.Calendar.query().where('user_account_id', user.id).delete()
+      const calendarData = yield q.ninvoke(googleCal.calendars, 'get', {calendarId: request.input('calendar'), auth: oauth2Client}).spread(function (response) {
+        return response
+      })
+      const calendar = new this.Calendar()
+      calendar.calendarID = calendarData.id
+      calendar.summary = calendarData.summary
+      calendar.description = calendarData.description
+
+      yield user.calendar().save(calendar)
     }
     yield user.save()
 
@@ -143,8 +156,6 @@ class UsersController {
     const tokens = yield q.ninvoke(oauth2Client, 'getToken', code).spread(function (tokens) {
       return tokens
     })
-
-    console.log(tokens)
 
     const user = yield request.auth.getUser()
     user.access_token = tokens.access_token

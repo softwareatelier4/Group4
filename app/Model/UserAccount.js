@@ -5,6 +5,10 @@ const Hash = use('Hash')
 
 class UserAccount extends Lucid {
 
+  calendar () {
+    return this.hasOne('App/Model/Calendar')
+  }
+
   static boot () {
     super.boot()
 
