@@ -7,10 +7,11 @@ const _ = require('lodash')
 const ProfileController = use('App/Http/Controllers/ProfileController')
 
 describe('ProfileController', function () {
+
   const browser = new Browser()
   this.timeout(15000)
 
-  this.timeout(5000);
+  this.timeout(5000)
 
   before(function (done) {
     browser.visit('/profiles', done)
@@ -21,22 +22,22 @@ describe('ProfileController', function () {
       browser.assert.success()
     })
 
-  describe('index:view state at init', function () {
+    describe('index:view state at init', function () {
+      it('should contain a link to profiles index page with text BROWSE', function () {
+        browser.assert.text('a[href="/profiles"]', 'BROWSE')
+      })
+      it('should contain an empty searchbox with placeholder Search', function () {
+        browser.assert.attribute('#searchbox', 'value', '')
+        browser.assert.attribute('#searchbox', 'placeholder', 'Search')
+      })
 
-    it('should contain a link to profiles index page with text BROWSE', function () {
-      browser.assert.text('a[href="/profiles"]', 'BROWSE')
-    })
-    it('should contain an empty searchbox with placeholder Search', function () {
-      browser.assert.attribute('#searchbox', 'value', '')
-      browser.assert.attribute('#searchbox', 'placeholder', 'Search')
-    })
+      it('should contain a select input for city', function () {
+        browser.assert.element('#search-position input')
+      })
 
-    it('should contain a select input for city', function () {
-      browser.assert.element('#search-position input')
-    })
-
-    it('should contain a select input for category', function () {
-      browser.assert.element('#search-category select')
+      it('should contain a select input for category', function () {
+        browser.assert.element('#search-category select')
+      })
     })
   })
 
@@ -61,7 +62,6 @@ describe('ProfileController', function () {
     })
 
     it('should contain anchors to sort by Distance ASC', function () {
-
       const a = browser.querySelectorAll('option')
       let exist = false
       _.forEach(a, function (el) {
@@ -74,7 +74,6 @@ describe('ProfileController', function () {
 
 
     it('should contain anchors to sort by Price ASC', function () {
-
       const a = browser.querySelectorAll('option')
       let exist = false
       _.forEach(a, function (el) {
@@ -86,7 +85,6 @@ describe('ProfileController', function () {
     })
 
     it('should contain anchors to sort by Price DESC', function () {
-
       const a = browser.querySelectorAll('option')
       let exist = false
       _.forEach(a, function (el) {
@@ -98,7 +96,6 @@ describe('ProfileController', function () {
     })
 
     it('should contain anchors to sort by Overall Rating ASC', function () {
-
       const a = browser.querySelectorAll('option')
       let exist = false
       _.forEach(a, function (el) {
@@ -110,7 +107,6 @@ describe('ProfileController', function () {
     })
 
     it('should contain anchors to sort by Overall Rating DESC', function () {
-
       const a = browser.querySelectorAll('option')
       let exist = false
       _.forEach(a, function (el) {
@@ -120,11 +116,9 @@ describe('ProfileController', function () {
       })
       assert(exist)
     })
-
   })
 
   describe('index:view should be sorted by Distance ASC', function () {
-
     it('should sort the result by Distance ASC by default', function () {
       let distance = -1
       let results = browser.querySelectorAll('.result-item-title+div')
@@ -136,35 +130,34 @@ describe('ProfileController', function () {
         distance = d
       })
     })
+  })
 
-    describe('profile:index sorting by Distance DESC', function () {
-
-      before(function (done) {
-        // browser.select("#orderBy", "Distance High")
-        browser.visit('/profiles?orderBy=1', done)
-      })
-
-      it('should sort the result by Distance DESC', function () {
-        let distance = Number.MAX_VALUE
-        let results = browser.querySelectorAll('.result-item-title+div')
-
-        _.forEach(results, function(el) {
-          let d = _.parseInt(_.replace(el.textContent, 'km'))
-          assert( distance >= d)
-          distance = d
-        })
-      })
+  describe('profile:index sorting by Distance DESC', function () {
+    before(function (done) {
+      // browser.select("#orderBy", "Distance High")
+      browser.visit('/profiles?orderBy=1', done)
     })
 
-    describe('profile:index sorting by Price ASC', function () {
-      before(function (done) {
-        browser.visit('/profiles?orderBy=2', done)
+    it('should sort the result by Distance DESC', function () {
+      let distance = Number.MAX_VALUE
+      let results = browser.querySelectorAll('.result-item-title+div')
+
+      _.forEach(results, function (el) {
+        let d = _.parseInt(_.replace(el.textContent, 'km'))
+        assert(distance >= d)
+        distance = d
       })
+    })
+  })
 
-      it('should sort the result by Price ASC', function () {
+  describe('profile:index sorting by Price ASC', function () {
+    before(function (done) {
+      browser.visit('/profiles?orderBy=2', done)
+    })
 
-        let price = -1
-        let results = browser.querySelectorAll('.item-price > span')
+    it('should sort the result by Price ASC', function () {
+      let price = -1
+      let results = browser.querySelectorAll('.item-price > span')
 
       _.forEach(results, function (el) {
         let p = parseFloat(el.innerHTML)
@@ -172,7 +165,6 @@ describe('ProfileController', function () {
         price = p
       })
     })
-
   })
 
   describe('profile:index sorting by Price DESC', function () {
@@ -189,7 +181,6 @@ describe('ProfileController', function () {
         assert(price >= p)
         price = p
       })
-
     })
   })
 
@@ -199,7 +190,6 @@ describe('ProfileController', function () {
     })
 
     it('should sort the result by overall rating asc', function () {
-
       let rating = Number.MIN_VALUE
       let results = browser.querySelectorAll('.ratings > option:checked')
 
@@ -217,7 +207,6 @@ describe('ProfileController', function () {
     })
 
     it('should sort the result by overall rating desc', function () {
-
       let rating = Number.MAX_VALUE
       let results = browser.querySelectorAll('.ratings > option:checked')
 
@@ -251,31 +240,29 @@ describe('ProfileController', function () {
   })
 
   describe('index:view default filtering options collapse', function () {
-    before(function(done) {
+    before(function (done) {
       browser.visit('/profiles', done)
     })
 
-    it('should have the filtering block non collapsed by default', function(){
+    it('should have the filtering block non collapsed by default', function () {
       browser.assert.hasClass('#filters', 'hidden-xs-up')
     })
 
-    it('should become visible when clicking Show filter', function() {
-      browser.clickLink('#showFilters')
+    it('should become visible when clicking Show filter', function () {
+      browser.pressButton('#showFilters')
       browser.assert.hasNoClass('#filters', 'hidden-xs-up')
     })
   })
 
-
-  before(function(done) {
+  before(function (done) {
     browser.visit('/profiles', done)
   })
 
   describe('index:view default filtering by distance', function () {
-
     let min = 25
     let max = 50
 
-    before(function(done) {
+    before(function (done) {
       browser
         .fill('minDist', min)
         .fill('maxDist', max)
@@ -283,7 +270,6 @@ describe('ProfileController', function () {
     })
 
     it(`should return only items between ${min} <= distance <= ${max}`, function () {
-
       let results = browser.querySelectorAll('.result-item-title+div')
 
       _.forEach(results, function (el) {
@@ -293,24 +279,20 @@ describe('ProfileController', function () {
         assert(d <= max)
       })
     })
-
   })
 
-
   describe('index:view default filtering by price', function () {
-
     let min = 25
     let max = 50
 
-    before(function(done) {
+    before(function (done) {
       browser
         .fill('minPrice', min)
-        .fill('maxPric', max)
+        .fill('maxPrice', max)
         .pressButton('Filter', done)
     })
 
     it(`should return only items between ${min} <= price <= ${max}`, function () {
-
       let results = browser.querySelectorAll('.item-price > span')
 
       _.forEach(results, function (el) {
@@ -321,3 +303,5 @@ describe('ProfileController', function () {
       })
     })
   })
+
+})
