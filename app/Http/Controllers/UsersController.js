@@ -135,7 +135,7 @@ class UsersController {
         return response
       })
       const calendar = new this.Calendar()
-      calendar.calendarID = calendarData.id
+      calendar.id = calendarData.id
       calendar.summary = calendarData.summary
       calendar.description = calendarData.description
 

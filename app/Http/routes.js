@@ -21,6 +21,7 @@ Route.get('/', 'HomeController.index')
 Route.resource('profiles', 'ProfileController')
 Route.resource('profiles.reviews', 'ReviewController')
 Route.resource('reviews.answer', 'AnswerController')
+Route.get('getCalendars', 'CalendarController.getCalendars')
 
 Route.resource('users', 'UsersController')
 Route.post('/login', 'UsersController.login')
