@@ -11,6 +11,8 @@ class EventsTableSchema extends Schema {
       table.text('summary').nullable()
       table.text('description').nullable()
       table.text('location').nullable()
+      table.string('lat').nullable()
+      table.string('lng').nullable()
       table.text('transparency').nullable()
       table.dateTime('start').nullable()
       table.dateTime('end').nullable()
