@@ -30,11 +30,23 @@
         <label>Your work calendar</label>
         <select class="form-control" name="calendar">
           {% for item in calendars.items %}
-            {% if item.accessRole == "owner" %}
-            <option value="{{ item.id }}">{{ item.summary }}</option>
-            {% endif %}
+          {% if item.accessRole == "owner" %}
+          <option value="{{ item.id }}">{{ item.summary }}</option>
+          {% endif %}
           {% endfor %}
         </select>  
+      </div>
+      <div class="form-check">
+        <label class="form-check-label">
+        <input class="form-check-input" type="radio" name="emergency" value="0" {{ "checked" if not currentUser.emergency }}>
+          Never available for emergency
+        </label>
+      </div>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input class="form-check-input" type="radio" name="emergency" value="1" {{ "checked" if currentUser.emergency }}>
+          Always available for emergency
+        </label>
       </div>
       {% endif %}
       <button type="submit" class="btn btn-primary">Submit</button>

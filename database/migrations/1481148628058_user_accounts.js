@@ -16,6 +16,7 @@ class UsersTableSchema extends Schema {
       table.text('access_token').nullable()
       table.text('refresh_token').nullable()
       table.bigInteger('expiry_date').nullable()
+      table.boolean('emergency').defaultTo(0)
       table.timestamps()
     })
   }

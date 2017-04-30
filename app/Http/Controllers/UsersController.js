@@ -114,6 +114,7 @@ class UsersController {
 
     user.email = request.input('email')
     user.name = request.input('name')
+    user.emergency = request.input('emergency') || 0
     const avatar = request.file('avatar')
 
     if (avatar.clientSize()) {
