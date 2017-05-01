@@ -11,7 +11,6 @@ describe('ProfileController', function () {
   const browser = new Browser()
   this.timeout(15000)
 
-  this.timeout(5000)
 
   before(function (done) {
     browser.visit('/profiles', done)
@@ -118,6 +117,7 @@ describe('ProfileController', function () {
     })
   })
 
+
   describe('index:view should be sorted by Distance ASC', function () {
     it('should sort the result by Distance ASC by default', function () {
       let distance = -1
@@ -132,90 +132,107 @@ describe('ProfileController', function () {
     })
   })
 
+
   describe('profile:index sorting by Distance DESC', function () {
-    before(function (done) {
-      // browser.select("#orderBy", "Distance High")
-      browser.visit('/profiles?orderBy=1', done)
-    })
-
     it('should sort the result by Distance DESC', function () {
-      let distance = Number.MAX_VALUE
-      let results = browser.querySelectorAll('.result-item-title+div')
+      browser.select('#orderBy', 'Distance High',  function () {
+        let distance = Number.MAX_VALUE
+        let results = browser.querySelectorAll('.result-item-title+div')
 
-      _.forEach(results, function (el) {
-        let d = _.parseInt(_.replace(el.textContent, 'km'))
-        assert(distance >= d)
-        distance = d
+        _.forEach(results, function (el) {
+          let d = _.parseInt(_.replace(el.textContent, 'km'))
+          assert(distance >= d)
+          distance = d
+        })
       })
     })
   })
 
   describe('profile:index sorting by Price ASC', function () {
+
     before(function (done) {
-      browser.visit('/profiles?orderBy=2', done)
+      browser.visit('/profiles', done)
     })
 
-    it('should sort the result by Price ASC', function () {
-      let price = -1
-      let results = browser.querySelectorAll('.item-price > span')
 
-      _.forEach(results, function (el) {
-        let p = parseFloat(el.innerHTML)
-        assert(price <= p)
-        price = p
+    it('should sort the result by Price ASC', function () {
+      browser.select('#orderBy', 'Price Low',  function () {
+        let price = -1
+        let results = browser.querySelectorAll('.item-price > span')
+
+        _.forEach(results, function (el) {
+          let p = parseFloat(el.innerHTML)
+          assert(price <= p)
+          price = p
+        })
       })
     })
   })
 
   describe('profile:index sorting by Price DESC', function () {
+
     before(function (done) {
-      browser.visit('/profiles?orderBy=3', done)
+      browser.visit('/profiles', done)
     })
 
     it('should sort the result by Price DESC', function () {
-      let price = Number.MAX_VALUE
-      let results = browser.querySelectorAll('.item-price > span')
 
-      _.forEach(results, function (el) {
-        let p = parseFloat(el.innerHTML)
-        assert(price >= p)
-        price = p
+      browser.select('#orderBy', 'Price High',  function () {
+        let price = Number.MAX_VALUE
+        let results = browser.querySelectorAll('.item-price > span')
+
+        _.forEach(results, function (el) {
+          let p = parseFloat(el.innerHTML)
+          assert(price >= p)
+          price = p
+        })
       })
     })
   })
 
   describe('profile:index sorting by Rating ASC', function () {
+
     before(function (done) {
-      browser.visit('/profiles?orderBy=4', done)
+      browser.visit('/profiles', done)
     })
+
 
     it('should sort the result by overall rating asc', function () {
-      let rating = Number.MIN_VALUE
-      let results = browser.querySelectorAll('.ratings > option:checked')
 
-      _.forEach(results, function (el) {
-        let r = parseFloat(el.innerHTML)
-        assert(rating <= r)
-        rating = r
+      browser.select('#orderBy', 'Rating Low',  function () {
+        let rating = Number.MIN_VALUE
+        let results = browser.querySelectorAll('.ratings > option:checked')
+
+        _.forEach(results, function (el) {
+          let r = parseFloat(el.innerHTML)
+          assert(rating <= r)
+          rating = r
+        })
       })
     })
+
   })
 
   describe('profile:index sorting by Rating DESC', function () {
+
     before(function (done) {
-      browser.visit('/profiles?orderBy=5', done)
+      browser.visit('/profiles', done)
     })
 
     it('should sort the result by overall rating desc', function () {
-      let rating = Number.MAX_VALUE
-      let results = browser.querySelectorAll('.ratings > option:checked')
 
-      _.forEach(results, function (el) {
-        let r = parseFloat(el.innerHTML)
-        assert(rating >= r)
-        rating = r
+      browser.select('#orderBy', 'Rating High',  function () {
+        let rating = Number.MAX_VALUE
+        let results = browser.querySelectorAll('.ratings > option:checked')
+
+        _.forEach(results, function (el) {
+          let r = parseFloat(el.innerHTML)
+          assert(rating >= r)
+          rating = r
+        })
       })
     })
+
   })
 
   describe('master:view login interface', function () {
@@ -254,53 +271,60 @@ describe('ProfileController', function () {
     })
   })
 
+
   before(function (done) {
     browser.visit('/profiles', done)
   })
 
   describe('index:view default filtering by distance', function () {
+
     let min = 25
     let max = 50
 
-    before(function (done) {
+    it(`should return only items between ${min} <= distance <= ${max}`, function () {
       browser
         .fill('minDist', min)
         .fill('maxDist', max)
-        .pressButton('Filter', done)
-    })
+        .pressButton('#filter', function () {
 
-    it(`should return only items between ${min} <= distance <= ${max}`, function () {
-      let results = browser.querySelectorAll('.result-item-title+div')
+          let results = browser.querySelectorAll('.result-item-title + div')
 
-      _.forEach(results, function (el) {
-        let d = el.innerHTML
-        d = parseInt(_.replace(d, 'km'))
-        assert(d >= min)
-        assert(d <= max)
-      })
+          assert( results.length > 0, 'Empty node list' )
+          _.forEach(results, function (el) {
+            let d = el.innerHTML
+            d = parseInt(_.replace(d, 'km'))
+            assert(d >= min)
+            assert(d <= max)
+          })
+        })
     })
   })
 
-  describe('index:view default filtering by price', function () {
-    let min = 25
-    let max = 50
 
-    before(function (done) {
+  before(function (done) {
+    browser.visit('/profiles', function(err) { console.log(err); done() })
+  })
+
+  describe('index:view default filtering by price', function () {
+
+    let min = 25
+    let max = 100
+
+    it(`should return only items between ${min} <= price <= ${max}`, function () {
       browser
         .fill('minPrice', min)
         .fill('maxPrice', max)
-        .pressButton('Filter', done)
-    })
+        .pressButton('#filter', function (err) {
 
-    it(`should return only items between ${min} <= price <= ${max}`, function () {
-      let results = browser.querySelectorAll('.item-price > span')
-
-      _.forEach(results, function (el) {
-        let d = el.innerHTML
-        d = parseFloat(d)
-        assert(d >= min)
-        assert(d <= max)
-      })
+          let results = browser.querySelectorAll('.item-price > span')
+          assert( results.length > 0, 'Empty node list' )
+          _.forEach(results, function (el) {
+            let d = el.innerHTML
+            d = parseFloat(d)
+            assert(d >= min, `Price is > ${max}`)
+            assert(d <= max, `Price is > ${max}`)
+          })
+        })
     })
   })
 

@@ -1,10 +1,6 @@
 {% extends 'master' %}
-
 {% block content %}
-
-
   <div class="container">
-
     <div class="row justify-content-center mb-3">
       <div class="col-5 col-md-10 ">
         <button id="showFilters" type="button" class="btn btn-secondary float-right ml-3">Show filters</button>
@@ -18,7 +14,6 @@
         </select>
       </div>
     </div>
-
     <div id="filters" class="row justify-content-center hidden-xs-up text-center">
       <div class="col-12 col-md-10">
         <form action="/profiles" class="mb-5" method="GET">
@@ -29,7 +24,7 @@
               <div class="row mb-3">
                 <div class="col-4">
                   <input type="number" id="distance-min-value" name="minDist" class="form-control" min="0" max="500" value="{{ request.minDist or 0 }}">
-                </div>
+                n</div>
                 <div class="col-4 offset-4 float-right">
                   <input type="number" id="distance-max-value" name="maxDist" class="form-control" min="0" max="500" value="{{ request.maxDist or 500 }}">
                 </div>
@@ -64,13 +59,12 @@
             </div>
             <div class="col-12 float-right">
               <hr>
-              <button type="submit" class="btn btn-primary btn-md float-right">Filter</button>
+              <button id="filter" type="submit" class="btn btn-primary btn-md float-right">Filter</button>
             </div>
           </div>
         </form>
       </div>
     </div>
-
     <div class="row justify-content-center">
       <div class="col-12 col-md-10">
         {% for profile in profiles.data %}
@@ -98,12 +92,12 @@
               <div class="row mt-3">
                 <div class="col-4 justify-content-end">
                   <select class="ratings" autocomplete="off" style="display: none;" >
-								    <option value="1" {{ "selected" if (profile.overall_rating == 1) }}>1</option>
-								    <option value="2" {{ "selected" if (profile.overall_rating == 2) }}>2</option>
-								    <option value="3" {{ "selected" if (profile.overall_rating == 3) }}>3</option>
-								    <option value="4" {{ "selected" if (profile.overall_rating == 4) }}>4</option>
-								    <option value="5" {{ "selected" if (profile.overall_rating == 5) }}>5</option>
-							    </select>
+                    <option value="1" {{ "selected" if (profile.overall_rating == 1) }}>1</option>
+                    <option value="2" {{ "selected" if (profile.overall_rating == 2) }}>2</option>
+                    <option value="3" {{ "selected" if (profile.overall_rating == 3) }}>3</option>
+                    <option value="4" {{ "selected" if (profile.overall_rating == 4) }}>4</option>
+                    <option value="5" {{ "selected" if (profile.overall_rating == 5) }}>5</option>
+                  </select>
                 </div>
                 <div class="col-8 text-right item-price">
                   $<span>{{ profile.price }}</span>
@@ -111,43 +105,37 @@
               </div>
             </div>
           </div>
-{% else %}
+        {% else %}
           <div class="alert alert-warning font-italic" role="alert">
             Your search did not match any profile.
           </div>
-
         {% endfor %}
-
         {% if profiles.total > 25 %}
           <!-- START Pagination -->
           <div class="row justify-content-center">
             <div class="col-md-4">
               <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
-
                   {% if  profiles.currentPage == 1 %}
-
                     <li class="page-item active"><a class="page-link" href="#">1</a></li>
                     <li class="page-item"><a class="page-link" href="{{ profiles.nextPage }}">{{ profiles.currentPage + 1 }}</a></li>
                     <li class="page-item "><a class="page-link" href="{{ profiles.previousPage }}">{{ profiles.currentPage + 2 }}</a></li>
-                      <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                      </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">Next</a>
+                    </li>
                   {% else %}
-
-
-                      <li class="page-item disabled">
-                        <a class="page-link" href="#" aria-label="Next">
-                          <span aria-hidden="true">&raquo;</span>
-                          <span class="sr-only">Next</span>
-                        </a>
-                      </li>
-                      <li class="page-item "><a class="page-link" href="{{ profiles.previousPage }}">{{ profiles.currentPage -1 }}</a></li>
-                      <li class="page-item active"><a class="page-link" href="#">{{ profiles.currentPage }}</a></li>
-                      <li class="page-item"><a class="page-link" href="{{ profiles.nextPage }}">{{ profiles.currentPage + 1 }}</a></li>
-                      <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                      </li>
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">»</span>
+                        <span class="sr-only">Next</span>
+                      </a>
+                    </li>
+                    <li class="page-item "><a class="page-link" href="{{ profiles.previousPage }}">{{ profiles.currentPage -1 }}</a></li>
+                    <li class="page-item active"><a class="page-link" href="#">{{ profiles.currentPage }}</a></li>
+                    <li class="page-item"><a class="page-link" href="{{ profiles.nextPage }}">{{ profiles.currentPage + 1 }}</a></li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">Next</a>
+                    </li>
                   {% endif %}
                 </ul>
               </nav>
@@ -155,12 +143,10 @@
           </div>
           <!-- END Pagination -->
         {% endif %}
-
       </div>
     </div>
   </div>
 {% endblock %}
-
 {% block javascript %}
   <script type="text/javascript">
     $('.ratings').barrating('show', {
@@ -169,16 +155,13 @@
       showSelectedRating: false,
       readonly: true,
     });
-
     $("#showFilters").click(function() {
       $("#filters").toggleClass('hidden-xs-up')
-
       if ( $('#filters').hasClass('hidden-xs-up') )
         $(this).text('Show filters')
       else
         $(this).text('Hide filters')
     });
-
     $( "#slider-distance" ).slider({
       range: true,
       min: 0,
@@ -190,7 +173,6 @@
         $("#distance-max-value").val(ui.values[1]);
       }
     });
-
     $( "#slider-price" ).slider({
       range: true,
       min: 0,
@@ -202,7 +184,6 @@
         $("#price-max-value").val(ui.values[1]);
       }
     });
-
     $( "#slider-rating" ).slider({
       range: true,
       min: 1,
@@ -214,36 +195,23 @@
         $("#rating-max-value").val(ui.values[1]);
       }
     });
-
-
     $("#distance-min-value").change(function(){
       $("#slider-distance").slider("values", 0, $("#distance-min-value").val())
     })
-
     $("#distance-max-value").change(function(){
       $("#slider-distance").slider("values", 1, $("#distance-max-value").val())
     })
-
-
     $("#price-min-value").change(function(){
       $("#slider-price").slider("values", 0, $("#price-min-value").val())
     })
-
     $("#price-max-value").change(function(){
       $("#slider-price").slider("values", 1, $("#price-max-value").val())
     })
-
     $("#rating-min-value").change(function(){
       $("#slider-rating").slider("values", 0, $("#rating-min-value").val())
     })
-
     $("#rating-max-value").change(function(){
       $("#slider-rating").slider("values", 1, $("#rating-max-value").val())
     })
-
-
-
-
-
   </script>
 {% endblock  %}
