@@ -47,13 +47,17 @@ class Profile extends Lucid {
   static scopePrice (builder, min, max) {
     min = min || 0
     max = max || 1000
-    builder.whereBetween('price', [min, max]).orWhere('price', null)
+    builder.where(function () {
+      this.whereBetween('price', [min, max])
+    })
   }
 
   static scopeRating (builder, min, max) {
     min = min || 1
     max = max || 5
-    builder.whereBetween('overall_rating', [min, max]).orWhere('overall_rating', null)
+    builder.where(function () {
+      this.whereBetween('overall_rating', [min, max])
+    })
   }
 
   static scopeDistance (builder, min, max, res) {
