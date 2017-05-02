@@ -35,7 +35,6 @@ class DatabaseSeeder {
       lng: '8.970071',
       city: 'Lugano',
       user_id: null,
-      overall_rating: 1
     })
 
     yield Profile.create({
@@ -50,8 +49,7 @@ class DatabaseSeeder {
       lng: '8.922933',
       city: 'Mezzovico-Vira',
       user_id: null,
-      overall_rating: 2
-    })
+          })
 
     yield Profile.create({
       id: 3,
@@ -65,8 +63,7 @@ class DatabaseSeeder {
       lng: '8.924697',
       city: 'Lugano',
       user_id: null,
-      overall_rating: 4
-    })
+          })
 
     yield Profile.create({
       id: 4,
@@ -80,8 +77,7 @@ class DatabaseSeeder {
       lng: '9.875321',
       city: 'Samaden',
       user_id: null,
-      overall_rating: 2
-    })
+          })
 
     yield Profile.create({
       id: 5,
@@ -95,8 +91,7 @@ class DatabaseSeeder {
       lng: '8.973651',
       city: 'Davesco-Soragno',
       user_id: null,
-      overall_rating: 4
-    })
+          })
 
     yield Profile.create({
       id: 6,
@@ -110,7 +105,6 @@ class DatabaseSeeder {
       lng: '9.031572',
       city: 'Chiasso',
       user_id: null,
-      overall_rating: 1
     })
 
     yield Profile.create({
@@ -125,7 +119,6 @@ class DatabaseSeeder {
       lng: '8.923949',
       city: 'Lugano',
       user_id: null,
-      overall_rating: 5
     })
 
     yield Profile.create({
@@ -140,7 +133,6 @@ class DatabaseSeeder {
       lng: '8.773200',
       city: 'Ascona',
       user_id: null,
-      overall_rating: 1
     })
 
     yield Profile.create({
@@ -155,7 +147,6 @@ class DatabaseSeeder {
       lng: '8.963594',
       city: 'Viganello',
       user_id: null,
-      overall_rating: 2
     })
 
     yield Profile.create({
@@ -170,7 +161,6 @@ class DatabaseSeeder {
       lng: '8.541694',
       city: 'Cremenaga',
       user_id: null,
-      overall_rating: 3
     })
 
     yield Review.create({ comment: 'Did a decent job', vote_price: 2, vote_quality: 2, vote_overall: 1, profile_id: 5 })
