@@ -279,52 +279,95 @@ describe('ProfileController', function () {
   describe('index:view default filtering by distance', function () {
 
     let min = 25
-    let max = 50
+    let max = 100
+
+    before(function (done) {
+        browser
+          .fill('minDist', min)
+          .fill('maxDist', max)
+          .pressButton('#filter',done)
+
+      })
+
 
     it(`should return only items between ${min} <= distance <= ${max}`, function () {
-      browser
-        .fill('minDist', min)
-        .fill('maxDist', max)
-        .pressButton('#filter', function () {
+      let results = browser.querySelectorAll('.result-item-title + div')
 
-          let results = browser.querySelectorAll('.result-item-title + div')
+      assert( results.length > 0, 'Empty node list' )
+      _.forEach(results, function (el) {
+        let d = el.innerHTML
+        d = parseInt(_.replace(d, 'km'))
+        assert(d >= min)
+        assert(d <= max)
 
-          assert( results.length > 0, 'Empty node list' )
-          _.forEach(results, function (el) {
-            let d = el.innerHTML
-            d = parseInt(_.replace(d, 'km'))
-            assert(d >= min)
-            assert(d <= max)
-          })
         })
     })
   })
 
-
   before(function (done) {
-    browser.visit('/profiles', function(err) { console.log(err); done() })
+    browser.visit('/profiles', done)
   })
 
-  describe('index:view default filtering by price', function () {
+  describe('index:view filtering by price', function () {
 
-    let min = 25
-    let max = 100
+    let min = 0
+    let max = 50
 
-    it(`should return only items between ${min} <= price <= ${max}`, function () {
+    before(function (done) {
       browser
         .fill('minPrice', min)
         .fill('maxPrice', max)
-        .pressButton('#filter', function (err) {
+        .fill('minDist', 0)
+        .fill('maxDist', 1000)
 
-          let results = browser.querySelectorAll('.item-price > span')
-          assert( results.length > 0, 'Empty node list' )
-          _.forEach(results, function (el) {
-            let d = el.innerHTML
-            d = parseFloat(d)
-            assert(d >= min, `Price is > ${max}`)
-            assert(d <= max, `Price is > ${max}`)
-          })
-        })
+        .pressButton('#filter',done)
+    })
+
+    it(`should return only items between ${min} <= price <= ${max}`, function () {
+
+      let results = browser.querySelectorAll('.item-price > span')
+      assert( results.length > 0, 'Empty node list' )
+
+      _.forEach(results, function (el) {
+        let d = el.innerHTML
+        d = parseFloat(d)
+        assert(d >= min, `Price ${d} is not > ${min}`)
+        assert(d <= max, `Price ${d} is not < ${max}`)
+      })
+    })
+  })
+
+  before(function (done) {
+    browser.visit('/profiles', done)
+  })
+
+  describe('index:view filtering by rating ', function () {
+
+    let min = 3
+    let max = 4
+
+    before(function (done) {
+      browser
+        .fill('minPrice', 0)
+        .fill('maxPrice', 500)
+        .fill('minDist', 0)
+        .fill('maxDist', 1000)
+        .fill('minRate', min)
+        .fill('maxRate', max)
+        .pressButton('#filter',done)
+    })
+
+    it(`should return only items between ${min} <= rating <= ${max}`, function () {
+
+      let results = browser.querySelectorAll('.ratings > option:checked')
+      assert( results.length > 0, 'Empty node list' )
+
+      _.forEach(results, function (el) {
+        let d = el.getAttribute('value')
+        d = parseFloat(d)
+        assert(d >= min, `Rate ${d} is not > ${min}`)
+        assert(d <= max, `Rate ${d} is not < ${max}`)
+      })
     })
   })
 
