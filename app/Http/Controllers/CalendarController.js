@@ -51,7 +51,6 @@ class CalendarController {
         yield event.save()
       }
     }
-    response.redirect('/profiles')
   }
 
 }
