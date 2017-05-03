@@ -13,8 +13,17 @@ body {
   width: 36px;
 }
 
+* {
+  border-radius: 0px !important;
+}
+
 #navbarDropdownMenuLink::after {
   display: none;
+}
+
+.navbar-nav > li > a {
+  color:white !important;
+  }
 }
 
 #searchbox{
