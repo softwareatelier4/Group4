@@ -134,6 +134,7 @@ a.badge-anchor{
 }
 
 .field-custom{
+
   color: #0275d8;
   /*background-color: #0275d8;*/
   border-color: #0275d8;
@@ -157,37 +158,30 @@ a.badge-anchor{
 }
 
 .name-custom {
+  background-position: 110px;
+  background-size: 17%;
   background-repeat: no-repeat;
-  background-position: right;
-  background-size: contain;
   background-image: url("../imgs/ic_account_circle_white_24px.svg");
-}
-
-.location-custom {
-  background-repeat: no-repeat;
-  background-position: right;
-  background-size: contain;
-  background-image: url("../imgs/ic_location_on_white_24px.svg");
 }
 
 .email-custom {
   background-repeat: no-repeat;
-  background-size: contain;
-  background-position: right;
+  background-size: 17%;
+  background-position: 110px;
   background-image: url("../imgs/ic_email_white_24px.svg");
 }
 
 .type-custom {
   background-repeat: no-repeat;
-  background-size: contain;
-  background-position: right;
+  background-size: 17%;
+  background-position: 110px;
   background-image: url("../imgs/ic_work_white_24px.svg");
 }
 
 .pass-custom {
   background-repeat: no-repeat;
-  background-size: contain;
-  background-position: right;
+  background-size: 17%;
+  background-position: 110px;
   background-image: url("../imgs/ic_lock_outline_white_24px.svg");
 }
 
@@ -260,3 +254,4 @@ a.badge-anchor{
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
 }
+

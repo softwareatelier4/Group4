@@ -7,7 +7,7 @@
 
   {{ csrfField }}
 
-  <div class="register-form">
+  <div class="register-form text-center">
 
   <div class="field register-item">
     {{ form.label('name', 'Name', { class: 'text-custom name-custom' }) }}
@@ -24,22 +24,12 @@
     {{ form.text('email', 'email' ,{ class: 'field-custom' }) }}
   </div>
 
-    <div class="field register-item">
-      {{ form.label('location', 'Location', { class: 'text-custom location-custom' }) }}
-      {{ form.password('location', 'location', { class: 'field-custom' }) }}
-    </div>
-
   <div class="field register-item">
     {{ form.label('password', 'Password', { class: 'text-custom pass-custom' }) }}
     {{ form.password('password', 'password', { class: 'field-custom' }) }}
   </div>
 
-  <div class="field register-item">
-    {{ form.label('type', 'Profile type', { class: 'text-custom type-custom' }) }}
-    {{ form.select('type', ['worker','user'], { class: 'select-custom' }) }}
-  </div>
-
-  <div class="button register-button">
+  <div class="button register-button submit-custom">
     {{ form.submit('Register', 'register', { class: 'btn-custom' }) }}
     <input class="btn-custom" type="reset" value="Reset">
   </div>
