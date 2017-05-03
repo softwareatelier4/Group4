@@ -13,6 +13,7 @@
   {#<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">#}
   <link rel="stylesheet" type="text/css" href="/css/custom.css">
   <link rel="stylesheet" type="text/css" href="/css/bars-square.css">
+  <link rel="stylesheet" type="text/css" href="/css/font-icon.css">
 </head>
 <body>
   <div class="container">
@@ -22,40 +23,19 @@
           <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <a class="navbar-brand" href="/"><img src="/assets/logo.png"/></a>
-
+          <a class="navbar-brand" href="/profiles"><img src="/assets/logo.png"/></a>
           <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
             <ul class="navbar-nav">
-
+              {% if currentUser %}
+                <li class="nav-item username">Welcome <b>{{ currentUser.name }}</b></li>
+                
+              {% endif %}
               <li class="nav-item"><a class="nav-link" href="/profiles">BROWSE</a></li>
 
-              <!-- Location dropdown button SHOULD BE AJAX -->
-              <li class="dropdown nav-item">
-                <input type="text" class="dropdown-toggle form-control" placeholder="Location" aria-label="..." data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                <ul class="dropdown-menu nav-item">
-                  {% block allCities %}
-                  {% for city in allCities %}
-                  <li class="nav-item"><a class="nav-link" href="/profiles?city={{ city.name }}">{{ city.name }}</a></li>
-                  {% endfor %}
-                  {% endblock %}
-                </ul>
-              </li>
-
-              <!-- Category dropdown button SHOULD BE AJAX -->
-              <li class="dropdown nav-item">
-                <input type="text" class="dropdown-toggle form-control" placeholder="Category" aria-label="..." data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                <ul class="dropdown-menu nav-item">
-                  {% block allCategories %}
-                  {% for category in allCategories %}
-                  <li class="nav-item"><a class="nav-link" href="/profiles?category={{ category.name }}">{{ category.name }}</a></li>
-                  {% endfor %}
-                  {% endblock %}
-                </ul>
-              </li>
-
               <!-- LOGIN / LOGOUT -->
+        
               {% if currentUser %}
-                <li class="nav-item"><a class="nav-link" href="/users">LOGOUT</a></li>
+                <li class="nav-item"><a class="nav-link" href="/logout">LOGOUT</a></li>
               {% else %}
 
                 <li class="dropdown">
@@ -64,7 +44,7 @@
                     ACCOUNT
                   </button>
                   <ul class="dropdown-menu login-dropdown">
-                    {{ form.open({action: 'UsersController.index'}) }}
+                    {{ form.open({action: 'UsersController.login', method: 'POST'}) }}
                     {{ csrfField }}
                     <li class="nav-link login-item">
                       {{ form.label('username', 'Username') }}
@@ -78,21 +58,44 @@
                       {{ form.submit('Login', 'login', { class: 'btn btn-primary btn-block' }) }}
                     </li>
                     {{ form.close() }}
-                    {{ form.open({action: 'UsersController.create'}) }}
                     <li class="nav-link">
-                      {{ form.submit('Register', 'register', { class: 'btn btn-primary btn-block' }) }}
-                    </li>
-                    {{ form.close() }}
+                      <a href="/register" class="btn btn-primary btn-block">Register</a>
+                    </li>  
                   </ul>
                 </li>
               {% endif %}
+
             </ul>
           </div>
-
         </nav>
       </div>
     </div>
   </div>
+
+<div class="container">
+   <form action="/profiles" class="mb-5" method="GET">
+    <div id="search-form" class="form-group row justify-content-center">
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="searchbox" name="search" placeholder="Search" value="{{ request.search }}">
+
+        <div id="search-position" class="input-group">
+          <span class="input-group-addon icon icon-basic-geolocalize-01 ja-input-icon" id="basic-addon1"></span>
+          <input type="text" class="form-control" id="searchlocationbox" name="location" placeholder="City" value="{{ request.location if (request.location) else userLocation.city }}">
+        </div>
+        <div id="search-category" class="input-group">
+          <select class="custom-select" name="category">
+          <option value="0" {{ "selected" if ( request.category == 0) }}>All categories</option>
+            {% for category in allCategories %}
+                <option value="{{ category.id }}" {{ "selected" if ( request.category == category.id) }}>{{ category.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <button id="search" type="submit" class="btn btn-primary">Search</button>
+      </div>
+    </div>
+  </form>
+</div>
 
   {% block content %}{% endblock %}
 

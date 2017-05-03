@@ -3,11 +3,12 @@
 class ReviewController {
 
   static get inject () {
-    return ['App/Model/Review']
+    return ['App/Model/Review', 'App/Model/Profile']
   }
 
-  constructor (Review) {
+  constructor (Review, Profile) {
     this.Review = Review
+    this.Profile = Profile
   }
 
   * index (request, response) {
@@ -38,6 +39,23 @@ class ReviewController {
       vote_overall: request.input('vote_overall'),
       profile_id: request.params().profiles_id
     })
+
+    const sum_overall_reviews = yield this.Review.query()
+          .where('profile_id', request.params().profiles_id)
+          .sum('vote_overall as sum')
+
+    const count_overall_reviews = yield this.Review.query()
+          .where('profile_id', request.params().profiles_id)
+          .count('id as count')
+
+    const overall_rating = sum_overall_reviews[0].sum / count_overall_reviews[0].count
+
+    let profile = yield this.Profile.findBy('id', request.params().profiles_id)
+
+    profile.overall_rating = Math.round(overall_rating)
+
+    yield profile.save()
+
     response.redirect('back')
   }
 
