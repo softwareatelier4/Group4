@@ -17,7 +17,6 @@ class ProfileController {
   constructor (Profile, Category, Event) {
     this.Profile = Profile
     this.Category = Category
-
     this.Event = Event
   }
 
@@ -33,15 +32,15 @@ class ProfileController {
 
     let order = 'distance'
 
-    switch(orderBy) {
-    case 1:
-      order = 'price'
-      break;
-    case 2:
-      order = 'overall_rating'
-      break;
-    default:
-      order = 'distance'
+    switch (orderBy) {
+      case 1:
+        order = 'price'
+        break
+      case 2:
+        order = 'overall_rating'
+        break
+      default:
+        order = 'distance'
     }
 
     let options = {
@@ -61,29 +60,32 @@ class ProfileController {
 
     const res = yield geocoder.geocode(userLocation)
     let profiles
-    if(request.input('emergency')){
-      var d = new Date();
-      d.setHours(0,0,0,0);
-      var d1 = new Date();
-      d1.setHours(24,0,0,0);
-      const events = yield this.Event
+    if (request.input('emergency')) {
+      var d = new Date()
+      profiles = yield this.Profile
       .query()
-      .where("start", ">", d)
-      .andWhere("end", "<", d1)
-      .fetch()      
-
-      console.log(events.toJSON())
-      return
-    }else{
-       profiles = yield this.Profile
+      .select('profiles.*')
+      .category(request.input('category'))
+      .innerJoin('user_accounts', 'profiles.user_id', 'user_accounts.id')
+      .andWhere('emergency', 1)
+      .innerJoin('calendars', 'calendars.user_account_id', 'user_accounts.id')
+      .innerJoin('events', 'calendars.id', 'events.calendar_id')
+      .andWhere('start', '<', d)
+      .andWhere('end', '>', d)
+      .andWhereNot('transparency', null)
+      .eventInRange(500, res)
+      .orderBy('distance')
+      .paginate(page, 25)
+    } else {
+      profiles = yield this.Profile
       .query()
       .inRange(3000, res)
       .category(request.input('category'))
       .search(request.input('search'))
-      .orderBy(order, orderBy == 2 ? 'desc' : 'asc')
+      .orderBy(order, orderBy === 2 ? 'desc' : 'asc')
       .paginate(page, 25)
     }
-    
+
     const components = request.except('page')
 
     let nextPage = request.url() + '?'

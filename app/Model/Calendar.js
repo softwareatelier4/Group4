@@ -8,8 +8,8 @@ class Calendar extends Lucid {
     return this.belongsTo('App/Model/UserAccount')
   }
 
-  reviews () {
-  	return this.hasMany('App/Model/Event')
+  events () {
+    return this.hasMany('App/Model/Event')
   }
 
 }
