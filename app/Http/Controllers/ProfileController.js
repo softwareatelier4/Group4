@@ -11,12 +11,13 @@ const googleMapsClient = require('@google/maps').createClient({
 class ProfileController {
 
   static get inject () {
-    return ['App/Model/Profile', 'App/Model/Category']
+    return ['App/Model/Profile', 'App/Model/Category', 'App/Model/Event']
   }
 
-  constructor (Profile, Category) {
+  constructor (Profile, Category, Event) {
     this.Profile = Profile
     this.Category = Category
+    this.Event = Event
   }
 
   * index (request, response) {
@@ -72,13 +73,32 @@ class ProfileController {
 
     const res = yield geocoder.geocode(userLocation)
 
-    const profiles = yield this.Profile
-    .query()
-    .inRange(3000, res)
-    .category(request.input('category'))
-    .search(request.input('search'))
-    .orderBy(order, asc)
-    .paginate(page, 25)
+    let profiles
+    if (request.input('emergency')) {
+      var d = new Date()
+      profiles = yield this.Profile
+      .query()
+      .select('profiles.*')
+      .category(request.input('category'))
+      .innerJoin('user_accounts', 'profiles.user_id', 'user_accounts.id')
+      .andWhere('emergency', 1)
+      .innerJoin('calendars', 'calendars.user_account_id', 'user_accounts.id')
+      .innerJoin('events', 'calendars.id', 'events.calendar_id')
+      .andWhere('start', '<', d)
+      .andWhere('end', '>', d)
+      .andWhereNot('transparency', null)
+      .eventInRange(500, res)
+      .orderBy('distance')
+      .paginate(page, 25)
+    } else {
+      profiles = yield this.Profile
+      .query()
+      .inRange(3000, res)
+      .category(request.input('category'))
+      .search(request.input('search'))
+      .orderBy(order, orderBy === 2 ? 'desc' : 'asc')
+      .paginate(page, 25)
+    }
 
     const components = request.except('page')
 
