@@ -96,7 +96,7 @@ class ProfileController {
       .inRange(3000, res)
       .category(request.input('category'))
       .search(request.input('search'))
-      .orderBy(order, orderBy === 2 ? 'desc' : 'asc')
+      .orderBy(order, asc)
       .paginate(page, 25)
     }
 
