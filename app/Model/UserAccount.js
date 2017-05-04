@@ -9,6 +9,10 @@ class UserAccount extends Lucid {
     return this.hasOne('App/Model/Calendar')
   }
 
+  profiles () {
+    return this.hasMany('App/Model/Profile')
+  }
+
   static boot () {
     super.boot()
 

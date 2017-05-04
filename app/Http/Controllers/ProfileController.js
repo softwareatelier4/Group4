@@ -11,12 +11,14 @@ const googleMapsClient = require('@google/maps').createClient({
 class ProfileController {
 
   static get inject () {
-    return ['App/Model/Profile', 'App/Model/Category']
+    return ['App/Model/Profile', 'App/Model/Category', 'App/Model/Event']
   }
 
-  constructor (Profile, Category) {
+  constructor (Profile, Category, Event) {
     this.Profile = Profile
     this.Category = Category
+
+    this.Event = Event
   }
 
   * index (request, response) {
@@ -58,15 +60,30 @@ class ProfileController {
     }
 
     const res = yield geocoder.geocode(userLocation)
+    let profiles
+    if(request.input('emergency')){
+      var d = new Date();
+      d.setHours(0,0,0,0);
+      var d1 = new Date();
+      d1.setHours(24,0,0,0);
+      const events = yield this.Event
+      .query()
+      .where("start", ">", d)
+      .andWhere("end", "<", d1)
+      .fetch()      
 
-    const profiles = yield this.Profile
-    .query()
-    .inRange(3000, res)
-    .category(request.input('category'))
-    .search(request.input('search'))
-    .orderBy(order, orderBy == 2 ? 'desc' : 'asc')
-    .paginate(page, 25)
-
+      console.log(events.toJSON())
+      return
+    }else{
+       profiles = yield this.Profile
+      .query()
+      .inRange(3000, res)
+      .category(request.input('category'))
+      .search(request.input('search'))
+      .orderBy(order, orderBy == 2 ? 'desc' : 'asc')
+      .paginate(page, 25)
+    }
+    
     const components = request.except('page')
 
     let nextPage = request.url() + '?'
