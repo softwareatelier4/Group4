@@ -1,7 +1,6 @@
 'use strict'
 const google = require('googleapis')
 const googleCal = google.calendar('v3')
-
 const OAuth2 = google.auth.OAuth2
 const q = require('q')
 
@@ -27,7 +26,14 @@ class CalendarController {
     const calendars = yield this.Calendar.all()
     const calendarsJSON = calendars.toJSON()
 
-    for (var i = 0; i < calendarsJSON.length; i++) {
+    const events = yield this.Event.all()
+
+    // Delete all data in the events table
+    for (let i = 0; i < events.value().length; i++) {
+      yield events.value()[i].delete()
+    }
+
+    for (let i = 0; i < calendarsJSON.length; i++) {
       const user = yield this.User.find(calendarsJSON[i].user_account_id)
       oauth2Client.setCredentials({
         access_token: user.access_token,
