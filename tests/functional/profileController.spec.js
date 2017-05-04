@@ -252,4 +252,26 @@ describe('ProfileController', function () {
     })
   })
 
+
+  before(function(done) {
+    browser.visit('/profiles/9', done)
+  })
+
+  describe('profile:show view', function () {
+
+    it('should succesffully load profile page with id=9', function(){
+      browser.assert.success();
+    })
+
+    it('should contain the profile image', function() {
+      browser.assert.element('img[src="/profile_images/9.jpg"]')
+    })
+
+    it('should contain the profile telephone', function() {
+      browser.assert.text('a[href="tel:091 950 91 63"]', '091 950 91 63')
+    })
+
+
+  })
+
 })
