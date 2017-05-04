@@ -27,21 +27,19 @@ a{
   font-size:1.2rem;
 }
 
+#search-row: {
+  margin-top:100px !important;
+}
+
 #search {
   height : 50px;
-  width:20%;
   float:left;
-  border-radius: 0px;
 }
 
 
 #search-position, #search-category  {
-  width: 20%;
   height: 50px;
-  float:left;
 }
-
-
 
 #search-category  select, #search-position  input{
   width: 100%;
@@ -63,9 +61,6 @@ a{
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 }
 
-#search-form{
-  margin-top: 50px;
-}
 
 #results{
   margin-top: 75px;
