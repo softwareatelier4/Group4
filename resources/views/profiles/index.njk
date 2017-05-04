@@ -1,7 +1,7 @@
 {% extends 'master' %}
 {% block content %}
   <div class="row mb-4 mt-4">
-    <div class="col-10 offset-md-1 px-0">
+    <div class="col-10 offset-md-1 px-0 mt-5">
       <select id="orderBy" class="custom-select float-right " name="category" onchange="location= this.value;">
         <option {{ "selected" if ( request.orderBy == 0) }} value="{{ queryWithoutOrder + 'orderBy=0' }}">Distance Low</option>
         <option {{ "selected" if ( request.orderBy == 1) }} value="{{ queryWithoutOrder + 'orderBy=1' }}">Distance High</option>

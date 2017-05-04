@@ -248,7 +248,7 @@ describe('ProfileController', function () {
     })
 
     it('should contain button to register', function () {
-      browser.assert.link('a', 'Register', '/register')
+      browser.assert.link('a', 'Sign up', '/register')
     })
   })
 

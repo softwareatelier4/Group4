@@ -4,6 +4,7 @@ body {
   margin-top:50px;
   overflow-y: scroll;
   overflow-x: hidden;
+  margin-bottom:100px;
 }
 
 a{
@@ -67,18 +68,22 @@ a{
 }
 
 .result-item:nth-child(odd){
-  /* border: 3px solid;
-     border-color: #F8F8F8;
-     padding: 10px;
-     box-shadow: 1px 0px 5px #EAE7E7; */
   background:#f9f9f9;
 }
 
-.item-header{
-  font-size: 1.4rem;
-  font-weight: bold;
-  margin-bottom: 1.2rem;
+.review-item:nth-child(odd){
+  background:#f9f9f9;
+
 }
+.review-answer {
+  background:#0275d8;
+  color:white;
+}
+  .item-header{
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 1.2rem;
+  }
 
 .item-details{
   margin-bottom: 1.2rem;

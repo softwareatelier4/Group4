@@ -12,11 +12,11 @@
     <link rel="stylesheet" type="text/css" href="/css/bars-square.css">
     <link rel="stylesheet" type="text/css" href="/css/font-icon.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/fontawesome-stars.css">
+    <link rel="stylesheet" href="/css/fontawesome-stars.css">
   </head>
   <body>
     <div class="container">
-      <div class="row">
+      <div class="row mb-5">
         <div class="col-12">
           <nav class="navbar navbar-toggleable-md">
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,7 +45,7 @@
       <div id="search-row" class="row">
         <form action="/profiles" class="col-10 offset-md-1 px-0" method="GET">
           <div id="search-form" class="form-group row justify-content-center">
-            <input type="text" class="form-control col-sm-6 mx-0" id="searchbox" name="search" placeholder="Plumber" value="{{ request.search }}">
+            <input type="text" class="form-control col-sm-6 mx-0" id="searchbox" name="search" placeholder="Search" value="{{ request.search }}">
             <div id="search-position" class="input-group col-sm-2 px-0 mx-0">
               <span class="input-group-addon icon icon-basic-geolocalize-01 ja-input-icon" id="basic-addon1"></span>
               <input type="text" class="form-control" id="searchlocationbox" name="location" placeholder="New York" value="{{ request.location if (request.location) else userLocation.city }}">
