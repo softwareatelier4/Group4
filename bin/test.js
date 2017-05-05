@@ -10,7 +10,8 @@ const path = require('path')
 const globby = require('globby')
 const yargs = require('yargs').argv
 const bootstrap = require('./bootstrap')
-process.env.ENV_PATH = '.env.test'
+process.env.ENV_PATH = '.env'
+// process.env.ENV_PATH = '.env.test'
 
 function runTests (mocha, fireServer, Server) {
   if (fireServer) {
