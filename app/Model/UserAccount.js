@@ -13,6 +13,8 @@ class UserAccount extends Lucid {
      * database.
      */
     this.addHook('beforeCreate', function * (next) {
+      console.log('email', this.email)
+      console.log('password', this.password)
       this.password = yield Hash.make(this.password)
       yield next
     })

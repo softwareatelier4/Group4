@@ -12,7 +12,6 @@
   <link rel="stylesheet" type="text/css" href="https://unpkg.com/bootstrap@4.0.0-alpha.6/dist/css/bootstrap.css">
   {#<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">#}
   <link rel="stylesheet" type="text/css" href="/css/home.css">
-  <link rel="stylesheet" type="text/css" href="/css/font-icon.css">
 </head>
 <body>
   <div class="container">
@@ -39,7 +38,7 @@
                     ACCOUNT
                   </button>
                   <ul class="dropdown-menu login-dropdown">
-                    {{ form.open({action: 'UsersController.login', method: 'POST'}) }}
+                    {{ form.open({action: 'UsersController.index'}) }}
                     {{ csrfField }}
                     <li class="nav-link login-item">
                       {{ form.label('username', 'Username') }}
@@ -53,11 +52,9 @@
                       {{ form.submit('Login', 'login', { class: 'btn btn-primary btn-block' }) }}
                     </li>
                     {{ form.close() }}
-                    <li class="nav-link">
-                      <a href="/register" class="btn btn-primary btn-block">Register</a>
-                    </li>  
                   </ul>
                 </li>
+                <li class="nav-item"><a class="nav-link" href="/users/create">REGISTER</a></li>
               {% endif %}
 
 
@@ -70,28 +67,14 @@
   </div>
 
   <div class="center container">
-    <form action="/profiles" class="mb-5" method="GET">
-       <div id="search-form" class="form-group row justify-content-center">
-         <div class="col-sm-10 px-0">
-           <input type="text" class="form-control" id="searchbox" name="search" placeholder="Plumber" value="{{ request.search }}">
-
-           <div id="search-position" class="input-group">
-             <span class="input-group-addon icon icon-basic-geolocalize-01 ja-input-icon" id="basic-addon1"></span>
-             <input type="text" class="form-control" id="searchlocationbox" name="location" placeholder="New York" value="{{ request.location if (request.location) else userLocation.city }}">
-           </div>
-           <div id="search-category" class="input-group">
-             <select class="custom-select" name="category">
-             <option value="0" {{ "selected" if ( request.category == 0) }}>All categories</option>
-               {% for category in allCategories %}
-                   <option value="{{ category.id }}" {{ "selected" if ( request.category == category.id) }}>{{ category.name }}</option>
-               {% endfor %}
-             </select>
-           </div>
-
-           <button id="search" type="submit" class="btn btn-primary">Search</button>
-         </div>
-       </div>
-     </form>
+    <form action="/profiles" method="GET">
+      <div class="form-group row justify-content-center">
+        <div class=" col-sm-10">
+        <input type="text" class="form-control" id="searchbox" name="search" placeholder="Plumber">
+          <button id="search" type="submit" class="btn btn-primary">Search</button>
+        </div>
+      </div>
+    </form>
   </div>
 
   <script src="https://unpkg.com/jquery@3.1.1"></script>
