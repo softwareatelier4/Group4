@@ -5,6 +5,7 @@ const Browser = require('zombie')
 const assert = require('assert')
 const _ = require('lodash')
 const ProfileController = use('App/Http/Controllers/ProfileController')
+const DB = use('Database')
 
 describe('ProfileController', function () {
   const browser = new Browser()
@@ -274,12 +275,53 @@ describe('ProfileController', function () {
       const expected = '091 950 91 63'
       assert(dd.length > 0, 'Empty nodelist')
       _.forEach(dd, function(el) {
-        result = result || _.isEqual(dd.textContent, expected)
+        result = result || _.isEqual(el.textContent, expected)
       })
-      assert(expected, 'Phone number is not found')
+      assert(result, 'Phone number not found')
     })
 
+    it('should contain the profile title', function() {
+      browser.assert.text('h1', 'PR Pulizia e Risanamenti SA', 'Title not found')
+    })
 
+    it('should contain the profile website', function() {
+      const dd = browser.querySelectorAll('dd')
+      let result = false
+      const expected = 'www.pr-ricamarte.ch'
+      assert(dd.length > 0, 'Empty nodelist')
+      _.forEach(dd, function(el) {
+        result = result || _.isEqual(el.textContent, expected)
+      })
+      assert(result, 'Website not found')
+    })
+
+    it('should contain the profile price', function() {
+      const dd = browser.querySelectorAll('dd')
+      let result = false
+      const expected = '$78'
+      assert(dd.length > 0, 'Empty nodelist')
+      _.forEach(dd, function(el) {
+        result = result || _.isEqual(el.textContent, expected)
+      })
+      assert(result, 'Price not found')
+    })
+
+    it('should contain the link to its category', function() {
+      const els = browser.document.querySelectorAll('#profile-details a.badge-anchor')
+
+      assert(els.length > 0, 'No categories')
+      _.forEach(els, function(el) {
+        const id = (_.split(el.getAttribute('href'), '='))[1]
+
+        const category = DB.select('name').from('categories').where('id', id).first()
+
+        console.log(category.name)
+        assert(el.childNodes[0], 'The anchor doesn\'t have childs')
+      })
+      // assert(el, 'The link  category doesn\' exists')
+
+      // assert(_.isEqual(el.childNodes[0].textContent, 'Informatico'), 'The text of anchor is not right')
+    })
   })
 
 })

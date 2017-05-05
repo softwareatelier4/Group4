@@ -8,7 +8,7 @@
           <hr>
         </div>
       </div>
-      <div class="row align-items-center">
+      <div id="profile-details" class="row align-items-center">
         <div class="col-4 text-center">
           <img src="/profile_images/{{ profile.logo }}" class="img-fluid" alt="{{ profile.title }} logo">
         </div>
@@ -33,13 +33,13 @@
             <dt class="col-sm-3">Service type</dt>
             <dd class="col-sm-9">
               {% for category in categories %}
-                <a href="/profiles?category={{ category.name }}" class="badge-anchor">
+                <a href="/profiles?category={{ category.id }}" class="badge-anchor">
                   <span class="badge badge-pill badge-primary">{{ category.name }}</span>
                 </a>
               {% endfor %}
             </dd>
             <dt class="col-sm-3">Rate per hour</dt>
-            <dd class="col-sm-9">${{ profile.price }}</dd>
+            <dd class="col-sm-9">${{ profile.price | float }}</dd>
             <dt class="col-sm-3">Distance by car</dt>
             <dd class="col-sm-9">{{ profile.distanceTime }}</dd>
           </dl>
