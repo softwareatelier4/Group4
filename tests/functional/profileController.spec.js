@@ -253,11 +253,12 @@ describe('ProfileController', function () {
   })
 
 
-  before(function(done) {
-    browser.visit('/profiles/9', done)
-  })
 
   describe('profile:show view', function () {
+
+    before(function(done) {
+      browser.visit('/profiles/9', done)
+    })
 
     it('should succesffully load profile page with id=9', function(){
       browser.assert.success();
@@ -268,7 +269,14 @@ describe('ProfileController', function () {
     })
 
     it('should contain the profile telephone', function() {
-      browser.assert.text('a[href="tel:091 950 91 63"]', '091 950 91 63')
+      const dd = browser.querySelectorAll('dd')
+      let result = false
+      const expected = '091 950 91 63'
+      assert(dd.length > 0, 'Empty nodelist')
+      _.forEach(dd, function(el) {
+        result = result || _.isEqual(dd.textContent, expected)
+      })
+      assert(expected, 'Phone number is not found')
     })
 
 
