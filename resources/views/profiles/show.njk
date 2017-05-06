@@ -103,11 +103,11 @@
                 <img src="http://avatar.3sd.me/100" class="img-fluid rounded-circle">
               </div>
               <div class="col-2">
-                <a href="#">Username</a>
+                <a class="review_username" href="#">Username</a>
               </div>
               <div class="col text-center">
                 <label>Vote overall</label><br>
-                <select class="ratings" autocomplete="off" style="display: none;" >
+                <select class="overall_rating ratings" autocomplete="off" style="display: none;" >
                   <option value="1" {{ "selected" if (review.vote_overall == 1) }}>1</option>
                   <option value="2" {{ "selected" if (review.vote_overall == 2) }}>2</option>
                   <option value="3" {{ "selected" if (review.vote_overall == 3) }}>3</option>
@@ -117,7 +117,7 @@
               </div>
               <div class="col text-center">
                 <label>Vote price</label><br>
-                <select class="ratings" autocomplete="off" style="display: none;">
+                <select class="price_rating ratings" autocomplete="off" style="display: none;">
                   <option value="1" {{ "selected" if (review.vote_price == 1) }}>1</option>
                   <option value="2" {{ "selected" if (review.vote_price == 2) }}>2</option>
                   <option value="3" {{ "selected" if (review.vote_price == 3) }}>3</option>
@@ -127,7 +127,7 @@
               </div>
               <div class="col text-center">
                 <label>Vote quality</label><br>
-                <select class="ratings" autocomplete="off" style="display: none;">
+                <select class="quality_rating ratings" autocomplete="off" style="display: none;">
                   <option value="1" {{ "selected" if (review.vote_quality == 1) }}>1</option>
                   <option value="2" {{ "selected" if (review.vote_quality == 2) }}>2</option>
                   <option value="3" {{ "selected" if (review.vote_quality == 3) }}>3</option>
