@@ -6,6 +6,7 @@ const assert = require('assert')
 const _ = require('lodash')
 const ProfileController = use('App/Http/Controllers/ProfileController')
 const DB = use('Database')
+const Category = use('App/Model/Category')
 
 describe('ProfileController', function () {
   const browser = new Browser()
@@ -306,22 +307,91 @@ describe('ProfileController', function () {
       assert(result, 'Price not found')
     })
 
-    it('should contain the link to its category', function() {
-      const els = browser.document.querySelectorAll('#profile-details a.badge-anchor')
+    it('should contain the link to its category', function () {
+      const a = browser.document.querySelectorAll('#profile-details a.badge-anchor')
+      const text = browser.document.querySelectorAll('#profile-details a.badge-anchor span')
 
-      assert(els.length > 0, 'No categories')
-      _.forEach(els, function(el) {
-        const id = (_.split(el.getAttribute('href'), '='))[1]
+      assert(a.length > 0, 'No categories')
+      const id = parseInt((_.split(a[0].getAttribute('href'), '='))[1])
 
-        const category = DB.select('name').from('categories').where('id', id).first()
+      assert(_.isEqual(id, 6), `Category id ${id} not match`)
+      const name = a[0].childNodes[1].textContent
+      assert(_.isEqual(name, 'Informatico'), `Category name ${name} not match`)
 
-        console.log(category.name)
-        assert(el.childNodes[0], 'The anchor doesn\'t have childs')
-      })
-      // assert(el, 'The link  category doesn\' exists')
-
-      // assert(_.isEqual(el.childNodes[0].textContent, 'Informatico'), 'The text of anchor is not right')
     })
+
+    it('should contain the profile city', function() {
+      const dd = browser.querySelectorAll('dd')
+      let result = false
+      const expected = 'Viganello'
+      assert(dd.length > 0, 'Empty nodelist')
+      _.forEach(dd, function(el) {
+        result = result || _.isEqual(el.textContent, expected)
+      })
+      assert(result, 'City not found')
+    })
+
+    it('should contain the profile description', function() {
+      const dd = browser.querySelector('#profile-description').textContent
+
+      const text = `La ditta PR Pulizia Risanamenti è stata fondata del 2001 ed è specializzata in diversi settori. La pulizia di canalizzazioni, l'ispezione anche con l'ausilio di rilievi televisivi ed il risanamento di canalizzazioni + sistema a spruzzo, lavori di epurazione di fosse biologiche e pozzetti raccoglitori.`
+      assert(_.isEqual(dd, text), `The description doesn not match\n${dd}`)
+    })
+
+    it('should contain the profile overall rating', function() {
+      const els = browser.querySelectorAll('#display_overall + div a')
+
+      assert(els.length > 0, 'Empty node list')
+      const rating = 2
+      _.forEach(els, function(el, i) {
+        if( i < rating ) {
+          browser.assert.hasClass(el, 'br-selected')
+          if( i == rating -1 ) { browser.assert.hasClass(el, 'br-current') }
+
+        } else {
+          browser.assert.hasNoClass(el, 'br-current')
+          browser.assert.hasNoClass(el, 'br-selected')
+        }
+
+      })
+    })
+
+    it('should contain the profile price rating', function() {
+      const els = browser.querySelectorAll('#display_price + div a')
+
+      assert(els.length > 0, 'Empty node list')
+      const rating = 2
+      _.forEach(els, function(el, i) {
+        if( i < rating ) {
+          browser.assert.hasClass(el, 'br-selected')
+          if( i == rating -1 ) { browser.assert.hasClass(el, 'br-current') }
+
+        } else {
+          browser.assert.hasNoClass(el, 'br-current')
+          browser.assert.hasNoClass(el, 'br-selected')
+        }
+
+      })
+    })
+
+    it('should contain the profile quality rating', function() {
+      const els = browser.querySelectorAll('#display_quality + div a')
+
+      assert(els.length > 0, 'Empty node list')
+      const rating = 3
+      _.forEach(els, function(el, i) {
+        if( i < rating ) {
+          browser.assert.hasClass(el, 'br-selected')
+          if( i == rating - 1 ) { browser.assert.hasClass(el, 'br-current') }
+
+        } else {
+          browser.assert.hasNoClass(el, 'br-current')
+          browser.assert.hasNoClass(el, 'br-selected')
+        }
+
+      })
+    })
+
   })
 
 })
