@@ -1,111 +1,113 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>JobAdvisor</title>
+    <link rel="icon" href="/assets/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/bootstrap@4.0.0-alpha.6/dist/css/bootstrap.css">
+    {#<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">#}
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/bars-square.css">
+    <link rel="stylesheet" type="text/css" href="/css/font-icon.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav class="navbar navbar-toggleable-md">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="/profiles"><img src="/assets/logo.png"/></a>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+              <ul class="navbar-nav">
+                {% if currentUser %}
+                  <li class="nav-item username">Welcome <b>{{ currentUser.name }}</b></li>
+                {% endif %}
+                <li class="nav-item"><a class="nav-link" href="/profiles">BROWSE</a></li>
+                <!-- LOGIN / LOGOUT -->
+                {% if currentUser %}
+                  <li class="nav-item"><a class="nav-link" href="/logout">LOGOUT</a></li>
+                {% else %}
+                  <li class="dropdown">
+                    {#<a class="nav-item form-control" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">ACCOUNT</a>#}
+                    <button class="btn form-control nav-link account-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                      ACCOUNT
+                    </button>
+                    <ul class="dropdown-menu login-dropdown">
+                      {{ form.open({action: 'UsersController.login', method: 'POST'}) }}
+                      {{ csrfField }}
+                      <li class="nav-link login-item">
+                        {{ form.label('username', 'Username') }}
+                        {{ form.text('email') }}
+                      </li>
+                      <li class="nav-link login-item">
+                        {{ form.label('password', 'Password') }}
+                        {{ form.password('password') }}
+                      </li>
+                      <li class="nav-link login-item">
+                        {{ form.submit('Login', 'login', { class: 'btn btn-primary btn-block' }) }}
+                      </li>
+                      {{ form.close() }}
+                      <li class="nav-link">
+                        <a href="/register" class="btn btn-primary btn-block">Register</a>
+                      </li>
+                    </ul>
+                  </li>
+                {% endif %}
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <form action="/profiles" class="mb-5" method="GET">
+        <div id="search-form" class="form-group row justify-content-center">
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="searchbox" name="search" placeholder="Search" value="{{ request.search }}">
+            <div id="search-position" class="input-group">
+              <span class="input-group-addon icon icon-basic-geolocalize-01 ja-input-icon" id="basic-addon1"></span>
+              <input type="text" class="form-control" id="searchlocationbox" name="location" placeholder="City" value="{{ request.location if (request.location) else userLocation.city }}">
+            </div>
+            <div id="search-category" class="input-group">
+              <select class="custom-select" name="category">
+                <option value="0" {{ "selected" if ( request.category == 0) }}>All categories</option>
+                {% for category in allCategories %}
+                  <option value="{{ category.id }}" {{ "selected" if ( request.category == category.id) }}>{{ category.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <button id="search" type="submit" class="btn {{ "active btn-danger" if request.emergency else "btn-primary" }}">Search</button>
+            <button id="emergency-button" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Emergency"><i class="fa fa-exclamation-circle" aria-hidden="true"></i></button>
+            <input id="emergency" name="emergency" type="checkbox" hidden value="1" {{ "checked" if request.emergency }}>
 
-  <title>JobAdvisor</title>
-
-
-  <link rel="icon" href="/assets/favicon.png" type="image/x-icon">
-  <link rel="stylesheet" type="text/css" href="https://unpkg.com/bootstrap@4.0.0-alpha.6/dist/css/bootstrap.css">
-  {#<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">#}
-  <link rel="stylesheet" type="text/css" href="/css/custom.css">
-  <link rel="stylesheet" type="text/css" href="/css/bars-square.css">
-  <link rel="stylesheet" type="text/css" href="/css/font-icon.css">
-</head>
-<body>
-  <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <nav class="navbar navbar-toggleable-md">
-          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <a class="navbar-brand" href="/profiles"><img src="/assets/logo.png"/></a>
-          <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-              {% if currentUser %}
-                <li class="nav-item username">Welcome <b>{{ currentUser.name }}</b></li>
-                
-              {% endif %}
-              <li class="nav-item"><a class="nav-link" href="/profiles">BROWSE</a></li>
-
-              <!-- LOGIN / LOGOUT -->
-        
-              {% if currentUser %}
-                <li class="nav-item"><a class="nav-link" href="/logout">LOGOUT</a></li>
-              {% else %}
-
-                <li class="dropdown">
-                  {#<a class="nav-item form-control" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">ACCOUNT</a>#}
-                  <button class="btn form-control nav-link account-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    ACCOUNT
-                  </button>
-                  <ul class="dropdown-menu login-dropdown">
-                    {{ form.open({action: 'UsersController.login', method: 'POST'}) }}
-                    {{ csrfField }}
-                    <li class="nav-link login-item">
-                      {{ form.label('username', 'Username') }}
-                      {{ form.text('email') }}
-                    </li>
-                    <li class="nav-link login-item">
-                      {{ form.label('password', 'Password') }}
-                      {{ form.password('password') }}
-                    </li>
-                    <li class="nav-link login-item">
-                      {{ form.submit('Login', 'login', { class: 'btn btn-primary btn-block' }) }}
-                    </li>
-                    {{ form.close() }}
-                    <li class="nav-link">
-                      <a href="/register" class="btn btn-primary btn-block">Register</a>
-                    </li>  
-                  </ul>
-                </li>
-              {% endif %}
-
-            </ul>
+            </div>
           </div>
-        </nav>
-      </div>
-    </div>
-  </div>
-
-<div class="container">
-   <form action="/profiles" class="mb-5" method="GET">
-    <div id="search-form" class="form-group row justify-content-center">
-      <div class="col-sm-10">
-        <input type="text" class="form-control" id="searchbox" name="search" placeholder="Search" value="{{ request.search }}">
-
-        <div id="search-position" class="input-group">
-          <span class="input-group-addon icon icon-basic-geolocalize-01 ja-input-icon" id="basic-addon1"></span>
-          <input type="text" class="form-control" id="searchlocationbox" name="location" placeholder="City" value="{{ request.location if (request.location) else userLocation.city }}">
         </div>
-        <div id="search-category" class="input-group">
-          <select class="custom-select" name="category">
-          <option value="0" {{ "selected" if ( request.category == 0) }}>All categories</option>
-            {% for category in allCategories %}
-                <option value="{{ category.id }}" {{ "selected" if ( request.category == category.id) }}>{{ category.name }}</option>
-            {% endfor %}
-          </select>
-        </div>
-
-        <button id="search" type="submit" class="btn btn-primary">Search</button>
-      </div>
+      </form>
     </div>
-  </form>
-</div>
+    {% block content %}{% endblock %}
+    <script src="https://unpkg.com/jquery@3.1.1"></script>
+    <script src="https://unpkg.com/tether@1.4.0"></script>
+    <script src="https://unpkg.com/bootstrap@4.0.0-alpha.6"></script>
+    <script type="text/javascript" src="/js/jquery.barrating.min.js"></script>
+    {#<script type="text/javascript" src="/js/jquery-3.1.1.js"></script>#}
+    {#<script type="text/javascript" src="/js/bootstrap.min.js"></script>#}
+    <script type="text/javascript">
+      $('#emergency-button').click(function() {
+        $(this).toggleClass('active')
 
-  {% block content %}{% endblock %}
+        $('#emergency').prop('checked', !this.checked)
+        $('#search').toggleClass('btn-primary').toggleClass('btn-danger active')
+        return false
+      })
+    </script>
+    {% block javascript %}
 
-  <script src="https://unpkg.com/jquery@3.1.1"></script>
-  <script src="https://unpkg.com/tether@1.4.0"></script>
-  <script src="https://unpkg.com/bootstrap@4.0.0-alpha.6"></script>
-  <script type="text/javascript" src="/js/jquery.barrating.min.js"></script>
-  {#<script type="text/javascript" src="/js/jquery-3.1.1.js"></script>#}
-  {#<script type="text/javascript" src="/js/bootstrap.min.js"></script>#}
-
-  {% block javascript %}{% endblock %}
-</body>
+    {% endblock %}
+  </body>
 </html>

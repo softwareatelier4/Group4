@@ -10,7 +10,7 @@ a{
   color: #025aa5;
 }
 
-input,select,option {
+* {
   border-radius: 0px !important;
 }
 
@@ -18,10 +18,15 @@ input,select,option {
   height: 50px;
   box-shadow: none;
   float:left;
-  width:40%;
+  width:30%;
   border-radius: 0px;
 }
 
+#emergency-button {
+  height:50px;
+  widht:10%;
+  outline:none;
+}
 #searchbox::-webkit-input-placeholder{
   font-style:italic;
   font-size:1.2rem;
@@ -193,4 +198,3 @@ a.badge-anchor{
 .nav-item.username{
   margin-top: 7px;
 }
-
