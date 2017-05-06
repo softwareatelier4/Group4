@@ -81,9 +81,9 @@
                 {% endfor %}
               </select>
             </div>
-            <button id="search" type="submit" class="btn {{ "active btn-danger" if request.emergency else "btn-primary" }}">Search</button>
+            <button id="search" type="submit" class="btn {{ "active btn-danger" if request.emergency == 1 else "btn-primary" }}">Search</button>
             <button id="emergency-button" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Emergency"><i class="fa fa-exclamation-circle" aria-hidden="true"></i></button>
-            <input id="emergency" name="emergency" type="checkbox" hidden value="1" {{ "checked" if request.emergency }}>
+            <input id="emergency" name="emergency" type="checkbox" hidden value="1" {{ "checked" if request.emergency == 1 }}>
 
             </div>
           </div>
@@ -100,9 +100,12 @@
     <script type="text/javascript">
       $('#emergency-button').click(function() {
         $(this).toggleClass('active')
-
-        $('#emergency').prop('checked', !this.checked)
         $('#search').toggleClass('btn-primary').toggleClass('btn-danger active')
+
+        $('#emergency').prop('checked', function(){
+          return ! $(this).prop('checked')
+        })
+
         return false
       })
     </script>
