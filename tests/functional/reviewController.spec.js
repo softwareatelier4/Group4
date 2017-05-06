@@ -6,6 +6,7 @@ const assert = require('assert')
 const _ = require('lodash')
 const ProfileController = use('App/Http/Controllers/ProfileController')
 const Review = use('App/Model/Review')
+const Answer = use('App/Model/Answer')
 
 require('co-mocha')
 
@@ -15,8 +16,8 @@ describe('ReviewController', function () {
 
   this.timeout(5000);
   const profile = 9
-  let reviews = 0
-  let _reviews = 0
+  let reviews = []
+  let _reviews = []
 
   before(function (done) {
     browser.visit(`/profiles/${profile}`,done)
@@ -94,6 +95,43 @@ describe('ReviewController', function () {
         }
 
       })
+    })
+  })
+
+    it('should match the comment for each review in DB', function() {
+
+      _.forEach(reviews, function(r, i) {
+        const comment = r.comment || 'No comment'
+        const _comment = _.trim(_reviews[i].querySelector('.review-comment').textContent)
+
+        assert(_.isEqual(comment, _comment), `The comment ${comment} is not matching`)
+      })
+    })
+
+  it('should have the Freelance answer if there are any, otherwise Answer button', function *() {
+
+    let ids = []
+    _.forEach(reviews, function(r) {
+      ids.push(r.id)
+    })
+
+    assert(ids.length > 0, 'No review found')
+
+    const answers = yield Answer.query().whereIn('review_id', ids)
+    _.forEach(answers, function(a, i) {
+      let index = _.findIndex(reviews, function(o) { return o.id == a.review_id })
+      if ( index >= 0 ) {
+        let answer = _.trim(_reviews[index].querySelector('.review-answer p > i').textContent)
+        assert(_.isEqual(a.comment, answer), `Answer ${a.comment} didn't match`)
+        ids[index] = -1
+      }
+    })
+    _.forEach(ids, function(v, i) {
+      if ( v >= 0 ) {
+        let form = _reviews[i].querySelector('.answer-form')
+        browser.assert.element(form, 'The answer form doesn\'t exists')
+        assert(form.querySelector('button'), 'There is no submit button')
+      }
     })
   })
 })
