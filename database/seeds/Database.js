@@ -23,6 +23,24 @@ const User = use('App/Model/UserAccount')
 class DatabaseSeeder {
 
   * run () {
+    yield User.create({
+      email: 'admin@jobadvisor.com',
+      password: 'admin',
+      name: 'admin'
+    })
+
+    yield User.create({
+      email: 'worker@jobadvisor.com',
+      password: 'worker',
+      name: 'worker'
+    })
+
+    yield User.create({
+      email: 'user@jobadvisor.com',
+      password: 'user',
+      name: 'user'
+    })
+
     yield Profile.create({
       id: 1,
       title: 'Agostino Campana & Co Sagl',
@@ -34,7 +52,7 @@ class DatabaseSeeder {
       lat: '46.020569',
       lng: '8.970071',
       city: 'Lugano',
-      user_id: null,
+      user_id: 1,
       overall_rating: 1
     })
 
@@ -49,7 +67,7 @@ class DatabaseSeeder {
       lat: '46.091604',
       lng: '8.922933',
       city: 'Mezzovico-Vira',
-      user_id: null,
+      user_id: 2,
       overall_rating: 2
     })
 
@@ -64,7 +82,7 @@ class DatabaseSeeder {
       lat: '45.967347',
       lng: '8.924697',
       city: 'Lugano',
-      user_id: null,
+      user_id: 3,
       overall_rating: 4
     })
 
@@ -233,24 +251,6 @@ class DatabaseSeeder {
     yield ProfileCategory.create({ profile_id: 2, category_id: 1})
     yield ProfileCategory.create({ profile_id: 8, category_id: 1})
     yield ProfileCategory.create({ profile_id: 4, category_id: 1})
-
-    yield User.create({
-      email: 'admin@jobadvisor.com',
-      password: 'admin',
-      name: 'admin'
-    })
-
-    yield User.create({
-      email: 'worker@jobadvisor.com',
-      password: 'worker',
-      name: 'worker'
-    })
-
-    yield User.create({
-      email: 'user@jobadvisor.com',
-      password: 'user',
-      name: 'user'
-    })
   }
 
 }

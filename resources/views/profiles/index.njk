@@ -54,7 +54,6 @@
               <div class="col"><i class="fa fa-phone" aria-hidden="true"></i> {{ profile.telephone }}</div>
               <div class="col"><i class="fa fa-address-card" aria-hidden="true"></i> {{ profile.city }}</div>
             </div>
-
           </div>
         </div>
 {% else %}
@@ -64,13 +63,14 @@
       {% endfor %}
     </div>
   </div>
+  </div>
 {% endblock %}
 {% block javascript %}
   <script type="text/javascript">
     $('.ratings').barrating('show', {
-    theme: 'fontawesome-stars',
-    showSelectedRating: false,
-    readonly: true,
+      theme: 'fontawesome-stars',
+      showSelectedRating: false,
+      readonly: true,
     });
   </script>
 {% endblock  %}

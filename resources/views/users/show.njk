@@ -19,8 +19,20 @@
         <label>Upload your avatar</label>
         <input type="file" class="form-control-file" name="avatar" accept="image/*">
       </div>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input class="form-check-input" type="radio" name="emergency" value="0" {{ "checked" if not currentUser.emergency }}>
+          Not available for emergency
+        </label>
+      </div>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input class="form-check-input" type="radio" name="emergency" value="1" {{ "checked" if currentUser.emergency }}>
+          Available for emergency
+        </label>
+      </div>
       {% if not currentUser.access_token %}
-      <div class="form-group">
+      <div id="google-signin" class="form-group hidden-xs-up">
         <a href="{{ auth_url }}"> 
           <button type="button" class="btn btn-secondary">Sign In With Google</button>
         </a>
@@ -36,18 +48,6 @@
           {% endfor %}
         </select>  
       </div>
-      <div class="form-check">
-        <label class="form-check-label">
-        <input class="form-check-input" type="radio" name="emergency" value="0" {{ "checked" if not currentUser.emergency }}>
-          Never available for emergency
-        </label>
-      </div>
-      <div class="form-check">
-        <label class="form-check-label">
-          <input class="form-check-input" type="radio" name="emergency" value="1" {{ "checked" if currentUser.emergency }}>
-          Always available for emergency
-        </label>
-      </div>
       {% endif %}
       <button type="submit" class="btn btn-primary">Submit</button>
       {{ form.close() }}
@@ -55,5 +55,19 @@
   </div>
 </div>
 
+
+{% endblock %}
+
+{% block javascript %}
+<script>
+  $('input[type=radio][name=emergency]').change(function() {
+    console.log("asds")
+    if (this.value == '1') {
+      $("#google-signin").removeClass("hidden-xs-up");
+    } else {
+      $("#google-signin").addClass("hidden-xs-up");
+    }
+  });
+</script>
 
 {% endblock %}

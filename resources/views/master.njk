@@ -27,6 +27,7 @@
               <ul class="navbar-nav">
                 {% if currentUser %}
                   <li class="nav-item username">Welcome <b>{{ currentUser.name }}</b></li>
+                  <li class="nav-item"><a class="nav-link" href="/users/{{ currentUser.id }}">SETTINGS</a></li>
                 {% endif %}
                 <li class="nav-item"><a class="nav-link" href="/profiles">BROWSE</a></li>
                 <!-- LOGIN / LOGOUT -->

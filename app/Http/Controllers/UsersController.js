@@ -50,7 +50,7 @@ class UsersController {
     if (request.currentUser) {
       yield request.auth.logout()
     }
-    response.redirect('back')
+    response.redirect('profiles')
   }
 
   * create (request, response) {
