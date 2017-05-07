@@ -49,7 +49,7 @@ class Profile extends Lucid {
     const lat = res[0].latitude
     const long = res[0].longitude
 
-    let str = '*, (6371 * acos (  cos ( radians(?) )    * cos( radians( lat ) )  * cos( radians( lng ) - radians(?) )   + sin ( radians(?) ) * sin( radians( lat ) ))) AS distance'
+    let str = '(6371 * acos (  cos ( radians(?) )    * cos( radians( lat ) )  * cos( radians( lng ) - radians(?) )   + sin ( radians(?) ) * sin( radians( lat ) ))) AS distance'
     builder.select(Database.raw(str, [lat, long, lat]))
     .groupBy('distance')
     .having('distance', '<', maxDistance)
