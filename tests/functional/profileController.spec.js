@@ -281,7 +281,7 @@ describe('ProfileController', function () {
   describe('index:view default filtering by distance', function () {
 
     let min = 0
-    let max = 1000
+    let max = 10
 
     before(function (done) {
       browser
@@ -291,12 +291,11 @@ describe('ProfileController', function () {
 
     })
     it(`should return only items between ${min} <= distance <= ${max}`, function () {
-      let results = browser.querySelectorAll('.result-item-title + div')
-
+      let results = browser.querySelectorAll('.item-distance')
       assert( results.length > 0, 'Empty node list' )
       _.forEach(results, function (el) {
-        let d = el.innerHTML
-        d = parseInt(_.replace(d, 'km'))
+        let d = el.textContent
+        d = _.replace(_.replace(d, 'Distance', ''), 'km', '')
         assert(d >= min)
         assert(d <= max)
 
