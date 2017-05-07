@@ -1,285 +1,264 @@
 {% extends 'master' %}
-
 {% block content %}
-<div class="container">
+  <div class="row justify-content-center mb-5">
+    <div class="col-10">
+      <div class="row mt-5">
+        <div class="col">
+          <h1>{{ profile.title }}</h1>
+          <hr>
+        </div>
+      </div>
+      <div id="profile-details" class="row align-items-center">
+        <div class="col-4 text-center">
+          <img src="/profile_images/{{ profile.logo }}" class="img-fluid" alt="{{ profile.title }} logo">
+        </div>
+        <div class="col-8">
+          <dl class="row">
+            {% if profile.email %}
+            <dt class="col-sm-3">Email</dt>
+            <dd class="col-sm-9"><a href="mailto:{{ profile.email }}">{{ profile.email }}</a></dd>
+            {% endif  %}
 
-	<div class="row justify-content-center">
-		<div class="col-10 result-item">
-			<div class="row">
-				<div class="col">
-					<h1>{{ profile.title }}</h1>
-					<hr>
-				</div>
-			</div>
-			<div class="row align-items-center">
-				<div class="col-4 text-center">
-					<img src="/profile_images/{{ profile.logo }}" class="img-fluid" alt="{{ profile.title }} logo">
-				</div>
-				<div class="col-8">
-					<dl class="row">
-						<dt class="col-sm-3">Email</dt>
-						<dd class="col-sm-9"><a href="mailto:{{ profile.email }}">{{ profile.email }}</a></dd>
-						<dt class="col-sm-3">Telephone</dt>
-						<dd class="col-sm-9"><a href="tel:{{ profile.telephone }}">{{ profile.telephone }}</a></dd>
-						<dt class="col-sm-3">Website</dt>
-						<dd class="col-sm-9"><a href="{{ profile.website }}" target="_blank" rel="nofollow">{{ profile.website }}</a></dd>
-						<dt class="col-sm-3">City</dt>
-						<dd class="col-sm-9">{{ profile.city }}</dd>
-						<dt class="col-sm-3">Service type</dt>
-						<dd class="col-sm-9">
-							{% for category in categories %}
-							<a href="/profiles?category={{ category.name }}" class="badge-anchor">
-								<span class="badge badge-pill badge-primary">{{ category.name }}</span>
-							</a>
-							{% endfor %}
-						</dd>
-						<dt class="col-sm-3">Rate per hour</dt>
-						<dd class="col-sm-9">${{ profile.price }}</dd>
-						<dt class="col-sm-3">Distance by car</dt>
-						<dd class="col-sm-9">{{ profile.distanceTime }}</dd>
-					</dl>
-				</div>
-			</div>
-			<div class="row mt-3">
-				<div class="col-12 col-md-8">
-					<h3>About us</h3>
-					{{ profile.description }}
-				</div>
-				<div class="col-12 col-md-4">
-					<h3>Rating</h3>
-					<div class="row mt-2">
-						<div class="col">
-							<label>Vote overall</label>
-							<select id="display_overall" autocomplete="off" style="display: none;" required>
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-								<option value="5">5</option>
-							</select>
-						</div>
-					</div>
-					<div class="row mt-2">
-						<div class="col">
-							<label>Vote price</label>
-							<select id="display_price" autocomplete="off" style="display: none;">
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-								<option value="5">5</option>
-							</select>
-						</div>
-					</div>
-					<div class="row mt-2">
-						<div class="col">
-							<label>Vote quality</label>
-							<select id="display_quality" autocomplete="off" style="display: none;">
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-								<option value="5">5</option>
-							</select>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row mt-3">
-				<div class="col">
-					<h3>Reviews</h3>
-				</div>
-			</div>
+            {% if profile.telephone  %}
+            <dt class="col-sm-3">Telephone</dt>
+            <dd class="col-sm-9"><a href="tel:{{ profile.telephone }}">{{ profile.telephone }}</a></dd>
+            {% endif  %}
 
-			{% for review in reviews %}
-			<div class="row mt-3 mb-3 ml-2 mr-2 align-items-center result-item">
-				<div class="col-12">
-					<div class="row align-items-center">
-						<div class="col-1">
-							<img src="http://avatar.3sd.me/100" class="img-fluid rounded-circle">
-						</div>
-						<div class="col-10">
-							<a href="#">Username</a>
-						</div>
-					</div>
-					<hr>
-				</div>
-				<div class="col-8">
-					<p class="ml-2">
-						{% if review.comment %}
-						{{ review.comment }}
-						{% else %}
-						<i>No comment</i>
-						{% endif %}
-					</p>
-				</div>
-				<div class="col-4">
-					<div class="row mt-2">
-						<div class="col text-center">
-							<label>Vote overall</label><br>
-							<select class="ratings" autocomplete="off" style="display: none;" >
-								<option value="1" {{ "selected" if (review.vote_overall == 1) }}>1</option>
-								<option value="2" {{ "selected" if (review.vote_overall == 2) }}>2</option>
-								<option value="3" {{ "selected" if (review.vote_overall == 3) }}>3</option>
-								<option value="4" {{ "selected" if (review.vote_overall == 4) }}>4</option>
-								<option value="5" {{ "selected" if (review.vote_overall == 5) }}>5</option>
-							</select>
-						</div>
-					</div>
-					<div class="row mt-2">
-						<div class="col text-center">
-							<label>Vote price</label><br>
-							<select class="ratings" autocomplete="off" style="display: none;">
-								<option value="1" {{ "selected" if (review.vote_price == 1) }}>1</option>
-								<option value="2" {{ "selected" if (review.vote_price == 2) }}>2</option>
-								<option value="3" {{ "selected" if (review.vote_price == 3) }}>3</option>
-								<option value="4" {{ "selected" if (review.vote_price == 4) }}>4</option>
-								<option value="5" {{ "selected" if (review.vote_price == 5) }}>5</option>
-							</select>
-						</div>
-					</div>
-					<div class="row mt-2">
-						<div class="col text-center">
-							<label>Vote quality</label><br>
-							<select class="ratings" autocomplete="off" style="display: none;">
-								<option value="1" {{ "selected" if (review.vote_quality == 1) }}>1</option>
-								<option value="2" {{ "selected" if (review.vote_quality == 2) }}>2</option>
-								<option value="3" {{ "selected" if (review.vote_quality == 3) }}>3</option>
-								<option value="4" {{ "selected" if (review.vote_quality == 4) }}>4</option>
-								<option value="5" {{ "selected" if (review.vote_quality == 5) }}>5</option>
-							</select>
-						</div>
-					</div>
-					<div class="row mt-3">
-						<div class="col text-center">
-							{% if not review.answer %}
-							<button class="btn btn-primary btn-sm answerButton" data-id="{{ review.id }}">Answer</button>
-							{% endif %}
-						</div>
-					</div>
-
-				</div>
-				{% if review.answer %}
-				<div class="col-12 mt-3">
-					<hr>
-					<h5>Answer from the owner</h5>
-					<p>{{ review.answer.comment }}</p>
-				</div>
-				{% else %}
-				<div id="answer{{review.id}}" class="col-12 mt-3 hidden-xs-up">
-					<h5>Add your answer</h5>
-					{{ form.open({ action: 'AnswerController.store', params: {reviews_id: review.id} }) }}
-					{{ csrfField }}
-					<div class="form-group">
-						<label>Answer</label>
-						<textarea class="form-control" name="comment" rows="3" required></textarea>
-					</div>
-					<button type="submit" class="btn btn-primary">Submit</button>
-					{{ form.close() }}
-				</div>
-				{% endif %}
-
-
-			</div>
-			{% endfor %}
-
-			<div class="row">
-				<div class="col">
-					<h4>Add your review</h4>
-					{{ form.open({ action: 'ReviewController.store', params: {profiles_id: profile.id} }) }}
-					{{ csrfField }}
-					<div class="form-group">
-						<label>Message</label>
-						<textarea class="form-control" name="comment" rows="3"></textarea>
-					</div>
-					<div class="form-group row">
-						<div class="col">
-							<label>Vote overall</label>
-							<select id="overall" name="vote_overall" autocomplete="off" style="display: none;" required>
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3" selected>3</option>
-								<option value="4">4</option>
-								<option value="5">5</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-group row">
-						<div class="col">
-							<label>Vote price</label>
-							<select id="price" name="vote_price" autocomplete="off" style="display: none;" required>
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3" selected>3</option>
-								<option value="4">4</option>
-								<option value="5">5</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-group row">
-						<div class="col">
-							<label>Vote quality</label>
-							<select id="quality" name="vote_quality" autocomplete="off" style="display: none;" required>
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3" selected>3</option>
-								<option value="4">4</option>
-								<option value="5">5</option>
-							</select>
-						</div>
-					</div>
-					<button type="submit" class="btn btn-primary">Submit</button>
-					{{ form.close() }}
-				</div>
-			</div>
-
-		</div>
-
-	</div>
-</div>
+            {% if profile.website %}
+            <dt class="col-sm-3">Website</dt>
+            <dd class="col-sm-9"><a href="{{ profile.website }}" target="_blank" rel="nofollow">{{ profile.website }}</a></dd>
+            {% endif %}
+            <dt class="col-sm-3">City</dt>
+            <dd class="col-sm-9">{{ profile.city }}</dd>
+            <dt class="col-sm-3">Service type</dt>
+            <dd class="col-sm-9">
+              {% for category in categories %}
+                <a href="/profiles?category={{ category.id }}" class="badge-anchor">
+                  <span class="badge badge-pill badge-primary">{{ category.name }}</span>
+                </a>
+              {% endfor %}
+            </dd>
+            <dt class="col-sm-3">Rate per hour</dt>
+            <dd class="col-sm-9">${{ profile.price | float }}</dd>
+            <dt class="col-sm-3">Distance by car</dt>
+            <dd class="col-sm-9">{{ profile.distanceTime }}</dd>
+          </dl>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-12 col-md-8">
+          <h3>About us</h3>
+          <p id="profile-description">{{ profile.description }}</p>
+        </div>
+        <div class="col-12 col-md-4 text-right">
+          <h3>Rating</h3>
+          <div class="row mt-2">
+            <div class="col ">
+              <label>Vote overall</label>
+              <select id="display_overall" autocomplete="off" style="display: none;" required>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col">
+              <label>Vote price</label>
+              <select id="display_price" autocomplete="off" style="display: none;">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col">
+              <label>Vote quality</label>
+              <select id="display_quality" autocomplete="off" style="display: none;">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-4 mb-4">
+        <div class="col">
+          <h3>Reviews</h3>
+        </div>
+      </div>
+      {% for review in reviews %}
+        <div class="row mx-0 align-items-center review-item mb-4">
+          <div class="col-12 pt-4 {{ "pb-2" if not review.comment }}">
+            <div class="row align-items-center">
+              <div class="col-1">
+                <img src="http://avatar.3sd.me/100" class="img-fluid rounded-circle">
+              </div>
+              <div class="col-2">
+                <a class="review_username" href="#">Username</a>
+              </div>
+              <div class="col text-center">
+                <label>Vote overall</label><br>
+                <select class="overall_rating ratings" autocomplete="off" style="display: none;" >
+                  <option value="1" {{ "selected" if (review.vote_overall == 1) }}>1</option>
+                  <option value="2" {{ "selected" if (review.vote_overall == 2) }}>2</option>
+                  <option value="3" {{ "selected" if (review.vote_overall == 3) }}>3</option>
+                  <option value="4" {{ "selected" if (review.vote_overall == 4) }}>4</option>
+                  <option value="5" {{ "selected" if (review.vote_overall == 5) }}>5</option>
+                </select>
+              </div>
+              <div class="col text-center">
+                <label>Vote price</label><br>
+                <select class="price_rating ratings" autocomplete="off" style="display: none;">
+                  <option value="1" {{ "selected" if (review.vote_price == 1) }}>1</option>
+                  <option value="2" {{ "selected" if (review.vote_price == 2) }}>2</option>
+                  <option value="3" {{ "selected" if (review.vote_price == 3) }}>3</option>
+                  <option value="4" {{ "selected" if (review.vote_price == 4) }}>4</option>
+                  <option value="5" {{ "selected" if (review.vote_price == 5) }}>5</option>
+                </select>
+              </div>
+              <div class="col text-center">
+                <label>Vote quality</label><br>
+                <select class="quality_rating ratings" autocomplete="off" style="display: none;">
+                  <option value="1" {{ "selected" if (review.vote_quality == 1) }}>1</option>
+                  <option value="2" {{ "selected" if (review.vote_quality == 2) }}>2</option>
+                  <option value="3" {{ "selected" if (review.vote_quality == 3) }}>3</option>
+                  <option value="4" {{ "selected" if (review.vote_quality == 4) }}>4</option>
+                  <option value="5" {{ "selected" if (review.vote_quality == 5) }}>5</option>
+                </select>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-12">
+                <p class="review-comment">
+                  {% if review.comment %}
+                    {{ review.comment }}
+                  {% else %}
+                    <i>No comment</i>
+                  {% endif %}
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              {% if review.answer %}
+                <div class="col-12 pt-2 review-answer">
+                  <h5>Answer from the owner</h5>
+                  <p><i>{{ review.answer.comment }}</i></p>
+                </div>
+              {% else %}
+                <div class="col-12 answer-form">
+                  <button class="btn btn-primary answerButton float-right" data-id="{{ review.id }}">Answer</button>
+                  <div id="answer{{review.id}}" class=" mt-3 hidden-xs-up">
+                    <h5>Add your answer</h5>
+                    {{ form.open({ action: 'AnswerController.store', params: {reviews_id: review.id} }) }}
+                    {{ csrfField }}
+                    <div class="form-group">
+                      <label>Answer</label>
+                      <textarea class="form-control" name="comment" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary float-right">Submit</button>
+                    {{ form.close() }}
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <hr>
+      {% endfor %}
+      <div class="row mt-5">
+        <div class="col">
+          <h4>Add your review</h4>
+          {{ form.open({ action: 'ReviewController.store', params: {profiles_id: profile.id} }) }}
+          {{ csrfField }}
+          <div class="form-group">
+            <label>Message</label>
+            <textarea class="form-control" name="comment" rows="3"></textarea>
+          </div>
+          <div class="form-group row">
+            <div class="col">
+              <label>Vote overall</label>
+              <select id="overall" name="vote_overall" autocomplete="off" style="display: none;" required>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3" selected>3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <div class="col">
+              <label>Vote price</label>
+              <select id="price" name="vote_price" autocomplete="off" style="display: none;" required>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3" selected>3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <div class="col">
+              <label>Vote quality</label>
+              <select id="quality" name="vote_quality" autocomplete="off" style="display: none;" required>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3" selected>3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary float-right">Submit</button>
+          {{ form.close() }}
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
-
 {% block javascript %}
-<script type="text/javascript">
-	$(".answerButton").click(function() {
-		$("#answer"+$(this).data('id')).toggleClass('hidden-xs-up')
-	});
-
-	$(function() {
-		$('#quality, #price, #overall').barrating('show', {
-			theme: 'bars-square',
-			showValues: true,
-			showSelectedRating: false,
-			initialRating: 3
-		});
-
-		$('#display_quality').barrating('show', {
-			theme: 'bars-square',
-			showValues: true,
-			showSelectedRating: false,
-			readonly: true,
-			initialRating: {{ profile.vote_quality[0].vote_quality | round }}
-		});
-		$('#display_price').barrating('show', {
-			theme: 'bars-square',
-			showValues: true,
-			showSelectedRating: false,
-			readonly: true,
-			initialRating: {{ profile.vote_price[0].vote_price | round }}
-		});
-		$('#display_overall').barrating('show', {
-			theme: 'bars-square',
-			showValues: true,
-			showSelectedRating: false,
-			readonly: true,
-			initialRating: {{ profile.vote_price[0].vote_price | round }}
-		});
-		$('.ratings').barrating('show', {
-			theme: 'bars-square-small',
-			showValues: false,
-			showSelectedRating: false,
-			readonly: true,
-		});
-	});
-</script>
+  <script type="text/javascript">
+    $(".answerButton").click(function() {
+      console.log("iii")
+      $("#answer"+$(this).data('id')).toggleClass('hidden-xs-up')
+    });
+    $(function() {
+      $('#quality, #price, #overall').barrating('show', {
+        theme: 'fontawesome-stars',
+        showSelectedRating: false,
+        initialRating: 3
+      });
+      $('#display_quality').barrating('show', {
+        theme: 'fontawesome-stars',
+        showSelectedRating: false,
+        readonly: true,
+        initialRating: {{ profile.vote_quality[0].vote_quality | round }}
+      });
+      $('#display_price').barrating('show', {
+        theme: 'fontawesome-stars',
+        showSelectedRating: false,
+        readonly: true,
+        initialRating: {{ profile.vote_price[0].vote_price | round }}
+      });
+      $('#display_overall').barrating('show', {
+        theme: 'fontawesome-stars',
+        showSelectedRating: false,
+        readonly: true,
+        initialRating: {{ profile.vote_price[0].vote_price | round }}
+      });
+      $('.ratings').barrating('show', {
+        theme: 'fontawesome-stars',
+        showValues: false,
+        showSelectedRating: false,
+        readonly: true,
+      });
+    });
+  </script>
 {% endblock %}
