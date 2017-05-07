@@ -4,13 +4,14 @@ body {
   margin-top:50px;
   overflow-y: scroll;
   overflow-x: hidden;
+  margin-bottom:100px;
 }
 
 a{
   color: #025aa5;
 }
 
-input,select,option {
+* {
   border-radius: 0px !important;
 }
 
@@ -27,21 +28,19 @@ input,select,option {
   font-size:1.2rem;
 }
 
+#search-row: {
+  margin-top:100px !important;
+}
+
 #search {
   height : 50px;
-  width:20%;
   float:left;
-  border-radius: 0px;
 }
 
 
 #search-position, #search-category  {
-  width: 20%;
   height: 50px;
-  float:left;
 }
-
-
 
 #search-category  select, #search-position  input{
   width: 100%;
@@ -63,37 +62,38 @@ input,select,option {
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 }
 
-#search-form{
-  margin-top: 50px;
-}
 
 #results{
   margin-top: 75px;
 }
 
-.result-item{
-  margin-bottom: 40px;
-  border: 3px solid;
-  border-color: #F8F8F8;
-  padding: 10px;
-  box-shadow: 1px 0px 5px #EAE7E7;
+.result-item:nth-child(odd){
+  background:#f9f9f9;
 }
 
-.result-item-title{
-  font-size: 1.4rem;
-  font-weight: bold;
+.review-item:nth-child(odd){
+  background:#f9f9f9;
+
+}
+.review-answer {
+  background:#0275d8;
+  color:white;
+}
+  .item-header{
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 1.2rem;
+  }
+
+.item-details{
   margin-bottom: 1.2rem;
 }
 
-.result-item-details{
-  margin-bottom: 1.2rem;
-}
-
-.result-item-title a{
+.item-header a{
   color: #025aa5;
 }
 
-.result-item-title a:hover{
+.item-header a:hover{
   text-decoration: none;
   color: #025aa5;
 }
@@ -193,4 +193,3 @@ a.badge-anchor{
 .nav-item.username{
   margin-top: 7px;
 }
-
