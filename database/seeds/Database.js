@@ -23,6 +23,24 @@ const User = use('App/Model/UserAccount')
 class DatabaseSeeder {
 
   * run () {
+    yield User.create({
+      email: 'admin@jobadvisor.com',
+      password: 'admin',
+      name: 'admin'
+    })
+
+    yield User.create({
+      email: 'worker@jobadvisor.com',
+      password: 'worker',
+      name: 'worker'
+    })
+
+    yield User.create({
+      email: 'user@jobadvisor.com',
+      password: 'user',
+      name: 'user'
+    })
+
     yield Profile.create({
       id: 1,
       title: 'Agostino Campana & Co Sagl',
@@ -34,7 +52,8 @@ class DatabaseSeeder {
       lat: '46.020569',
       lng: '8.970071',
       city: 'Lugano',
-      user_id: null,
+      user_id: 1,
+      overall_rating: 1
     })
 
     yield Profile.create({
@@ -48,8 +67,9 @@ class DatabaseSeeder {
       lat: '46.091604',
       lng: '8.922933',
       city: 'Mezzovico-Vira',
-      user_id: null,
-          })
+      user_id: 2,
+      overall_rating: 2
+    })
 
     yield Profile.create({
       id: 3,
@@ -62,8 +82,9 @@ class DatabaseSeeder {
       lat: '45.967347',
       lng: '8.924697',
       city: 'Lugano',
-      user_id: null,
-          })
+      user_id: 3,
+      overall_rating: 4
+    })
 
     yield Profile.create({
       id: 4,
@@ -77,7 +98,8 @@ class DatabaseSeeder {
       lng: '9.875321',
       city: 'Samaden',
       user_id: null,
-          })
+      overall_rating: 2
+    })
 
     yield Profile.create({
       id: 5,
@@ -91,7 +113,8 @@ class DatabaseSeeder {
       lng: '8.973651',
       city: 'Davesco-Soragno',
       user_id: null,
-          })
+      overall_rating: 4
+    })
 
     yield Profile.create({
       id: 6,
@@ -105,6 +128,7 @@ class DatabaseSeeder {
       lng: '9.031572',
       city: 'Chiasso',
       user_id: null,
+      overall_rating: 1
     })
 
     yield Profile.create({
@@ -114,11 +138,12 @@ class DatabaseSeeder {
       website: '  www.pagnamenta.ch',
       telephone: '091 993 07 54',
       price: 82,
-      logo: '',
+      logo: '7.png',
       lat: '45.966269',
       lng: '8.923949',
       city: 'Lugano',
       user_id: null,
+      overall_rating: 5
     })
 
     yield Profile.create({
@@ -133,6 +158,7 @@ class DatabaseSeeder {
       lng: '8.773200',
       city: 'Ascona',
       user_id: null,
+      overall_rating: 1
     })
 
     yield Profile.create({
@@ -147,6 +173,7 @@ class DatabaseSeeder {
       lng: '8.963594',
       city: 'Viganello',
       user_id: null,
+      overall_rating: 2
     })
 
     yield Profile.create({
@@ -161,6 +188,7 @@ class DatabaseSeeder {
       lng: '8.541694',
       city: 'Cremenaga',
       user_id: null,
+      overall_rating: 3
     })
 
     yield Review.create({ comment: 'Did a decent job', vote_price: 2, vote_quality: 2, vote_overall: 1, profile_id: 5 })
@@ -223,24 +251,6 @@ class DatabaseSeeder {
     yield ProfileCategory.create({ profile_id: 2, category_id: 1})
     yield ProfileCategory.create({ profile_id: 8, category_id: 1})
     yield ProfileCategory.create({ profile_id: 4, category_id: 1})
-
-    yield User.create({
-      email: 'admin@jobadvisor.com',
-      password: 'admin',
-      name: 'admin'
-    })
-
-    yield User.create({
-      email: 'worker@jobadvisor.com',
-      password: 'worker',
-      name: 'worker'
-    })
-
-    yield User.create({
-      email: 'user@jobadvisor.com',
-      password: 'user',
-      name: 'user'
-    })
   }
 
 }

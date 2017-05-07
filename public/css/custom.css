@@ -20,10 +20,20 @@ a{
   height: 50px;
   box-shadow: none;
   float:left;
-  width:40%;
+  width:30%;
   border-radius: 0px;
 }
 
+#emergency-button {
+  height:50px;
+  widht:10%;
+  outline:none !important;
+  background:#c9302c;
+  border-color:#c9302c
+}
+#emergency-button:focus, #emergency-button .active:focus {
+  outline:0 !important;
+}
 #searchbox::-webkit-input-placeholder{
   font-style:italic;
   font-size:1.2rem;

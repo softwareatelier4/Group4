@@ -1,6 +1,6 @@
 'use strict'
 
-const URL = require('url').URL;
+const URL = require('url').URL
 
 class GlobalHelpers {
 
@@ -28,6 +28,9 @@ class GlobalHelpers {
 
     const currentUser = yield request.auth.getUser()
     response.viewInstance = use('View')
+
+    request.currentUser = yield request.auth.getUser()
+
     response.viewInstance.global('currentUser', currentUser)
     response.viewInstance.global('request', request.all())
     response.viewInstance.global('queryWithoutOrder', queryWithoutOrder)
