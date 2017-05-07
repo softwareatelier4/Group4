@@ -28,9 +28,7 @@ class UsersController {
   }
 
   * logout (request, response) {
-    if (request.currentUser) {
-      yield request.auth.logout()
-    }
+    yield request.auth.logout()
     response.redirect('back')
   }
   * create (request, response) {

@@ -2,6 +2,7 @@
 {% block content %}
   <div class="row mb-4 mt-4">
     <div class="col-10 offset-md-1 px-0 mt-5">
+      <button id="showFilters" type="button" class="btn btn-secondary float-right ml-3">Show filters</button>
       <select id="orderBy" class="custom-select float-right " name="category" onchange="location= this.value;">
         <option {{ "selected" if ( request.orderBy == 0) }} value="{{ queryWithoutOrder + 'orderBy=0' }}">Distance Low</option>
         <option {{ "selected" if ( request.orderBy == 1) }} value="{{ queryWithoutOrder + 'orderBy=1' }}">Distance High</option>
@@ -10,6 +11,63 @@
         <option {{ "selected" if ( request.orderBy == 4) }} value="{{ queryWithoutOrder + 'orderBy=4' }}">Rating Low</option>
         <option {{ "selected" if ( request.orderBy == 5) }} value="{{ queryWithoutOrder + 'orderBy=5' }}">Rating High</option>
       </select>
+    </div>
+  </div>
+  <div id="filters" class="row my-3 hidden-xs-up">
+    <div class="col-10 offset-md-1 px-5 py-3">
+      <form class="" action="/profiles"  method="GET">
+        <div class="row">
+          <div class="col-12 col-md-4">
+            <div class="row text-center"><div class="col-12">Distance (km)</div></div>
+            <hr>
+            <div class="row mb-3">
+              <div class="col-4">
+                <input type="number" id="distance-min-value" name="minDist" class="form-control" min="0" max="500" value="{{ request.minDist or 0 }}">
+              </div>
+              <div class="col-4 offset-4 float-right">
+                <input type="number" id="distance-max-value" name="maxDist" class="form-control" min="0" max="500" value="{{ request.maxDist or 500 }}">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div id="slider-distance"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="row text-center"><div class="col-12">Price</div></div>
+            <hr>
+            <div class="row mb-3">
+              <div class="col-4">
+                <input type="number" id="price-min-value" name="minPrice" class="form-control" min="0" max="1000" value="{{ request.minPrice or 0 }}">
+              </div>
+              <div class="col-4 offset-4 float-right">
+                <input type="number" id="price-max-value" name="maxPrice" class="form-control" min="0" max="1000" value="{{ request.maxPrice or 1000 }}">
+              </div>
+            </div>
+            <div id="slider-price"></div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="row text-center"><div class="col-12">Rating</div></div>
+            <hr>
+            <div class="row mb-3">
+              <div class="col-4">
+                <input type="number" id="rating-min-value" name="minRate" class="form-control" min="1" max="5" value="{{ request.minRate or 1 }}">
+              </div>
+              <div class="col-4 offset-4 float-right">
+                <input type="number" id="rating-max-value" name="maxRate" class="form-control" min="1" max="5" value="{{ request.maxRate or 5 }}">
+              </div>
+            </div>
+            <div id="slider-rating"></div>
+          </div>
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col-12 float-right">
+            <button id="filter" type="submit" class="btn btn-primary btn-md float-right">Filter</button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
   <div class="row">
@@ -54,7 +112,6 @@
               <div class="col"><i class="fa fa-phone" aria-hidden="true"></i> {{ profile.telephone }}</div>
               <div class="col"><i class="fa fa-address-card" aria-hidden="true"></i> {{ profile.city }}</div>
             </div>
-
           </div>
         </div>
 {% else %}
@@ -101,9 +158,70 @@
 {% block javascript %}
   <script type="text/javascript">
     $('.ratings').barrating('show', {
-    theme: 'fontawesome-stars',
-    showSelectedRating: false,
-    readonly: true,
+      theme: 'fontawesome-stars',
+      showValues: false,
+      showSelectedRating: false,
+      readonly: true,
     });
+
+    $("#showFilters").click(function() {
+      $("#filters").toggleClass('hidden-xs-up')
+      if ( $('#filters').hasClass('hidden-xs-up') )
+        $(this).text('Show filters')
+      else
+        $(this).text('Hide filters')
+    });
+
+    $( "#slider-distance" ).slider({
+      range: true,
+      min: 0,
+      max: 500,
+      values: [ {{ request.minDist or 0 }}, {{ request.maxDist or 500 }} ],
+      step: 10,
+      slide: function(event, ui) {
+        $("#distance-min-value").val(ui.values[0]);
+        $("#distance-max-value").val(ui.values[1]);
+      }
+    });
+    $( "#slider-price" ).slider({
+      range: true,
+      min: 0,
+      max: 1000,
+      values: [ {{ request.minPrice or 0 }}, {{ request.maxPrice or 1000 }} ],
+      step: 10,
+      slide: function(event, ui) {
+        $("#price-min-value").val(ui.values[0]);
+        $("#price-max-value").val(ui.values[1]);
+      }
+    });
+    $( "#slider-rating" ).slider({
+      range: true,
+      min: 1,
+      max: 5,
+      values: [ {{ request.minRate or 1 }}, {{ request.maxRate or 5 }} ],
+      step: 1,
+      slide: function(event, ui) {
+        $("#rating-min-value").val(ui.values[0]);
+        $("#rating-max-value").val(ui.values[1]);
+      }
+    });
+    $("#distance-min-value").change(function(){
+      $("#slider-distance").slider("values", 0, $("#distance-min-value").val())
+    })
+    $("#distance-max-value").change(function(){
+      $("#slider-distance").slider("values", 1, $("#distance-max-value").val())
+    })
+    $("#price-min-value").change(function(){
+      $("#slider-price").slider("values", 0, $("#price-min-value").val())
+    })
+    $("#price-max-value").change(function(){
+      $("#slider-price").slider("values", 1, $("#price-max-value").val())
+    })
+    $("#rating-min-value").change(function(){
+      $("#slider-rating").slider("values", 0, $("#rating-min-value").val())
+    })
+    $("#rating-max-value").change(function(){
+      $("#slider-rating").slider("values", 1, $("#rating-max-value").val())
+    })
   </script>
 {% endblock  %}

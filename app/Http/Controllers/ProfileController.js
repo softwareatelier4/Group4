@@ -74,9 +74,12 @@ class ProfileController {
 
     const profiles = yield this.Profile
     .query()
-    .inRange(3000, res)
     .category(request.input('category'))
+    .price(request.input('minPrice'), request.input('maxPrice'))
+    .rating(request.input('minRate'), request.input('maxRate'))
     .search(request.input('search'))
+    .distance(request.input('minDist'), request.input('maxDist'), res)
+    .select('profiles.*')
     .orderBy(order, asc)
     .paginate(page, 25)
 
