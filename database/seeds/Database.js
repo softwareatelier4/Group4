@@ -138,7 +138,7 @@ class DatabaseSeeder {
       website: '  www.pagnamenta.ch',
       telephone: '091 993 07 54',
       price: 82,
-      logo: '',
+      logo: '7.png',
       lat: '45.966269',
       lng: '8.923949',
       city: 'Lugano',
