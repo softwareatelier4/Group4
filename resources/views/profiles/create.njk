@@ -1,0 +1,54 @@
+{% extends 'master' %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-10 result-item">
+      <h3>Create a profile</h3>
+      {{ form.open({ action: 'ProfileController.store', files: true }) }}
+      <div class="form-group">
+        <label>Title</label>
+        <input type="text" class="form-control" name="title" placeholder="Enter the title" required>
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea class="form-control" name="description" rows="3"  placeholder="Enter the description" required></textarea>
+      </div>
+      <div class="form-group">
+        <label>City</label>
+        <input type="text" class="form-control" name="city" placeholder="Enter the telephone">
+      </div>
+      <div class="form-group">
+        <label>Website</label>
+        <input type="text" class="form-control" name="website" placeholder="Enter the website">
+      </div>
+      <div class="form-group">
+        <label>Telephone</label>
+        <input type="text" class="form-control" name="telephone" placeholder="Enter the telephone">
+      </div>
+      <div class="form-group">
+        <label>Price</label>
+        <input type="number" class="form-control" name="price" min="0" value="0" required>
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <select class="form-control" name="category">
+          {% for category in allCategories %}
+          <option value="{{ category.id }}">{{ category.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Upload a logo</label>
+        <input type="file" class="form-control-file" name="logo" accept="image/*">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+      {{ form.close() }}
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+

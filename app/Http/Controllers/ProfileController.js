@@ -3,6 +3,7 @@ const NodeGeocoder = require('node-geocoder')
 const geoip = use('geoip-lite')
 const q = require('q')
 const Database = use('Database')
+const Helpers = use('Helpers')
 
 const googleMapsClient = require('@google/maps').createClient({
   key: 'AIzaSyATbIT8xR4HJIV9-H_mFu4DaY3lqI0K6hE',
@@ -173,7 +174,11 @@ class ProfileController {
   }
 
   * create (request, response) {
+    const categories = yield this.Category.all()
 
+    yield response.sendView('profiles.create', {
+      categories: categories.toJSON()
+    })
   }
 
   * edit (request, response) {
@@ -186,7 +191,41 @@ class ProfileController {
   }
 
   * store (request, response) {
+    const user = yield request.auth.getUser()
+    const profile = new this.Profile()
+    profile.title = request.input('title')
+    profile.description = request.input('description')
+    profile.city = request.input('city')
+    profile.website = request.input('website')
+    profile.telephone = request.input('telephone')
+    profile.price = request.input('price')
+    // profile.user_id = user.id
+    let options = {
+      provider: 'google',
+      httpAdapter: 'https',
+      formatter: null
+    }
+    let geocoder = NodeGeocoder(options)
+    const res = yield geocoder.geocode(request.input('city'))
+    profile.lat = res[0].latitude
+    profile.lng = res[0].longitude
+    yield profile.save()
 
+    const file = request.file('logo')
+    if (file.clientSize()) {
+      yield file.move(Helpers.publicPath() + '/profile_images/', profile.id + '_' + file.clientName())
+      if (!file.moved()) {
+        response.badRequest(file.errors())
+        return
+      }
+      profile.logo = profile.id + '_' + file.clientName()
+    }
+
+    yield profile.save()
+
+    yield profile.categories().attach([request.input('category')])
+
+    response.redirect('/profiles/' + profile.id)
   }
 
   * destroy (request, response) {
