@@ -45,7 +45,7 @@
       <div id="search-row" class="row">
         <form action="/profiles" class="col-10 offset-md-1 px-0" method="GET">
           <div id="search-form" class="form-group row justify-content-center">
-            <input type="text" class="form-control col-sm-6 mx-0" id="searchbox" name="search" placeholder="Search" value="{{ request.search }}">
+            <input type="text" class="form-control col-sm-5 mx-0" id="searchbox" name="search" placeholder="Search" value="{{ request.search }}">
             <div id="search-position" class="input-group col-sm-2 px-0 mx-0">
               <span class="input-group-addon icon icon-basic-geolocalize-01 ja-input-icon" id="basic-addon1"></span>
               <input type="text" class="form-control" id="searchlocationbox" name="location" placeholder="New York" value="{{ request.location if (request.location) else userLocation.city }}">
@@ -58,7 +58,9 @@
                 {% endfor %}
               </select>
             </div>
-            <button id="search" type="submit" class="btn btn-primary col-sm-2 px-0 mx-0">Search</button>
+            <button id="search" type="submit" class="btn {{ "btn-danger" if request.emergency == 1 else "btn-primary" }} col-sm-2 px-0 mx-0">Search</button>
+            <button id="emergency-button" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Emergency"><i class="fa fa-exclamation-circle" aria-hidden="true"></i></button>
+            <input id="emergency" name="emergency" class="col-sm-2 px-0 mx-0" type="checkbox" hidden value="1" {{ "checked" if request.emergency == 1 }}>
           </div>
         </form>
       </div>
