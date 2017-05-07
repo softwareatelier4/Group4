@@ -24,10 +24,8 @@ class Profile extends Lucid {
   static scopeCategory (builder, categoryQuery) {
     if (categoryQuery && categoryQuery != 0) {
       builder
-      .innerJoin('profile_categories', 'profile_categories.profile_id', 'profiles.id')
-      .innerJoin('categories', 'categories.id', 'profile_categories.category_id')
-      .where('profile_categories.category_id', categoryQuery)
-      .select('profiles.*')
+      .innerJoin('profile_categories', 'profiles.id', 'profile_categories.profile_id')
+      .where('category_id', categoryQuery)
     }
   }
 
@@ -45,14 +43,34 @@ class Profile extends Lucid {
       }
     }
   }
-  static scopeInRange (builder, maxDistance, res) {
+
+  static scopePrice (builder, min, max) {
+    min = min || 0
+    max = max || 1000
+    builder.where(function () {
+      this.whereBetween('price', [min, max])
+    })
+  }
+
+  static scopeRating (builder, min, max) {
+    min = min || 1
+    max = max || 5
+    builder.where(function () {
+      this.whereBetween('overall_rating', [min, max])
+    })
+  }
+
+  static scopeDistance (builder, min, max, res) {
+    min = min || 0
+    max = max || 500
     const lat = res[0].latitude
     const long = res[0].longitude
 
     let str = '(6371 * acos (  cos ( radians(?) )    * cos( radians( lat ) )  * cos( radians( lng ) - radians(?) )   + sin ( radians(?) ) * sin( radians( lat ) ))) AS distance'
     builder.select(Database.raw(str, [lat, long, lat]))
     .groupBy('distance')
-    .having('distance', '<', maxDistance)
+    .having('distance', '>=', min)
+    .having('distance', '<=', max)
   }
 
   static scopeEventInRange (builder, maxDistance, res) {

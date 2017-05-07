@@ -26,11 +26,15 @@ class GlobalHelpers {
       queryWithoutOrder += `${key}=${decodeURIComponent(components[key])}&`
     }
 
+    const currentUser = yield request.auth.getUser()
     response.viewInstance = use('View')
+
     request.currentUser = yield request.auth.getUser()
-    view.global('currentUser', request.currentUser)
+
+    response.viewInstance.global('currentUser', currentUser)
     response.viewInstance.global('request', request.all())
     response.viewInstance.global('queryWithoutOrder', queryWithoutOrder)
+
     yield next
   }
 

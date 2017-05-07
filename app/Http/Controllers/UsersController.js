@@ -47,9 +47,7 @@ class UsersController {
   }
 
   * logout (request, response) {
-    if (request.currentUser) {
-      yield request.auth.logout()
-    }
+    yield request.auth.logout()
     response.redirect('profiles')
   }
 

@@ -40,23 +40,7 @@ class ReviewController {
       profile_id: request.params().profiles_id
     })
 
-    const sum_overall_reviews = yield this.Review.query()
-          .where('profile_id', request.params().profiles_id)
-          .sum('vote_overall as sum')
-
-    const count_overall_reviews = yield this.Review.query()
-          .where('profile_id', request.params().profiles_id)
-          .count('id as count')
-
-    const overall_rating = sum_overall_reviews[0].sum / count_overall_reviews[0].count
-
-    let profile = yield this.Profile.findBy('id', request.params().profiles_id)
-
-    profile.overall_rating = Math.round(overall_rating)
-
-    yield profile.save()
-
-    response.redirect('back')
+     response.redirect('back')
   }
 
   * destroy (request, response) {
