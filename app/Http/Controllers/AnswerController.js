@@ -27,7 +27,10 @@ class AnswerController {
   }
 
   * update (request, response) {
-
+    const answer = yield this.Answer.findBy('id', request.params().id)
+    answer.comment = request.input('comment')
+    yield answer.save()
+    response.redirect('back')
   }
 
   * store (request, response) {

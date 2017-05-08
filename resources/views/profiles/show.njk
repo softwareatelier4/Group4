@@ -151,25 +151,41 @@
           {% if review.answer %}
           <div class="col-12 pt-2 review-answer">
             <h5>Answer from the owner</h5>
+            <p><i><small>Last update {{ review.answer.updated_at }}</small></i></p>
             <p><i>{{ review.answer.comment }}</i></p>
-          </div>
-          {% else %}
             {% if profile.user_id == currentUser.id and profile.user_id != null %}
-            <div class="col-12 answer-form">
-              <button class="btn btn-primary answerButton float-right" data-id="{{ review.id }}">Answer</button>
-              <div id="answer{{review.id}}" class=" mt-3 hidden-xs-up">
-                <h5>Add your answer</h5>
-                {{ form.open({ action: 'AnswerController.store', params: {reviews_id: review.id} }) }}
-                {{ csrfField }}
-                <div class="form-group">
-                  <label>Answer</label>
-                  <textarea class="form-control" name="comment" rows="3" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary float-right">Submit</button>
-                {{ form.close() }}
+
+            <button class="btn btn-primary editButton float-right" data-id="{{ review.id }}">Edit</button>
+            <div id="answerEdit{{review.id}}" class="mt-3 hidden-xs-up">
+              <h5>Edit your answer</h5>
+              {{ form.open({ action: 'AnswerController.update', params: {id: review.answer.id, reviews_id: review.id} }) }}
+              {{ csrfField }}
+              <div class="form-group">
+                <label>Answer</label>
+                <textarea class="form-control" name="comment" rows="3" required>{{ review.answer.comment }}</textarea>
               </div>
+              <button type="submit" class="btn btn-primary float-right">Submit</button>
+              {{ form.close() }}
             </div>
             {% endif %}
+          </div>
+          {% else %}
+          {% if profile.user_id == currentUser.id and profile.user_id != null %}
+          <div class="col-12 answer-form">
+            <button class="btn btn-primary answerButton float-right" data-id="{{ review.id }}">Answer</button>
+            <div id="answer{{review.id}}" class=" mt-3 hidden-xs-up">
+              <h5>Add your answer</h5>
+              {{ form.open({ action: 'AnswerController.store', params: {reviews_id: review.id} }) }}
+              {{ csrfField }}
+              <div class="form-group">
+                <label>Answer</label>
+                <textarea class="form-control" name="comment" rows="3" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary float-right">Submit</button>
+              {{ form.close() }}
+            </div>
+          </div>
+          {% endif %}
           {% endif %}
         </div>
       </div>
@@ -235,8 +251,11 @@
 {% block javascript %}
 <script type="text/javascript">
   $(".answerButton").click(function() {
-    console.log("iii")
     $("#answer"+$(this).data('id')).toggleClass('hidden-xs-up')
+  });
+
+  $(".editButton").click(function() {
+    $("#answerEdit"+$(this).data('id')).toggleClass('hidden-xs-up')
   });
   $(function() {
     $('#quality, #price, #overall').barrating('show', {
