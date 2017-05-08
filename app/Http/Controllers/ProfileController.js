@@ -13,13 +13,14 @@ const googleMapsClient = require('@google/maps').createClient({
 class ProfileController {
 
   static get inject () {
-    return ['App/Model/Profile', 'App/Model/Category', 'App/Model/Event']
+    return ['App/Model/Profile', 'App/Model/Category', 'App/Model/Event', 'App/Model/UserAccount']
   }
 
-  constructor (Profile, Category, Event) {
+  constructor (Profile, Category, Event, User) {
     this.Profile = Profile
     this.Category = Category
     this.Event = Event
+    this.User = User
   }
 
   * index (request, response) {
@@ -165,10 +166,18 @@ class ProfileController {
     } else {
       profile.distanceTime = distanceMatrix.json.rows[0].elements[0].duration.text
     }
+    /* Attach the User who wrote the review to the Review object */
+    let tempReviews = reviews.toJSON()
+    for (var i = 0; i < tempReviews.length; i++) {
+      tempReviews[i].user = yield this.User.find(tempReviews[i].user_id)
+      if (tempReviews[i].user) {
+        tempReviews[i].user = tempReviews[i].user.toJSON()
+      }
+    }
 
     yield response.sendView('profiles.show', {
       profile: profile.toJSON(),
-      reviews: reviews.toJSON(),
+      reviews: tempReviews,
       categories: categories.toJSON()
     })
   }

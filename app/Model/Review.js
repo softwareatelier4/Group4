@@ -4,7 +4,7 @@ const Lucid = use('Lucid')
 const Profile = use('App/Model/Profile')
 class Review extends Lucid {
 
-  static boot() {
+  static boot () {
     super.boot()
 
     /**
@@ -27,10 +27,8 @@ class Review extends Lucid {
 
       yield profile.save()
 
-
       yield next
     })
-
   }
   profile () {
     return this.belongsTo('App/Model/Profile')
@@ -41,7 +39,7 @@ class Review extends Lucid {
   }
 
   user () {
-    return this.hasOne('App/Model/UserAccount')
+    return this.belongsTo('App/Model/UserAccount')
   }
 }
 

@@ -31,9 +31,11 @@ class AnswerController {
   }
 
   * store (request, response) {
+    const user = yield request.auth.getUser()
     yield this.Answer.create({
       comment: request.input('comment'),
-      review_id: request.params().reviews_id
+      review_id: request.params().reviews_id,
+      user_id: user.id
     })
     response.redirect('back')
   }

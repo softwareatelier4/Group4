@@ -26,19 +26,22 @@ class DatabaseSeeder {
     yield User.create({
       email: 'admin@jobadvisor.com',
       password: 'admin',
-      name: 'admin'
+      name: 'admin',
+      avatar: '1.jpg'
     })
 
     yield User.create({
       email: 'worker@jobadvisor.com',
       password: 'worker',
-      name: 'worker'
+      name: 'worker',
+      avatar: '2.jpg'
     })
 
     yield User.create({
       email: 'user@jobadvisor.com',
       password: 'user',
-      name: 'user'
+      name: 'user',
+      avatar: '3.jpg'
     })
 
     yield Profile.create({
@@ -191,31 +194,31 @@ class DatabaseSeeder {
       overall_rating: 3
     })
 
-    yield Review.create({ comment: 'Did a decent job', vote_price: 2, vote_quality: 2, vote_overall: 1, profile_id: 5 })
-    yield Review.create({ comment: 'Buon prezzo ma scarsa qualità', vote_price: 4, vote_quality: 2, vote_overall: 2, profile_id: 7 })
-    yield Review.create({ comment: 'Non lo consiglio', vote_price: 1, vote_quality: 1, vote_overall: 2, profile_id: 7 })
-    yield Review.create({ comment: 'Fatto bene ma costa troppo', vote_price: 1, vote_quality: 3, vote_overall: 2, profile_id: 9 })
-    yield Review.create({ comment: 'Ben fatto', vote_price: 4, vote_quality: 3, vote_overall: 1, profile_id: 9 })
-    yield Review.create({ comment: 'Ok', vote_price: 1, vote_quality: 2, vote_overall: 4, profile_id: 9 })
-    yield Review.create({ comment: '', vote_price: 1, vote_quality: 2, vote_overall: 1, profile_id: 6 })
-    yield Review.create({ comment: '', vote_price: 1, vote_quality: 1, vote_overall: 4, profile_id: 5 })
-    yield Review.create({ comment: '', vote_price: 1, vote_quality: 1, vote_overall: 2, profile_id: 1 })
-    yield Review.create({ comment: 'Lavoro perfetto ad un ottimo prezzo', vote_price: 5, vote_quality: 5, vote_overall: 5, profile_id: 8 })
-    yield Review.create({ comment: '', vote_price: 2, vote_quality: 3, vote_overall: 1, profile_id: 2 })
-    yield Review.create({ comment: '', vote_price: 3, vote_quality: 4, vote_overall: 4, profile_id: 7 })
-    yield Review.create({ comment: '', vote_price: 4, vote_quality: 1, vote_overall: 1, profile_id: 3 })
-    yield Review.create({ comment: 'Not worth the money', vote_price: 1, vote_quality: 3, vote_overall: 2, profile_id: 1 })
-    yield Review.create({ comment: '', vote_price: 4, vote_quality: 1, vote_overall: 4, profile_id: 1 })
-    yield Review.create({ comment: '', vote_price: 3, vote_quality: 4, vote_overall: 3, profile_id: 4 })
-    yield Review.create({ comment: '', vote_price: 2, vote_quality: 2, vote_overall: 4, profile_id: 2 })
-    yield Review.create({ comment: '', vote_price: 2, vote_quality: 3, vote_overall: 3, profile_id: 4 })
-    yield Review.create({ comment: 'Lavoro decente', vote_price: 3, vote_quality: 4, vote_overall: 3, profile_id: 7 })
-    yield Review.create({ comment: '', vote_price: 2, vote_quality: 3, vote_overall: 3, profile_id: 5 })
-    yield Review.create({ comment: '', vote_price: 2, vote_quality: 4, vote_overall: 4, profile_id: 9 })
-    yield Review.create({ comment: '', vote_price: 2, vote_quality: 4, vote_overall: 2, profile_id: 5 })
-    yield Review.create({ comment: '', vote_price: 4, vote_quality: 4, vote_overall: 2, profile_id: 4 })
-    yield Review.create({ comment: '', vote_price: 3, vote_quality: 2, vote_overall: 3, profile_id: 7 })
-    yield Review.create({ comment: '', vote_price: 3, vote_quality: 2, vote_overall: 4, profile_id: 2 })
+    yield Review.create({ comment: 'Did a decent job', vote_price: 2, vote_quality: 2, vote_overall: 1, profile_id: 5, user_id: 1 })
+    yield Review.create({ comment: 'Buon prezzo ma scarsa qualità', vote_price: 4, vote_quality: 2, vote_overall: 2, profile_id: 7, user_id: 2 })
+    yield Review.create({ comment: 'Non lo consiglio', vote_price: 1, vote_quality: 1, vote_overall: 2, profile_id: 7, user_id: 2 })
+    yield Review.create({ comment: 'Fatto bene ma costa troppo', vote_price: 1, vote_quality: 3, vote_overall: 2, profile_id: 9, user_id: 3 })
+    yield Review.create({ comment: 'Ben fatto', vote_price: 4, vote_quality: 3, vote_overall: 1, profile_id: 9, user_id: 3 })
+    yield Review.create({ comment: 'Ok', vote_price: 1, vote_quality: 2, vote_overall: 4, profile_id: 9, user_id: 2 })
+    yield Review.create({ comment: '', vote_price: 1, vote_quality: 2, vote_overall: 1, profile_id: 6, user_id: 3 })
+    yield Review.create({ comment: '', vote_price: 1, vote_quality: 1, vote_overall: 4, profile_id: 5, user_id: 1 })
+    yield Review.create({ comment: '', vote_price: 1, vote_quality: 1, vote_overall: 2, profile_id: 1, user_id: 2 })
+    yield Review.create({ comment: 'Lavoro perfetto ad un ottimo prezzo', vote_price: 5, vote_quality: 5, vote_overall: 5, profile_id: 8, user_id: 3})
+    yield Review.create({ comment: '', vote_price: 2, vote_quality: 3, vote_overall: 1, profile_id: 2, user_id: 1 })
+    yield Review.create({ comment: '', vote_price: 3, vote_quality: 4, vote_overall: 4, profile_id: 7, user_id: 2 })
+    yield Review.create({ comment: '', vote_price: 4, vote_quality: 1, vote_overall: 1, profile_id: 3, user_id: 2 })
+    yield Review.create({ comment: 'Not worth the money', vote_price: 1, vote_quality: 3, vote_overall: 2, profile_id: 1, user_id: 3 })
+    yield Review.create({ comment: '', vote_price: 4, vote_quality: 1, vote_overall: 4, profile_id: 1, user_id: 2 })
+    yield Review.create({ comment: '', vote_price: 3, vote_quality: 4, vote_overall: 3, profile_id: 4, user_id: 1 })
+    yield Review.create({ comment: '', vote_price: 2, vote_quality: 2, vote_overall: 4, profile_id: 2, user_id: 3 })
+    yield Review.create({ comment: '', vote_price: 2, vote_quality: 3, vote_overall: 3, profile_id: 4, user_id: 2 })
+    yield Review.create({ comment: 'Lavoro decente', vote_price: 3, vote_quality: 4, vote_overall: 3, profile_id: 7, user_id: 3 })
+    yield Review.create({ comment: '', vote_price: 2, vote_quality: 3, vote_overall: 3, profile_id: 5, user_id: 1 })
+    yield Review.create({ comment: '', vote_price: 2, vote_quality: 4, vote_overall: 4, profile_id: 9, user_id: 1 })
+    yield Review.create({ comment: '', vote_price: 2, vote_quality: 4, vote_overall: 2, profile_id: 5, user_id: 3 })
+    yield Review.create({ comment: '', vote_price: 4, vote_quality: 4, vote_overall: 2, profile_id: 4, user_id: 2 })
+    yield Review.create({ comment: '', vote_price: 3, vote_quality: 2, vote_overall: 3, profile_id: 7, user_id: 2 })
+    yield Review.create({ comment: '', vote_price: 3, vote_quality: 2, vote_overall: 4, profile_id: 2, user_id: 1 })
 
     yield Answer.create({ comment: 'Grazie! Cerchiamo sempre di migliorare', review_id: 1 })
     yield Answer.create({ comment: 'Ci dispiace', review_id: 2 })
