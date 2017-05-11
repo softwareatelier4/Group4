@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+export PATH=/usr/local/n/versions/node/5.8.0/bin/:$PATH
+
 # Install modules
 npm install
 
