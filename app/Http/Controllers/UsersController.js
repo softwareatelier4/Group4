@@ -125,7 +125,7 @@ class UsersController {
         response.badRequest(avatar.errors())
         return
       }
-      user.avatar = avatar.uploadPath()
+      user.avatar = fileName
     }
 
     if (request.input('calendar')) {

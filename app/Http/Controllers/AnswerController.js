@@ -27,13 +27,18 @@ class AnswerController {
   }
 
   * update (request, response) {
-
+    const answer = yield this.Answer.findBy('id', request.params().id)
+    answer.comment = request.input('comment')
+    yield answer.save()
+    response.redirect('back')
   }
 
   * store (request, response) {
+    const user = yield request.auth.getUser()
     yield this.Answer.create({
       comment: request.input('comment'),
-      review_id: request.params().reviews_id
+      review_id: request.params().reviews_id,
+      user_id: user.id
     })
     response.redirect('back')
   }
