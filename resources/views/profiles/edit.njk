@@ -1,0 +1,61 @@
+{% extends 'master' %}
+
+{% block content %}
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-10 result-item">
+        <h3>Edit your profile</h3>
+
+        {{ form.open({ action: 'ProfileController.update',  files: true, params: {id: profile.id} }) }}
+        {{ csrfField }}
+        <div class="form-group">
+          <label>Title</label>
+          <input type="text" class="form-control" name="title" value="{{ profile.title }}" placeholder="Enter the title" required>
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <textarea class="form-control" name="description" rows="3"  placeholder="Enter the description" required>{{ profile.description }}</textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" class="form-control" name="email" required>
+        </div>
+
+        <div class="form-group">
+          <label>City</label>
+          <input type="text" class="form-control" name="city" value="{{ profile.city }}" placeholder="Enter the telephone">
+        </div>
+
+        <div class="form-group">
+          <label>Website</label>
+          <input type="text" class="form-control" name="website" value="{{ profile.website }}" placeholder="Enter the website">
+        </div>
+
+        <div class="form-group">
+          <label>Telephone</label>
+          <input type="text" class="form-control" name="telephone" value="{{ profile.telephone }}" placeholder="Enter the telephone">
+        </div>
+
+        <div class="form-group">
+          <label>Price</label>
+          <input type="number" class="form-control" name="price" value="{{ profile.price }}" min="0" value="0" required>
+        </div>
+
+        <div class="form-group">
+          <label>Upload a logo</label>
+          <input type="file" class="form-control-file" name="logo"  accept="image/*">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="reset" class="btn btn-primary">Reset</button>
+        {{ form.close() }}
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}
+
