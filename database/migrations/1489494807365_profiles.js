@@ -9,7 +9,7 @@ class ProfilesTableSchema extends Schema {
       table.increments('id').primary()
       table.text('title')
       table.text('description')
-
+      table.string('email').nullable()
       table.string('website').nullable()
       table.string('telephone').nullable()
       table.decimal('price', 5, 2).nullable()

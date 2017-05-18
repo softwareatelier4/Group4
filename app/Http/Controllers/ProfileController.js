@@ -204,6 +204,7 @@ class ProfileController {
     const profile = new this.Profile()
     profile.title = request.input('title')
     profile.description = request.input('description')
+    profile.email = request.input('email')
     profile.city = request.input('city')
     profile.website = request.input('website')
     profile.telephone = request.input('telephone')
