@@ -38,6 +38,7 @@
       <div class="form-group">
         <label>Category</label>
         <select class="form-control" name="category">
+          <option disabled selected value>Select a category</option>
           {% for category in allCategories %}
           <option value="{{ category.id }}">{{ category.name }}</option>
           {% endfor %}
