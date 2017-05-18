@@ -6,6 +6,13 @@
   <div class="row justify-content-center">
     <div class="col-10 result-item">
       <h3>Create a profile</h3>
+      {% if errors %}
+        <div class="alert alert-danger">
+          {% for error in errors %}
+            <li> {{ error.message }} </li>
+          {% endfor %}
+        </div>
+      {% endif %}
       {{ form.open({ action: 'ProfileController.store', files: true }) }}
       <div class="form-group">
         <label>Title</label>

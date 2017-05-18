@@ -4,7 +4,7 @@ const geoip = use('geoip-lite')
 const q = require('q')
 const Database = use('Database')
 const Helpers = use('Helpers')
-
+const Validator = use('Validator')
 const googleMapsClient = require('@google/maps').createClient({
   key: 'AIzaSyATbIT8xR4HJIV9-H_mFu4DaY3lqI0K6hE',
   Promise: q.Promise
@@ -209,6 +209,32 @@ class ProfileController {
     profile.website = request.input('website')
     profile.telephone = request.input('telephone')
     profile.price = request.input('price')
+  
+
+    const rules = {
+      title: 'required',
+      description: 'required',
+      email: 'required',
+      city: 'required',
+      website: 'required',
+      telephone: 'required',
+      price: 'required'
+    }
+
+    const validation = yield Validator.validate(profile, rules)
+
+    if (validation.fails()) {
+
+      yield request
+        .withOnly('title', 'description', 'email', 'city', 'website', 'telephone', 'price')
+        .andWith({errors: validation.messages() })
+        .flash()
+
+      yield response.sendView('profiles.create', {
+        errors: validation.messages()
+        })
+      return
+    } else {
     // profile.user_id = user.id
     let options = {
       provider: 'google',
@@ -236,7 +262,7 @@ class ProfileController {
     yield profile.categories().attach([request.input('category')])
 
     response.redirect('/profiles/' + profile.id)
-  }
+  }}
 
   * destroy (request, response) {
 
