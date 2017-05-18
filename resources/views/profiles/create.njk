@@ -13,6 +13,11 @@
           {% endfor %}
         </div>
       {% endif %}
+      {% if message %}
+        <div class="alert alert-danger">
+            <li> {{ message }} </li>
+        </div>
+      {% endif %}
       {{ form.open({ action: 'ProfileController.store', files: true }) }}
       <div class="form-group">
         <label>Title</label>

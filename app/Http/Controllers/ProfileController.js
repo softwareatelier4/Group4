@@ -209,7 +209,7 @@ class ProfileController {
     profile.website = request.input('website')
     profile.telephone = request.input('telephone')
     profile.price = request.input('price')
-  
+
 
     const rules = {
       title: 'required',
@@ -243,8 +243,17 @@ class ProfileController {
     }
     let geocoder = NodeGeocoder(options)
     const res = yield geocoder.geocode(request.input('city'))
-    profile.lat = res[0].latitude
-    profile.lng = res[0].longitude
+    if(res[0] === undefined){
+      const message = "The entered city does not exist"
+      yield response.sendView('profiles.create', {
+        message: message
+        })
+    }
+    else{
+      profile.lat = res[0].latitude
+      profile.lng = res[0].longitude
+    }
+    return
     yield profile.save()
 
     const file = request.file('logo')
