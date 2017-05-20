@@ -29,3 +29,4 @@ Route.get('/logout', 'UsersController.logout')
 Route.get('register', 'UsersController.create')
 Route.get('store', 'UsersController.store')
 Route.get('saveToken', 'UsersController.saveToken')
+

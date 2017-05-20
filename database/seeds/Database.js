@@ -55,6 +55,7 @@ class DatabaseSeeder {
       lat: '46.020569',
       lng: '8.970071',
       city: 'Lugano',
+      email: "carlo@cracco.ch",
       user_id: 1,
       overall_rating: 1
     })
@@ -70,6 +71,7 @@ class DatabaseSeeder {
       lat: '46.091604',
       lng: '8.922933',
       city: 'Mezzovico-Vira',
+      email: "carlo@cracco.ch",
       user_id: 2,
       overall_rating: 2
     })
@@ -85,6 +87,7 @@ class DatabaseSeeder {
       lat: '45.967347',
       lng: '8.924697',
       city: 'Lugano',
+      email: "lastra@gora.ch",
       user_id: 3,
       overall_rating: 4
     })
@@ -100,6 +103,7 @@ class DatabaseSeeder {
       lat: '46.537320',
       lng: '9.875321',
       city: 'Samaden',
+      email: "url@em.ch",
       user_id: null,
       overall_rating: 2
     })
@@ -115,6 +119,7 @@ class DatabaseSeeder {
       lat: '46.031668',
       lng: '8.973651',
       city: 'Davesco-Soragno',
+      email: "carlo@semper.ch",
       user_id: null,
       overall_rating: 4
     })
@@ -130,6 +135,7 @@ class DatabaseSeeder {
       lat: '45.837612',
       lng: '9.031572',
       city: 'Chiasso',
+      email: "marzio@jes.ch",
       user_id: null,
       overall_rating: 1
     })
@@ -145,6 +151,7 @@ class DatabaseSeeder {
       lat: '45.966269',
       lng: '8.923949',
       city: 'Lugano',
+      email: "carlo@cracco.ch",
       user_id: null,
       overall_rating: 5
     })
@@ -160,6 +167,7 @@ class DatabaseSeeder {
       lat: '46.157442',
       lng: '8.773200',
       city: 'Ascona',
+      email: "marco@cracco.ch",
       user_id: null,
       overall_rating: 1
     })
@@ -175,6 +183,7 @@ class DatabaseSeeder {
       lat: '46.014447',
       lng: '8.963594',
       city: 'Viganello',
+      email: "carlo@cracco.ch",
       user_id: null,
       overall_rating: 2
     })
@@ -190,6 +199,7 @@ class DatabaseSeeder {
       lat: '47.376887',
       lng: '8.541694',
       city: 'Cremenaga',
+      email: "carlo@cracco.ch",
       user_id: null,
       overall_rating: 3
     })
