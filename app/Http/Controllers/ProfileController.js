@@ -73,6 +73,7 @@ class ProfileController {
     } else {
       userLocation = request.input('location')
     }
+    yield request.session.put('location', userLocation)
 
     const res = yield geocoder.geocode(userLocation)
 
@@ -150,10 +151,12 @@ class ProfileController {
     const reviews = yield profile.reviews().with('answer').fetch()
     const categories = yield profile.categories().fetch()
 
-    const ip = (request.ip() === '127.0.0.1') ? '84.72.13.20' : request.ip()
+    let userLocation = yield request.session.get('location')
+
+    // const ip = (request.ip() === '127.0.0.1') ? '84.72.13.20' : request.ip()
 
     const distanceMatrix = yield googleMapsClient.distanceMatrix({
-      origins: geoip.lookup(ip).city,
+      origins: userLocation,
       destinations: profile.toJSON().lat + ',' + profile.toJSON().lng
     }).asPromise()
 
@@ -179,6 +182,7 @@ class ProfileController {
       profile: profile.toJSON(),
       reviews: tempReviews,
       categories: categories.toJSON()
+      // userLocation: { city: userLocation }
     })
   }
 
