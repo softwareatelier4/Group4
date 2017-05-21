@@ -137,8 +137,8 @@ describe('ReviewController', function () {
         .fill('input[name="email"]', 'worker@jobadvisor.com')
         .fill('input[name="password"]', 'worker')
         .pressButton('Login', done)
-      console.log(`With answers:\t${reviews_ids}`)
-      console.log(`Without answers:\t${reviews_ids_without_answer}`)
+      // console.log(`With answers:\t${reviews_ids}`)
+      // console.log(`Without answers:\t${reviews_ids_without_answer}`)
 
     })
 
