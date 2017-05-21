@@ -17,6 +17,7 @@ class ProfilesTableSchema extends Schema {
       table.string('lat').nullable()
       table.string('lng').nullable()
       table.string('city').nullable()
+      table.string('email').nullable()
 
       table.integer('overall_rating').nullable()
 

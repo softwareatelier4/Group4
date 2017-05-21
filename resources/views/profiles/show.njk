@@ -1,10 +1,15 @@
 {% extends 'master' %}
+{% block search %}{% endblock %}
 {% block content %}
 <div class="row justify-content-center mb-5">
   <div class="col-10">
     <div class="row mt-5">
       <div class="col">
         <h1>{{ profile.title }}</h1>
+        {#Profile Controller not asnwering#}
+        {% if profile.user_id == currentUser.id and profile.user_id != null %}
+        <a href="/profiles/{{ profile.id }}/edit" id="edit" class="btn btn-primary col-sm-1 px-0 mx-0" role="button">Edit</a>
+        {% endif %}
         <hr>
       </div>
     </div>
@@ -22,7 +27,6 @@
           <dt class="col-sm-3">Telephone</dt>
           <dd class="col-sm-9"><a href="tel:{{ profile.telephone }}">{{ profile.telephone }}</a></dd>
           {% endif  %}
-
           {% if profile.website %}
           <dt class="col-sm-3">Website</dt>
           <dd class="col-sm-9"><a href="{{ profile.website }}" target="_blank" rel="nofollow">{{ profile.website }}</a></dd>

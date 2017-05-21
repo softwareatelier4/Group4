@@ -73,6 +73,7 @@ class ProfileController {
     } else {
       userLocation = request.input('location')
     }
+    yield request.session.put('location', userLocation)
 
     const res = yield geocoder.geocode(userLocation)
 
@@ -150,22 +151,30 @@ class ProfileController {
     const reviews = yield profile.reviews().with('answer').fetch()
     const categories = yield profile.categories().fetch()
 
-    const ip = (request.ip() === '127.0.0.1') ? '84.72.13.20' : request.ip()
+    let userLocation = yield request.session.get('location')
 
-    const distanceMatrix = yield googleMapsClient.distanceMatrix({
-      origins: geoip.lookup(ip).city,
-      destinations: profile.toJSON().lat + ',' + profile.toJSON().lng
-    }).asPromise()
+    // const ip = (request.ip() === '127.0.0.1') ? '84.72.13.20' : request.ip()
+
+    if (userLocation) {
+      const distanceMatrix = yield googleMapsClient.distanceMatrix({
+        origins: userLocation,
+        destinations: profile.toJSON().lat + ',' + profile.toJSON().lng
+      }).asPromise()
+
+      if (distanceMatrix.json.rows[0].elements[0].status === 'ZERO_RESULTS') {
+        profile.distanceTime = 'Not available'
+      } else {
+        profile.distanceTime = distanceMatrix.json.rows[0].elements[0].duration.text
+      }
+    }
+    else {
+      profile.distanceTime = 'Not available'
+    }
 
     profile.vote_quality = yield profile.reviews().avg('vote_quality as vote_quality')
     profile.vote_price = yield profile.reviews().avg('vote_price as vote_price')
     profile.vote_overall = yield profile.reviews().avg('vote_overall as vote_overall')
 
-    if (distanceMatrix.json.rows[0].elements[0].status === 'ZERO_RESULTS') {
-      profile.distanceTime = 'Not available'
-    } else {
-      profile.distanceTime = distanceMatrix.json.rows[0].elements[0].duration.text
-    }
     /* Attach the User who wrote the review to the Review object */
     let tempReviews = reviews.toJSON()
     for (var i = 0; i < tempReviews.length; i++) {
@@ -179,6 +188,7 @@ class ProfileController {
       profile: profile.toJSON(),
       reviews: tempReviews,
       categories: categories.toJSON()
+      // userLocation: { city: userLocation }
     })
   }
 
@@ -191,12 +201,58 @@ class ProfileController {
   }
 
   * edit (request, response) {
+    const user = yield request.auth.getUser();
     const profile = yield this.Profile.find(request.param('id'))
-    yield response.sendView('profiles.edit', { profile: profile })
+
+    if (user.id != profile.user_id){
+      yield response.redirect('/profiles')
+    }
+
+    yield response.sendView('profiles.edit', {profile: profile.toJSON()})
+    //console.log(request)
+    // const profile = yield this.Profile.find(request.param('id'))
+    // yield response.sendView('profiles.edit', { profile: profile })
   }
 
   * update (request, response) {
+    const profile = yield this.Profile.find(request.param('id'))
+    const user = yield request.auth.getUser();
+    if (user.id != profile.user_id){
+      yield response.redirect('/profiles')
+    }
+    profile.title = request.input('title')
+    profile.description = request.input('description')
+    profile.city = request.input('city')
+    profile.website = request.input('website')
+    profile.telephone = request.input('telephone')
+    profile.price = request.input('price')
+    profile.email = request.input('email')
+    let options = {
+      provider: 'google',
+      httpAdapter: 'https',
+      formatter: null
+    }
+    let geocoder = NodeGeocoder(options)
+    const res = yield geocoder.geocode(request.input('city'))
+    profile.lat = res[0].latitude
+    profile.lng = res[0].longitude
+    yield profile.save()
 
+
+    const file = request.file('logo')
+    console.log(file)
+    if (file.clientSize()) {
+      yield file.move(Helpers.publicPath() + '/profile_images/', profile.id + '_' + file.clientName())
+      if (!file.moved()) {
+        response.badRequest(file.errors())
+        return
+      }
+      profile.logo = profile.id + '_' + file.clientName()
+    }
+
+    yield profile.save()
+
+    response.redirect('/profiles/' + profile.id)
   }
 
   * store (request, response) {
@@ -208,6 +264,7 @@ class ProfileController {
     profile.website = request.input('website')
     profile.telephone = request.input('telephone')
     profile.price = request.input('price')
+    profile.email = request.input('email')
     // profile.user_id = user.id
     let options = {
       provider: 'google',
@@ -238,7 +295,7 @@ class ProfileController {
   }
 
   * destroy (request, response) {
-
+    yield response.sendView('index')
   }
 }
 
