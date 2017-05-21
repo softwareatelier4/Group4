@@ -11,16 +11,18 @@
       <div class="form-group">
         <label>Name</label>
         <input type="text" name="name" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
-      </div>  
+      </div>
       <div class="form-group">
-        <label>Email address</label>
+        <label>E-mail address</label>
         <input type="email" name="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
       </div>
       <div class="form-group">
         <label>Password</label>
         <input type="password" name="password" class="form-control" placeholder="Password">
       </div>
-
+      <div class="form-group">
+        <input type="checkbox" name="createProfile">  I also wish to create a user profile<br>
+      </div>
       <button type="submit" class="btn btn-primary">Submit</button>
       <button type="reset" class="btn btn-primary">Reset</button>
       {{ form.close() }}

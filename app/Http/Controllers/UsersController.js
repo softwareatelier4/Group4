@@ -68,7 +68,13 @@ class UsersController {
       type: request.input('type'),
       name: request.input('name')
     })
-    response.redirect('back')
+    if(request.input('createProfile') == 'on'){
+      response.redirect('profiles/create')
+    }
+    else{
+      response.redirect('profiles')
+    }
+
   }
 
   * show (request, response) {
