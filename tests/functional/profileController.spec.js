@@ -259,13 +259,13 @@ describe('ProfileController', function () {
   })
 
 
-  // Suddenly zombiejs started to compplain for this test cases
+  // before(function (done) {
+  //   browser.visit('/profiles', done)
+  // })
+
+  // Suddenly zombiejs started to complain for this test cases
   // These lines were never changed from the previous working commit
   // describe('index:view default filtering options collapse', function () {
-  //   before(function (done) {
-  //     browser.visit('/profiles', done)
-  //   })
-
   //   it('should have the filtering block non collapsed by default', function () {
   //     browser.assert.hasClass('#filters', 'hidden-xs-up')
   //   })
@@ -321,7 +321,6 @@ describe('ProfileController', function () {
         .fill('maxPrice', max)
         .fill('minDist', 0)
         .fill('maxDist', 1000)
-
         .pressButton('#search',done)
     })
 
