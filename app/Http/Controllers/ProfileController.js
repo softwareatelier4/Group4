@@ -247,13 +247,14 @@ class ProfileController {
       const message = "The entered city does not exist"
       yield response.sendView('profiles.create', {
         message: message
-        })
+      })
+      return
     }
     else{
       profile.lat = res[0].latitude
       profile.lng = res[0].longitude
     }
-    return
+
     yield profile.save()
 
     const file = request.file('logo')
