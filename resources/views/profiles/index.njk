@@ -64,14 +64,6 @@
       readonly: true,
     });
 
-    $("#showFilters").click(function() {
-      $("#filters").toggleClass('hidden-xs-up')
-      if ( $('#filters').hasClass('hidden-xs-up') )
-        $(this).text('Show filters')
-      else
-        $(this).text('Hide filters')
-    });
-
     $( "#slider-distance" ).slider({
       range: true,
       min: 0,

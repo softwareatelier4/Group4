@@ -95,7 +95,7 @@
       </div>
     </div>
     {% for review in reviews %}
-    <div class="row mx-0 align-items-center review-item mb-4">
+    <div id="review{{review.id}}"class="row mx-0 align-items-center review-item mb-4">
       <div class="col-12 pt-4 {{ "pb-2" if not review.comment }}">
         <div class="row align-items-center">
           <div class="col-1">
@@ -152,7 +152,7 @@
           <div class="col-12 pt-2 review-answer">
             <h5>Answer from the owner</h5>
             <p><i><small>Last update {{ review.answer.updated_at }}</small></i></p>
-            <p><i>{{ review.answer.comment }}</i></p>
+            <p class="review-answer-comment"><i>{{ review.answer.comment }}</i></p>
             {% if profile.user_id == currentUser.id and profile.user_id != null %}
 
             <button class="btn btn-primary editButton float-right" data-id="{{ review.id }}">Edit</button>

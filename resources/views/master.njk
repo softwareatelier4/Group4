@@ -179,6 +179,14 @@
 
         return false
       })
+
+      $("#showFilters").click(function() {
+        $("#filters").toggleClass('hidden-xs-up')
+        if ( $('#filters').hasClass('hidden-xs-up') )
+          $(this).text('Show filters')
+        else
+          $(this).text('Hide filters')
+      })
     </script>
     {% block javascript %}{% endblock %}
   </body>

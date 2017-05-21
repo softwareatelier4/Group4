@@ -24,6 +24,7 @@ class DatabaseSeeder {
 
   * run () {
     yield User.create({
+      id: 1,
       email: 'admin@jobadvisor.com',
       password: 'admin',
       name: 'admin',
@@ -31,6 +32,7 @@ class DatabaseSeeder {
     })
 
     yield User.create({
+      id: 2,
       email: 'worker@jobadvisor.com',
       password: 'worker',
       name: 'worker',
@@ -38,6 +40,7 @@ class DatabaseSeeder {
     })
 
     yield User.create({
+      id: 3,
       email: 'user@jobadvisor.com',
       password: 'user',
       name: 'user',
@@ -175,7 +178,7 @@ class DatabaseSeeder {
       lat: '46.014447',
       lng: '8.963594',
       city: 'Viganello',
-      user_id: null,
+      user_id: 2,
       overall_rating: 2
     })
 
