@@ -73,6 +73,7 @@ class ProfileController {
     } else {
       userLocation = request.input('location')
     }
+    yield request.session.put('location', userLocation)
 
     const res = yield geocoder.geocode(userLocation)
 
@@ -150,22 +151,30 @@ class ProfileController {
     const reviews = yield profile.reviews().with('answer').fetch()
     const categories = yield profile.categories().fetch()
 
-    const ip = (request.ip() === '127.0.0.1') ? '84.72.13.20' : request.ip()
+    let userLocation = yield request.session.get('location')
 
-    const distanceMatrix = yield googleMapsClient.distanceMatrix({
-      origins: geoip.lookup(ip).city,
-      destinations: profile.toJSON().lat + ',' + profile.toJSON().lng
-    }).asPromise()
+    // const ip = (request.ip() === '127.0.0.1') ? '84.72.13.20' : request.ip()
+
+    if (userLocation) {
+      const distanceMatrix = yield googleMapsClient.distanceMatrix({
+        origins: userLocation,
+        destinations: profile.toJSON().lat + ',' + profile.toJSON().lng
+      }).asPromise()
+
+      if (distanceMatrix.json.rows[0].elements[0].status === 'ZERO_RESULTS') {
+        profile.distanceTime = 'Not available'
+      } else {
+        profile.distanceTime = distanceMatrix.json.rows[0].elements[0].duration.text
+      }
+    }
+    else {
+      profile.distanceTime = 'Not available'
+    }
 
     profile.vote_quality = yield profile.reviews().avg('vote_quality as vote_quality')
     profile.vote_price = yield profile.reviews().avg('vote_price as vote_price')
     profile.vote_overall = yield profile.reviews().avg('vote_overall as vote_overall')
 
-    if (distanceMatrix.json.rows[0].elements[0].status === 'ZERO_RESULTS') {
-      profile.distanceTime = 'Not available'
-    } else {
-      profile.distanceTime = distanceMatrix.json.rows[0].elements[0].duration.text
-    }
     /* Attach the User who wrote the review to the Review object */
     let tempReviews = reviews.toJSON()
     for (var i = 0; i < tempReviews.length; i++) {
@@ -179,6 +188,7 @@ class ProfileController {
       profile: profile.toJSON(),
       reviews: tempReviews,
       categories: categories.toJSON()
+      // userLocation: { city: userLocation }
     })
   }
 

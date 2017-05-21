@@ -16,6 +16,16 @@
   <div id="filters" class="row my-3 hidden-xs-up">
     <div class="col-10 offset-md-1 px-5 py-3">
       <form class="" action="/profiles"  method="GET">
+        <div class="hidden-xl-down">
+          <select class="custom-select" name="category">
+            <option value="0" {{ "selected" if ( request.category == 0) }}>All categories</option>
+            {% for category in allCategories %}
+            <option value="{{ category.id }}" {{ "selected" if ( request.category == category.id) }}>{{ category.name }}</option>
+            {% endfor %}
+          </select>
+          <input type="text" class="form-control" id="searchlocationbox" name="location" placeholder="New York" value="{{ request.location if (request.location) else userLocation.city }}">
+          <input type="text" class="form-control col-sm-5 mx-0" id="searchbox" name="search" placeholder="Search" value="{{ request.search }}">
+        </div>
         <div class="row">
           <div class="col-12 col-md-4">
             <div class="row text-center"><div class="col-12">Distance (km)</div></div>
@@ -108,8 +118,8 @@
               </div>
             </div>
             <div class="row item-detail mt-3">
-              <div class="col"><a href="{{profile.website}}"><i class="fa fa-home" aria-hidden="true"></i> {{ profile.website | truncate(20) }} </a></div>
-              <div class="col"><i class="fa fa-phone" aria-hidden="true"></i> {{ profile.telephone }}</div>
+              <div class="col">{% if profile.website !== '' %}<a href="https://{{profile.website}}"><i class="fa fa-home" aria-hidden="true"></i> {{ profile.website | truncate(20) }} </a>{% endif %}</div>
+              <div class="col">{% if profile.telephone !== '' %}<i class="fa fa-phone" aria-hidden="true"></i> {{ profile.telephone }}{% endif %}</div>
               <div class="col"><i class="fa fa-address-card" aria-hidden="true"></i> {{ profile.city }}</div>
             </div>
           </div>
