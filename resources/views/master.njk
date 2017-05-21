@@ -172,14 +172,11 @@
       $('#emergency-button').click(function() {
         $(this).toggleClass('active')
         $('#search').toggleClass('btn-primary').toggleClass('btn-danger active')
-
         $('#emergency').prop('checked', function(){
           return ! $(this).prop('checked')
         })
-
         return false
       })
-
       $("#showFilters").click(function() {
         $("#filters").toggleClass('hidden-xs-up')
         if ( $('#filters').hasClass('hidden-xs-up') )
