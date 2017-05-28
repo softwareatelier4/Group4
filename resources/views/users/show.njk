@@ -31,13 +31,15 @@
           Available for emergency
         </label>
       </div>
+
       {% if not currentUser.access_token %}
-      <div id="google-signin" class="form-group hidden-xs-up">
+      <div id="google-signin" class="form-group {{ 'hidden-xs-up' if not currentUser.emergency }}">
         <a href="{{ auth_url }}"> 
           <button type="button" class="btn btn-secondary">Sign In With Google</button>
         </a>
       </div>
       {% else %}
+      {% if currentUser.emergency %}
       <div class="form-group">
         <label>Your work calendar</label>
         <select class="form-control" name="calendar">
@@ -48,6 +50,7 @@
           {% endfor %}
         </select>  
       </div>
+      {% endif %}
       {% endif %}
       <button type="submit" class="btn btn-primary">Submit</button>
       {{ form.close() }}
@@ -61,7 +64,7 @@
 {% block javascript %}
 <script>
   $('input[type=radio][name=emergency]').change(function() {
-    console.log("asds")
+
     if (this.value == '1') {
       $("#google-signin").removeClass("hidden-xs-up");
     } else {

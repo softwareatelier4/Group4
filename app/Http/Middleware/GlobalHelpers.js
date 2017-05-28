@@ -3,7 +3,6 @@
 const URL = require('url').URL
 
 class GlobalHelpers {
-
   static get inject () {
     return ['App/Model/Profile', 'App/Model/Category']
   }
@@ -27,17 +26,12 @@ class GlobalHelpers {
     }
 
     const currentUser = yield request.auth.getUser()
-    response.viewInstance = use('View')
 
-    request.currentUser = yield request.auth.getUser()
-
-    response.viewInstance.global('currentUser', currentUser)
     response.viewInstance.global('request', request.all())
     response.viewInstance.global('queryWithoutOrder', queryWithoutOrder)
 
     yield next
   }
-
 }
 
 module.exports = GlobalHelpers
