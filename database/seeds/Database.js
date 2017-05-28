@@ -207,6 +207,214 @@ class DatabaseSeeder {
       overall_rating: 3
     })
 
+    yield Profile.create({
+      id: 11,
+      title: 'Gymtonic SA',
+      description: "Palestra di alta qualità per migliorare il tuo fitness personale",
+      website: 'gymtonic.ch',
+      telephone: '091 924 96 66',
+      price: 89,
+      logo: '11.jpg',
+      lat: '46.007315',
+      lng: '8.949599',
+      city: 'Lugano',
+      email: "info@gymtonic.ch",
+      user_id: null,
+      overall_rating: 1
+    })
+
+    yield Profile.create({
+      id: 12,
+      title: '7th Street Sagl',
+      description: "Impresa Sagl generale.",
+      website: null,
+      telephone: null,
+      price: 89,
+      logo: '12.jpeg',
+      lat: '46.006653',
+      lng: '8.957132',
+      city: 'Lugano',
+      email: null,
+      user_id: null,
+      overall_rating: 2
+    })
+
+    yield Profile.create({
+      id: 13,
+      title: 'Barchi Nicoli Trisconi e Associati SA',
+      description: "Studio legale per risolvere i tuoi problemi con la legge.",
+      website: 'bnta.ch',
+      telephone: '091 912 20 00',
+      price: 149,
+      logo: '13.jpg',
+      lat: '46.008363',
+      lng: '8.956263',
+      city: 'Lugano',
+      email: null,
+      user_id: null,
+      overall_rating: 4
+    })
+
+    yield Profile.create({
+      id: 14,
+      title: 'SAM Società Atletica Massagno',
+      description: "SAM Società Atletica Massagno: perché lo sport viene prima di tutto. Atleti professionisti e non.",
+      website: 'sammassagno.ch',
+      telephone: '091 968 15 72',
+      price: 60,
+      logo: '14.jpg',
+      lat: '46.013310',
+      lng: '8.944832',
+      city: 'Massagno',
+      email: 'info@sammassagno.ch',
+      user_id: null,
+      overall_rating: 3
+    })
+
+    yield Profile.create({
+      id: 15,
+      title: 'Club Move SA Palestra',
+      description: "Palestra, personal trainer e allenatore personale per la tua salute fisica.",
+      website: 'clubmove.ch',
+      telephone: '091 924 01 07',
+      price: 88,
+      logo: '15.jpg',
+      lat: '46.020796',
+      lng: '8.957190',
+      city: 'Trevano',
+      email: null,
+      user_id: null,
+      overall_rating: 3
+    })
+
+    yield Profile.create({
+      id: 16,
+      title: 'Lido di Lugano',
+      description: "Eventi, cene e luogo di svago presso il lido ufficiale di Lugano.",
+      website: 'lugano.ch',
+      telephone: '058 866 68 80',
+      price: 40,
+      logo: '16.jpg',
+      lat: '46.005578',
+      lng: '8.963550',
+      city: 'Lugano',
+      email: 'lido@lugano.ch',
+      user_id: null,
+      overall_rating: 5
+    })
+
+    yield Profile.create({
+      id: 17,
+      title: 'CineStar Arena Cinemas Ticino SA',
+      description: "Sempre disponibili gli ultimi film premiato da oscar.",
+      website: 'arena.ch',
+      telephone: '0900 552 202',
+      price: 12,
+      logo: '17.jpg',
+      lat: '46.025136',
+      lng: '8.963385',
+      city: 'Porza',
+      email: 'info@arena.ch',
+      user_id: null,
+      overall_rating: 4
+    })
+
+    yield Profile.create({
+      id: 18,
+      title: 'TicinOnline SA',
+      description: "Internet Marketing Service per i tuoi bisogni di azienda o di indipendente.",
+      website: 'tio.ch',
+      telephone: '091 985 90 10',
+      price: 100,
+      logo: '18.jpeg',
+      lat: '46.012128',
+      lng: '8.935234',
+      city: 'Breganzona',
+      email: 'info@tio.ch',
+      user_id: null,
+      overall_rating: 2
+    })
+
+    yield Profile.create({
+      id: 19,
+      title: 'Mattino della domenica',
+      description: "Solo le migliori informazioni su votazioni in Ticino.",
+      website: 'mattinonline.ch',
+      telephone: '091 973 10 43',
+      price: 150,
+      logo: '19.jpeg',
+      lat: '46.020237',
+      lng: '8.959371',
+      city: 'Lugano',
+      email: null,
+      user_id: null,
+      overall_rating: 2
+    })
+
+    yield Profile.create({
+      id: 20,
+      title: 'Cattaneo & Postizzi Studio Legale SA',
+      description: "Studio legale: da professionisti per professionisti.",
+      website: 'cattaneopostizzi.ch',
+      telephone: '091 912 20 70',
+      price: 150,
+      logo: '20.jpg',
+      lat: '46.007361',
+      lng: '8.953065',
+      city: 'Lugano',
+      email: null,
+      user_id: null,
+      overall_rating: 4
+    })
+
+    yield Profile.create({
+      id: 21,
+      title: 'Studio legale e notarile Verda',
+      description: "Studio legale: da professionisti per professionisti.",
+      website: 'verda-law.ch',
+      telephone: '091 922 84 72',
+      price: 120,
+      logo: '21.jpg',
+      lat: '46.007773',
+      lng: '8.952235',
+      city: 'Lugano',
+      email: 'info@verda-law.ch',
+      user_id: null,
+      overall_rating: 3
+    })
+
+    yield Profile.create({
+      id: 22,
+      title: 'Mrs. Paola Bernasconi Avvocati',
+      description: "Avvocati nel settore da 20 anni.",
+      website: null,
+      telephone: '091 922 04 61',
+      price: 180,
+      logo: '22.jpeg',
+      lat: '46.008073',
+      lng: '8.951952',
+      city: 'Lugano',
+      email: null,
+      user_id: null,
+      overall_rating: 1
+    })
+
+    yield Profile.create({
+      id: 23,
+      title: 'Avvocato Marcellini Luca',
+      description: "Nessun meglio dell'avvocato Marcellini può fornirti assistenza legale.",
+      website: 'legal-notary.ch',
+      telephone: '091 910 05 50',
+      price: 165,
+      logo: '23.jpeg',
+      lat: '46.006021',
+      lng: '8.957509',
+      city: 'Lugano',
+      email: 'contatto@legal-notary.ch',
+      user_id: null,
+      overall_rating: 5
+    })
+
     yield Review.create({ comment: 'Did a decent job', vote_price: 2, vote_quality: 2, vote_overall: 1, profile_id: 5, user_id: 1 })
     yield Review.create({ comment: 'Buon prezzo ma scarsa qualità', vote_price: 4, vote_quality: 2, vote_overall: 2, profile_id: 7, user_id: 2 })
     yield Review.create({ comment: 'Non lo consiglio', vote_price: 1, vote_quality: 1, vote_overall: 2, profile_id: 7, user_id: 2 })
@@ -247,6 +455,10 @@ class DatabaseSeeder {
     yield Category.create({ name: 'Dentista'})
     yield Category.create({ name: 'Informatico'})
     yield Category.create({ name: 'Giardiniere'})
+    yield Category.create({ name: 'Giornale'})
+    yield Category.create({ name: 'Eventi'})
+    yield Category.create({ name: 'Fitness'})
+    yield Category.create({ name: 'Legale'})
 
     yield ProfileCategory.create({ profile_id: 6, category_id: 2})
     yield ProfileCategory.create({ profile_id: 6, category_id: 4})
@@ -267,6 +479,20 @@ class DatabaseSeeder {
     yield ProfileCategory.create({ profile_id: 2, category_id: 1})
     yield ProfileCategory.create({ profile_id: 8, category_id: 1})
     yield ProfileCategory.create({ profile_id: 4, category_id: 1})
+    yield ProfileCategory.create({ profile_id: 19, category_id: 8})
+    yield ProfileCategory.create({ profile_id: 18, category_id: 8})
+    yield ProfileCategory.create({ profile_id: 18, category_id: 6})
+    yield ProfileCategory.create({ profile_id: 17, category_id: 9})
+    yield ProfileCategory.create({ profile_id: 16, category_id: 9})
+    yield ProfileCategory.create({ profile_id: 15, category_id: 10})
+    yield ProfileCategory.create({ profile_id: 14, category_id: 10})
+    yield ProfileCategory.create({ profile_id: 11, category_id: 10})
+    yield ProfileCategory.create({ profile_id: 13, category_id: 11})
+    yield ProfileCategory.create({ profile_id: 20, category_id: 11})
+    yield ProfileCategory.create({ profile_id: 21, category_id: 11})
+    yield ProfileCategory.create({ profile_id: 22, category_id: 11})
+    yield ProfileCategory.create({ profile_id: 23, category_id: 11})
+    yield ProfileCategory.create({ profile_id: 12, category_id: 6})
   }
 
 }
