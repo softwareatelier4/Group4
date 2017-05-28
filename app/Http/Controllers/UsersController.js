@@ -10,7 +10,7 @@ const oauth2Client = new OAuth2(
   '9mUHdNS9yure_CAcSS44s0iN',
   'http://localhost:3333/saveToken'
   )
-
+const CalendarController = use('App/Http/Controllers/CalendarController')
 // generate a url that asks permissions for Google+ and Google Calendar scopes
 const scopes = [
   'https://www.googleapis.com/auth/calendar'
@@ -19,7 +19,6 @@ const scopes = [
 const Helpers = use('Helpers')
 
 class UsersController {
-
   static get inject () {
     return ['App/Model/UserAccount', 'App/Model/Calendar']
   }
@@ -139,6 +138,17 @@ class UsersController {
       calendar.description = calendarData.description
 
       yield user.calendar().save(calendar)
+      const controller = new CalendarController()
+      yield controller.getCalendars()
+    }
+    if (request.input('emergency') == 0) {
+      user.access_token = null
+      user.refresh_token = null
+      user.expiry_date = null
+      yield this.Calendar.query().where('user_account_id', user.id).delete()
+
+      const controller = new CalendarController()
+      yield controller.getCalendars()
     }
     yield user.save()
 
@@ -160,11 +170,11 @@ class UsersController {
     user.access_token = tokens.access_token
     user.refresh_token = tokens.refresh_token
     user.expiry_date = tokens.expiry_date
+    user.emergency = 1
     yield user.save()
 
     response.redirect('/users/' + user.id)
   }
-
 }
 
 module.exports = UsersController
