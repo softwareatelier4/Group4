@@ -67,7 +67,6 @@
           </div>
           <div class="row mb-4 mt-4">
             <div class="col-10 offset-1  px-0 mt-5">
-              <button id="showFilters" type="button" class="btn btn-secondary float-right ml-3">Show filters</button>
               <select id="orderBy" class="custom-select float-right " name="orderBy" onchange="this.form.submit()">
                 <option value="0" {{ "selected" if (request.orderBy == 0) }}>Distance Low</option>
                 <option value="1" {{ "selected" if (request.orderBy == 1) }}>Distance High</option>
@@ -78,7 +77,7 @@
               </select>
             </div>
           </div>
-          <div id="filters" class="row my-3 hidden-xs-up">
+          <div id="filters" class="row my-3">
             <div class="col-10 offset-1 px-5 py-3">
               <div class="row">
                 <div class="col-12 col-md-4">
@@ -177,13 +176,13 @@
         })
         return false
       })
-      $("#showFilters").click(function() {
+{# $("#showFilters").click(function() {
         $("#filters").toggleClass('hidden-xs-up')
         if ( $('#filters').hasClass('hidden-xs-up') )
           $(this).text('Show filters')
         else
           $(this).text('Hide filters')
-      })
+}) #}
     </script>
     {% block javascript %}{% endblock %}
   </body>
